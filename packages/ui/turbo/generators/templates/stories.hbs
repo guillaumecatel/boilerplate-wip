@@ -1,0 +1,15 @@
+import type { Meta, StoryObj } from '@storybook/react-vite'
+
+import { {{pascalCase name}} } from '@myorg/react-ui'
+
+const meta = {
+  title: 'Components/{{pascalCase name}}',
+  component: {{pascalCase name}},
+  tags: ['autodocs'],
+} satisfies Meta<typeof {{pascalCase name}}>
+
+export default meta
+
+type Story = StoryObj<typeof {{pascalCase name}}>
+
+export const Playground: Story = {}

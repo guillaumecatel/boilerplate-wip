@@ -1,0 +1,8 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "say_hi": "Salut {username} !",
+  "legal_information": "Informations légales",
+  "privacy_policy": "Politique de confidentialité",
+  "terms_and_conditions": "Termes et conditions",
+  "accessibility": "Accessibilité"
+}

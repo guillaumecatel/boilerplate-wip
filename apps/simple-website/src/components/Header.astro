@@ -1,0 +1,40 @@
+---
+import { getLocale, locales, localizeHref } from '@/i18n/runtime'
+
+const currentPage = Astro.url.pathname
+const locale = getLocale()
+---
+
+<header>
+  <nav
+    class='flex flex-row border-gray-200 px-4 py-2.5 lg:px-6 dark:bg-gray-800'>
+    <div class='mx-auto flex flex-wrap items-center justify-between'>
+      <a
+        href={localizeHref('/')}
+        class='flex items-center'>
+        <img
+          src='/icons/favicon.svg'
+          class='mr-3 h-6 sm:h-9'
+          alt='Logo'
+        />
+        <span
+          class='self-center text-xl font-semibold whitespace-nowrap dark:text-white'
+          >Simple website</span
+        >
+      </a>
+    </div>
+    <div>
+      {
+        locales
+          .filter((l) => l !== locale)
+          .map((l) => (
+            <a
+              href={localizeHref(currentPage, { locale: l })}
+              class='me-4'>
+              {l.toUpperCase()}
+            </a>
+          ))
+      }
+    </div>
+  </nav>
+</header>

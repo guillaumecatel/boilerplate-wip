@@ -1,0 +1,32 @@
+import type { ReactNode } from 'react'
+
+export interface SelectProps {
+  children: ReactNode
+}
+
+export const Select = ({ children }: SelectProps) => {
+  return (
+    <div>
+      <label htmlFor='Headline'>
+        <span className='text-sm font-medium text-gray-700'> Headliner </span>
+
+        <select
+          data-component='Select'
+          name='Headline'
+          id='Headline'
+          className='mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm'>
+          <option value=''>Please select</option>
+          <option value='JM'>John Mayer</option>
+          <option value='SRV'>Stevie Ray Vaughn</option>
+          <option value='JH'>Jimi Hendrix</option>
+          <option value='BBK'>B.B King</option>
+          <option value='AK'>Albert King</option>
+          <option value='BG'>Buddy Guy</option>
+          <option value='EC'>Eric Clapton</option>
+        </select>
+      </label>
+    </div>
+  )
+}
+
+export default Select

@@ -1,0 +1,28 @@
+packages:
+  - apps/*
+  - packages/*
+
+autoInstallPeers: true
+
+enablePrePostScripts: true
+
+engineStrict: true
+
+injectWorkspacePackages: true
+
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - core-js-pure
+  - esbuild
+  - msw
+  - sharp
+
+overrides:
+  tmp@<=0.2.3: '>=0.2.4'
+
+packageManagerStrict: true
+
+strictPeerDependencies: false
+
+syncInjectedDepsAfterScripts:
+  - build

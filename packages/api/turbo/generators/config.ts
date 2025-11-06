@@ -1,0 +1,48 @@
+import type { PlopTypes } from '@turbo/gen'
+
+export default function generator(plop: PlopTypes.NodePlopAPI): void {
+  plop.setGenerator('@/api create file', {
+    description: '📝🧪 Create a new file',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the file?',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/{{kebabCase name}}.ts',
+        templateFile: 'templates/ts-file/file.hbs',
+      },
+      {
+        type: 'add',
+        path: 'tests/{{kebabCase name}}.test.ts',
+        templateFile: 'templates/ts-file/test.hbs',
+      },
+      {
+        type: 'append',
+        path: 'package.json',
+        pattern: /"exports": {(?<insertion>)/,
+        template: `    "./{{kebabCase name}}": "./src/{{kebabCase name}}.ts",`,
+      },
+      {
+        type: 'append',
+        path: 'package.json',
+        pattern: /"publishConfig": {\s*"exports": {(?<insertion>)/,
+        template: `      "./{{kebabCase name}}": {
+            "import": "./dist/{{kebabCase name}}.js",
+            "require": "./dist/{{kebabCase name}}.cjs",
+            "types": "./dist/{{kebabCase name}}.d.ts"
+          },`,
+      },
+      {
+        type: 'modify',
+        path: 'package.json',
+        transform: (content) =>
+          JSON.stringify(JSON.parse(content), null, 2) + '\n',
+      },
+    ],
+  })
+}

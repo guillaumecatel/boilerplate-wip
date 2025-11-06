@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+
+.git
+.svn
+.hg
+pnpm-lock.yaml
+
+**/turbo/generators/**/*.hbs

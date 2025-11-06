@@ -1,0 +1,19 @@
+---
+import { m } from '@/i18n/messages'
+import Layout from '@/layouts/Layout.astro'
+
+const metadata = {
+  title: m.legal_information(),
+  description: 'Legal information for our usersApi',
+}
+---
+
+<Layout metadata={metadata}>
+  <div
+    class='flex flex-1 items-center justify-center'
+    id='main-content'>
+    <h1 class='text-2xl'>
+      {m.legal_information()}
+    </h1>
+  </div>
+</Layout>

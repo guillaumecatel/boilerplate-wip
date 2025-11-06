@@ -1,0 +1,92 @@
+@import 'tailwindcss';
+
+/*
+ * Explicitly registering sources
+ * Use @source to explicitly register source paths relative to the stylesheet:
+ *
+ * @source '../node_modules/@myorg/ui-lib';
+ *
+ * This is especially useful when you need to scan an external library that is built with Tailwind,
+ * since dependencies are usually listed in your .gitignore file and ignored by Tailwind by default.
+*/
+
+@source '../node_modules/@myorg/react-ui';
+
+@theme {
+  /* Spacing: 4px → 5px */
+  --spacing: 0.25rem;
+
+  --font-baseline: var(--spacing);
+  --base-font-size: 18px;
+  --font-scale: 1.2;
+
+  --text-display-large: calc(var(--text-display-medium) * var(--font-scale));
+  --text-display-large--line-height: round(
+    down,
+    var(--text-display-large),
+    var(--font-baseline)
+  );
+
+  --text-display-medium: calc(var(--text-display-small) * var(--font-scale));
+  --text-display-medium--line-height: round(
+    down,
+    var(--text-display-medium),
+    var(--font-baseline)
+  );
+
+  --text-display-small: calc(var(--text-heading-large) * var(--font-scale));
+  --text-display-small--line-height: round(
+    down,
+    var(--text-display-small),
+    var(--font-baseline)
+  );
+
+  --text-heading-large: calc(var(--text-heading-medium) * var(--font-scale));
+  --text-heading-large--line-height: round(
+    down,
+    var(--text-heading-large),
+    var(--font-baseline)
+  );
+
+  --text-heading-medium: calc(var(--text-heading-small) * var(--font-scale));
+  --text-heading-medium--line-height: round(
+    down,
+    var(--text-heading-medium),
+    var(--font-baseline)
+  );
+
+  --text-heading-small: calc(var(--text-body-large) * var(--font-scale));
+  --text-heading-small--line-height: round(
+    down,
+    var(--text-heading-small),
+    var(--font-baseline)
+  );
+
+  --text-body-large: calc(var(--text-body-medium) * var(--font-scale));
+  --text-body-large--line-height: round(
+    up,
+    var(--text-body-large),
+    var(--font-baseline)
+  );
+
+  --text-body-medium: var(--base-font-size);
+  --text-body-medium--line-height: round(
+    up,
+    var(--text-body-medium),
+    var(--font-baseline)
+  );
+
+  --text-body-small: calc(var(--text-body-medium) / var(--font-scale));
+  --text-body-small--line-height: round(
+    up,
+    var(--text-body-small),
+    var(--font-baseline)
+  );
+
+  --text-caption: calc(var(--text-body-small) / var(--font-scale));
+  --text-caption--line-height: round(
+    up,
+    var(--text-caption),
+    var(--font-baseline)
+  );
+}

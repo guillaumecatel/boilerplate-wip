@@ -1,0 +1,16 @@
+---
+import { getLocale } from '@/i18n/runtime'
+
+const locale = getLocale()
+const localeInformation = new Intl.Locale(locale)
+// @ts-expect-error TextInfo is not yet in TS lib
+const dir = localeInformation.getTextInfo().direction
+---
+
+<!doctype html>
+<html
+  lang={locale}
+  dir={dir}
+  class='antialiased'>
+  <slot />
+</html>
