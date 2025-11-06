@@ -7,6 +7,7 @@ import markdown from '@eslint/markdown'
 import pluginAstro from 'eslint-plugin-astro'
 import pluginPrettier from 'eslint-plugin-prettier'
 import pluginReact from 'eslint-plugin-react'
+import storybook from 'eslint-plugin-storybook'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
 import { fileURLToPath } from 'node:url'
@@ -25,6 +26,7 @@ const config = (config: Config) => {
     includeIgnoreFile(gitignorePath),
 
     tseslint.configs.recommended,
+    storybook.configs['flat/recommended'],
 
     {
       files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
@@ -106,6 +108,9 @@ const config = (config: Config) => {
         customSyntax: tailwind4,
       },
       extends: ['css/recommended'],
+      rules: {
+        'css/no-invalid-at-rules': 'off',
+      },
     })
   }
 
