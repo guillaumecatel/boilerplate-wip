@@ -5,10 +5,9 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "storybook build",
-    "check-types": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "dev": "storybook dev --no-open -p 9009",
     "start": "echo 'start design system'",
-    "test": "vitest",
     "storybook": "storybook",
     "clean": "shx rm -rf {node_modules,.turbo,dist,coverage,storybook-static}"
   },
@@ -17,18 +16,17 @@
     "@myorg/shared": "workspace:*",
     "@myorg/ui": "workspace:*",
     "express": "^5.1.0",
-    "i18next": "^25.6.0",
-    "lucide-react": "^0.548.0",
+    "lucide-react": "^0.552.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-i18next": "^16.2.1"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@inlang/paraglide-js": "^2.4.0",
     "@storybook/addon-a11y": "^10.0.0",
     "@storybook/addon-docs": "^10.0.0",
     "@storybook/addon-vitest": "^10.0.0",
     "@storybook/react-vite": "^10.0.0",
-    "@tailwindcss/vite": "4.1.16",
+    "@tailwindcss/vite": "4.1.17",
     "@types/express": "^5.0.3",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.1",

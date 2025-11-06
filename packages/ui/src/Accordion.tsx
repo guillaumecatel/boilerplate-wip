@@ -28,9 +28,9 @@ export const Accordion = ({
 
   return (
     <RadixAccordion.Root
-      onValueChange={(openValues) => {
+      onValueChange={(openValues: string | string[]) => {
         if (type === 'single') {
-          setOpenItems(openValues ? [openValues] : [])
+          setOpenItems(openValues ? [openValues as string] : [])
         } else {
           setOpenItems(openValues as string[])
         }
@@ -54,11 +54,15 @@ export const Accordion = ({
               </div>
             )}
             <div className='flex flex-1 flex-col gap-1'>
-              <Text type='body-medium' className='font-bold text-gray-800'>
+              <Text
+                type='body-medium'
+                className='font-bold text-gray-800'>
                 {item.title}
               </Text>
               {item.subtitle && (
-                <Text type='body-medium' className='text-gray-800'>
+                <Text
+                  type='body-medium'
+                  className='text-gray-800'>
                   {item.subtitle}
                 </Text>
               )}
@@ -69,7 +73,9 @@ export const Accordion = ({
           <RadixAccordion.Content
             data-component='AccordionContent'
             className='ps-15 pb-6'>
-            <Text type='body-medium' className='text-gray-500'>
+            <Text
+              type='body-medium'
+              className='text-gray-500'>
               {item.content}
             </Text>
           </RadixAccordion.Content>

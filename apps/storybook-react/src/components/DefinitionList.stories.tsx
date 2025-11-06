@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { DefinitionList } from '@myorg/react-ui'
+import { DefinitionList } from '@myorg/ui'
 
 const meta = {
   title: 'Components/DefinitionList',

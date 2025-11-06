@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { Modal } from '@myorg/react-ui'
+import { Modal } from '@myorg/ui'
 
 const meta = {
   title: 'Components/Modal',

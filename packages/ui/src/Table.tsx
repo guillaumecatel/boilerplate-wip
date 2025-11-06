@@ -4,9 +4,11 @@ export interface TableProps {
   children: ReactNode
 }
 
-export const Table = ({ children }: TableProps) => {
+export const Table = () => {
   return (
-    <div data-component='Table' className='overflow-x-auto'>
+    <div
+      data-component='Table'
+      className='overflow-x-auto'>
       <table className='min-w-full divide-y-2 divide-gray-200'>
         <thead className='ltr:text-left rtl:text-right'>
           <tr className='*:font-medium *:text-gray-900'>

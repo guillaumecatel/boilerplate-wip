@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { QuantityField } from '@myorg/react-ui'
+import { QuantityField } from '@myorg/ui'
 
 const meta = {
   title: 'Components/QuantityField',

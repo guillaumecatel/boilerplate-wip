@@ -1,7 +1,7 @@
-import { Text } from '@myorg/react-ui'
+import { Text } from '@myorg/ui'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { useTranslation } from 'react-i18next'
+import { m } from '../../.storybook/i18n/messages'
 
 const meta = {
   title: 'Components/Text',
@@ -82,8 +82,7 @@ export const Defaut: Story = {
     },
   },
   render: (args) => {
-    const { t } = useTranslation()
-    return <Text {...args}>{t('SampleText')}</Text>
+    return <Text {...args}>{m.say_hi({ username: 'User' })}</Text>
   },
 }
 
@@ -93,11 +92,10 @@ export const AsChild: Story = {
     asChild: true,
   },
   render: (args) => {
-    const { t } = useTranslation()
     return (
       <>
         <Text {...args}>
-          <h1>{t('Hello!')}</h1>
+          <h1>{m.say_hi({ username: 'User' })}</h1>
         </Text>
         <div>HTML tag is: {args.asChild ? 'h1' : 'span'}</div>
       </>

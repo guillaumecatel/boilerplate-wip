@@ -1,7 +1,7 @@
 import type { PlopTypes } from '@turbo/gen'
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
-  plop.setGenerator('@myorg/react-ui create component', {
+  plop.setGenerator('@myorg/ui create component', {
     description: '⚛️ Create a new component',
     prompts: [
       {

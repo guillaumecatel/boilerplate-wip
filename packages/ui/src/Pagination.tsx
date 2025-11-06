@@ -4,7 +4,7 @@ export interface PaginationProps {
   children: ReactNode
 }
 
-export const Pagination = ({ children }: PaginationProps) => {
+export const Pagination = () => {
   return (
     <ul
       data-component='Pagination'

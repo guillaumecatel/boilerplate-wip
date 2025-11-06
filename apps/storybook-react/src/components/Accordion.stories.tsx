@@ -1,7 +1,8 @@
-import { Accordion } from '@myorg/react-ui'
+import { Accordion } from '@myorg/ui'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { BellRing, Link, Plus, ShieldAlert } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+
+import { m } from './../../.storybook/i18n/messages'
 
 const meta = {
   title: 'Components/Accordion',
@@ -23,26 +24,25 @@ type Story = StoryObj<typeof Accordion>
 
 export const Defaut: Story = {
   render: (args) => {
-    const { t } = useTranslation()
     const items = [
       {
         id: 'item-0',
-        title: t('Hello!'),
-        subtitle: t('SampleSentence'),
-        content: t('SampleParagraph'),
+        title: m.say_hi({ username: 'User' }),
+        subtitle: m.say_hi({ username: 'User' }),
+        content: m.say_hi({ username: 'User' }),
         icon: <Link size='14' />,
       },
       {
         id: 'item-1',
-        title: t('How are you?'),
-        content: t('SampleParagraph'),
+        title: m.say_hi({ username: 'User' }),
+        content: m.say_hi({ username: 'User' }),
         icon: <BellRing size='14' />,
       },
       {
         id: 'item-2',
-        title: t('Goodbye!'),
-        subtitle: t('SampleSentence'),
-        content: t('SampleParagraph'),
+        title: m.say_hi({ username: 'User' }),
+        subtitle: m.say_hi({ username: 'User' }),
+        content: m.say_hi({ username: 'User' }),
         icon: <ShieldAlert size='14' />,
       },
     ]
@@ -50,7 +50,10 @@ export const Defaut: Story = {
       <Accordion
         {...args}
         renderChevronIcon={(isOpen) => (
-          <Plus size={18} className={isOpen ? 'rotate-45' : ''} />
+          <Plus
+            size={18}
+            className={isOpen ? 'rotate-45' : ''}
+          />
         )}
         items={items}
       />

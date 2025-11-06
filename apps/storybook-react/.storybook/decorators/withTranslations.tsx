@@ -1,20 +1,25 @@
 import { Suspense, useEffect } from 'react'
-import { I18nextProvider } from 'react-i18next'
 import type { DecoratorFunction } from 'storybook/internal/types'
 
-import i18n from '../i18n'
+import { locales, setLocale } from '../i18n/runtime'
 
 const withLocale: DecoratorFunction = (Story, context) => {
-  const { locale } = context.globals
+  const { locale } = context.globals as { locale: (typeof locales)[number] }
+  const localeInformation = new Intl.Locale(locale)
+  // @ts-expect-error TextInfo is not yet in TS lib
+  const dir = localeInformation.getTextInfo().direction
 
   useEffect(() => {
-    i18n.changeLanguage(locale)
+    setLocale(locale)
   }, [locale])
+
   return (
     <Suspense fallback={<div>Loading translations...</div>}>
-      <I18nextProvider i18n={i18n}>
+      <div
+        lang={locale}
+        dir={dir}>
         <Story />
-      </I18nextProvider>
+      </div>
     </Suspense>
   )
 }

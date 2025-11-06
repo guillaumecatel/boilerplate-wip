@@ -1,55 +1,38 @@
-import {
-  Accordion,
-  Alert,
-  Badge,
-  BreadCrumb,
-  Button,
-  ButtonGroup,
-  Checkbox,
-  DefinitionList,
-  Divider,
-  Dropdown,
-  FileUploader,
-  Modal,
-  Pagination,
-  QuantityField,
-  Select,
-  Table,
-  Textarea,
-  TextField,
-  Toggle,
-} from '@myorg/react-ui'
+import { Accordion } from '@myorg/ui'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { useTranslation } from 'react-i18next'
+
+import { m } from './../../.storybook/i18n/messages'
 
 const All = () => {
-  const { t } = useTranslation()
-
   return (
     <div className='grid h-lvh grid-cols-3 gap-6'>
       <div className='relative col-span-1'>
         <Accordion
+          type='single'
           items={[
             {
               id: 'item-1',
-              title: t('Click me'),
-              content: t('SampleText'),
+              title: m.say_hi({ username: 'User' }),
+              content: m.say_hi({ username: 'User' }),
             },
             {
               id: 'item-2',
-              title: t('Hello!'),
-              content: t('SampleText'),
+              title: m.say_hi({ username: 'User' }),
+              content: m.say_hi({ username: 'User' }),
             },
             {
               id: 'item-3',
-              title: t('Click me'),
-              content: t('SampleText'),
+              title: m.say_hi({ username: 'User' }),
+              content: m.say_hi({ username: 'User' }),
             },
           ]}
         />
       </div>
-      <div className='relative col-span-1'>
-        <Alert variant='success' title='Success Alert' />
+      {/* <div className='relative col-span-1'>
+        <Alert
+          variant='success'
+          title='Success Alert'
+        />
       </div>
       <div className='relative col-span-1'>
         <Badge />
@@ -111,7 +94,7 @@ const All = () => {
       </div>
       <div className='relative col-span-1'>
         <Toggle />
-      </div>
+      </div> */}
     </div>
   )
 }
@@ -126,6 +109,4 @@ export default meta
 
 type Story = StoryObj<typeof All>
 
-export const Preview: Story = {
-  render: (_, { globals: { locale } }) => <All locale={locale as LocaleKey} />,
-}
+export const Preview: Story = {}

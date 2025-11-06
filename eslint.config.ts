@@ -10,6 +10,7 @@ import pluginReact from 'eslint-plugin-react'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
 import { fileURLToPath } from 'node:url'
+import { tailwind4 } from 'tailwind-csstree'
 import tseslint from 'typescript-eslint'
 
 export type Config = Partial<
@@ -101,6 +102,9 @@ const config = (config: Config) => {
       files: ['**/*.css'],
       plugins: { css },
       language: 'css/css',
+      languageOptions: {
+        customSyntax: tailwind4,
+      },
       extends: ['css/recommended'],
     })
   }

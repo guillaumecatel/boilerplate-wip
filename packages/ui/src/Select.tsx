@@ -4,7 +4,7 @@ export interface SelectProps {
   children: ReactNode
 }
 
-export const Select = ({ children }: SelectProps) => {
+export const Select = () => {
   return (
     <div>
       <label htmlFor='Headline'>

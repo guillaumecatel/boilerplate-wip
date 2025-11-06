@@ -10,7 +10,7 @@
  * since dependencies are usually listed in your .gitignore file and ignored by Tailwind by default.
 */
 
-@source '../node_modules/@myorg/react-ui';
+@source '../node_modules/@myorg/ui';
 
 @theme {
   /* Spacing: 4px → 5px */

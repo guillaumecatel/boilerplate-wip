@@ -4,7 +4,7 @@ export interface ToggleProps {
   children: ReactNode
 }
 
-export const Toggle = ({ children }: ToggleProps) => {
+export const Toggle = () => {
   return (
     <label
       htmlFor='AcceptConditions'

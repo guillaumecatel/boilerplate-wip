@@ -13,7 +13,9 @@ export const Textarea = ({ children }: TextareaProps) => {
         data-component='Textarea'
         id='Notes'
         className='mt-0.5 w-full resize-none rounded border-gray-300 shadow-sm sm:text-sm'
-        rows={4}></textarea>
+        rows={4}>
+        {children}
+      </textarea>
     </label>
   )
 }

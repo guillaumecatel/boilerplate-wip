@@ -1,0 +1,8 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "say_hi": "مرحبًا {username}!",
+  "legal_information": "المعلومات القانونية",
+  "privacy_policy": "سياسة الخصوصية",
+  "terms_and_conditions": "الشروط والأحكام",
+  "accessibility": "إمكانية الوصول"
+}

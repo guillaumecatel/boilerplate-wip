@@ -157,7 +157,7 @@
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",
-    "type-check": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "test": "vitest",
     "clean": "shx rm -rf {node_modules,.turbo,dist,coverage}"
   },

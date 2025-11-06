@@ -1,4 +1,5 @@
 /// <reference types="vitest/config" />
+import { paraglideVitePlugin } from '@inlang/paraglide-js'
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
@@ -12,7 +13,14 @@ const dirname =
     : path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
-  plugins: [tailwindcss(), react()],
+  plugins: [
+    tailwindcss(),
+    react(),
+    paraglideVitePlugin({
+      project: '../../.inlang',
+      outdir: './.storybook/i18n',
+    }),
+  ],
   test: {
     projects: [
       {

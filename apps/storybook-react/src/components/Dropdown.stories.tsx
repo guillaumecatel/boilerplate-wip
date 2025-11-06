@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { Dropdown } from '@myorg/react-ui'
+import { Dropdown } from '@myorg/ui'
 
 const meta = {
   title: 'Components/Dropdown',

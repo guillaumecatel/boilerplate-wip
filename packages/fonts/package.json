@@ -112,8 +112,7 @@
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",
-    "type-check": "tsc --noEmit",
-    "test": "vitest",
+    "typecheck": "tsc --noEmit",
     "clean": "shx rm -rf {node_modules,.turbo,dist,coverage}"
   },
   "peerDependencies": {},

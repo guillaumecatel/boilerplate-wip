@@ -4,9 +4,11 @@ export interface DropdownProps {
   children: ReactNode
 }
 
-export const Dropdown = ({ children }: DropdownProps) => {
+export const Dropdown = () => {
   return (
-    <div data-component='Dropdown' className='relative'>
+    <div
+      data-component='Dropdown'
+      className='relative'>
       <div
         role='menu'
         className='absolute end-0 top-12 z-auto w-56 overflow-hidden rounded border border-gray-300 bg-white shadow-sm'>
