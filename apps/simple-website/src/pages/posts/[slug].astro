@@ -1,0 +1,43 @@
+---
+import { getEntry, render } from 'astro:content'
+
+import { getLocale } from '@/i18n/runtime'
+import Layout from '@/layouts/Layout.astro'
+import { findGroupBySlugAndLang, getPostGroups } from '@/utils/multilang'
+
+const locale = getLocale()
+const post = await getEntry('posts', Astro.params.slug!)
+
+if (post === undefined || post.data.lang !== locale) {
+  return Astro.rewrite('/404')
+}
+
+// Obtenir les groupes de posts et trouver les liens alternatifs
+const siteUrl = Astro.site?.href || import.meta.env.SITE
+const postGroups = await getPostGroups(siteUrl)
+const currentGroup = findGroupBySlugAndLang(
+  postGroups,
+  post.data.slug,
+  post.data.lang,
+)
+
+// Générer les liens alternatifs pour le head
+const alternates = currentGroup ? currentGroup.getAlternateLinks() : []
+
+const metadata = {
+  title: post.data.title,
+  description: post.data.description,
+  alternates, // Utilisé à la fois pour Head et Header
+}
+
+const { Content } = await render(post)
+---
+
+<Layout metadata={metadata}>
+  <div
+    class='flex flex-1 flex-col items-center justify-center'
+    id='main-content'>
+    <h1 class='text-2xl'>{post.data.title}</h1>
+    <Content />
+  </div>
+</Layout>

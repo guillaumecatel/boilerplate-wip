@@ -4,22 +4,33 @@ export default [
   {
     pattern: '/',
     localized: [
-      ['en', '/en'],
       ['fr', '/'],
+      ['en', '/en'],
+      ['ar', '/ar'],
+      ['de', '/de'],
+    ],
+  },
+  {
+    pattern: '/posts/:slug',
+    localized: [
+      ['fr', '/articles/:slug'],
+      ['en', '/en/posts/:slug'],
+      ['ar', '/ar/مقالات/:slug'],
+      ['de', '/de/artikel/:slug'],
     ],
   },
   {
     pattern: '/accessibility',
     localized: [
-      ['en', '/en/accessibility'],
       ['fr', '/accessibilite'],
+      ['en', '/en/accessibility'],
     ],
   },
   {
     pattern: '/:path(.*)?',
     localized: [
-      ['en', '/en/:path(.*)?'],
       ['fr', '/:path(.*)?'],
+      ['en', '/en/:path(.*)?'],
     ],
   },
 ] as Runtime['urlPatterns']

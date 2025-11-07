@@ -22,7 +22,7 @@ const { metadata } = Astro.props
         href='#main-content'>
         Skip to main content
       </a>
-      <Header />
+      <Header availableLanguages={metadata.alternates} />
       <slot />
       <Footer />
     </Body>

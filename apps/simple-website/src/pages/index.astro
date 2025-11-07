@@ -1,18 +1,26 @@
 ---
+import { getCollection } from 'astro:content'
+
+import { getLocale, locales, localizeHref } from '@/i18n/runtime'
 import Layout from '@/layouts/Layout.astro'
-import { usersApi } from '@myorg/api'
+import { generateStaticPageAlternates } from '@/utils/multilang'
+
+const currentLocale = getLocale()
+const siteUrl = Astro.site?.href || import.meta.env.SITE
 
 const metadata = {
   description: 'A simple website built with Astro.',
+  alternates: generateStaticPageAlternates(
+    locales,
+    (locale) => localizeHref('/', { locale }),
+    siteUrl,
+  ),
 }
 
-const [usersSuccess, usersData, usersError] = await usersApi.all()
-const targetEmail = 'Shanna@melissa.tv'
-const [usersByEmailSuccess, usersByEmailData, usersByEmailError] =
-  await usersApi.findByEmail(targetEmail)
-
-const hasValidUsersList = usersData && Array.isArray(usersData)
-const hasValidUsersByEmail = usersByEmailData && Array.isArray(usersByEmailData)
+const allPosts = await getCollection('posts')
+const localizedPosts = allPosts.filter(
+  (post) => post.data.lang === currentLocale,
+)
 ---
 
 <Layout metadata={metadata}>
@@ -20,118 +28,16 @@ const hasValidUsersByEmail = usersByEmailData && Array.isArray(usersByEmailData)
     class='flex flex-1 flex-col items-center justify-center'
     id='main-content'>
     <h1 class='text-2xl'>Simple website</h1>
-
-    <!-- 🎯 Section : Recherche par email -->
-    <section class='mb-6 rounded-lg border bg-gray-50 p-4'>
-      <h2 class='mb-2 text-lg font-semibold'>
-        🔍 Recherche par email: {targetEmail}
-      </h2>
+    <div>
       {
-        !usersByEmailSuccess ? (
-          <div class='rounded border bg-red-50 p-3 text-red-600'>
-            <p class='font-medium'>❌ Erreur de recherche</p>
-            <p>
-              <strong>Code:</strong> {usersByEmailError.code}
-            </p>
-            <p>
-              <strong>Message:</strong> {usersByEmailError.message}
-            </p>
-            {usersByEmailError.status && (
-              <p>
-                <strong>Status HTTP:</strong> {usersByEmailError.status}
-              </p>
-            )}
+        localizedPosts.map((post) => (
+          <div>
+            <h2>{post.data.title}</h2>
+            <p>{post.data.description}</p>
+            <a href={localizeHref(`/posts/${post.data.slug}`)}>Read more</a>
           </div>
-        ) : hasValidUsersByEmail && usersByEmailData.length > 0 ? (
-          <div class='rounded border bg-green-50 p-3 text-green-600'>
-            <p class='font-medium'>✅ Utilisateur trouvé</p>
-            {usersByEmailData.map((user) => (
-              <div
-                data-id={user.id}
-                class='mt-2 rounded bg-white p-2'>
-                <p>
-                  <strong>Nom:</strong> {user.name}
-                </p>
-                <p>
-                  <strong>Email:</strong> {user.email}
-                </p>
-                <p>
-                  <strong>Nom d'utilisateur:</strong> {user.username}
-                </p>
-              </div>
-            ))}
-          </div>
-        ) : hasValidUsersByEmail ? (
-          <p class='rounded border bg-orange-50 p-3 text-orange-600'>
-            ⚠️ Aucun utilisateur trouvé avec l'email: {targetEmail}
-          </p>
-        ) : (
-          <p class='rounded border bg-gray-100 p-3 text-gray-600'>
-            🔄 Chargement de la recherche...
-          </p>
-        )
+        ))
       }
-    </section>
-
-    <div class='my-6 h-px w-full max-w-4xl bg-gray-300'></div>
-
-    <!-- 📋 Section : Liste de tous les utilisateurs -->
-    <section class='w-full max-w-4xl'>
-      <h2 class='mb-4 text-lg font-semibold'>📋 Tous les utilisateurs</h2>
-      {
-        !usersSuccess ? (
-          <div class='rounded border bg-red-50 p-4 text-red-600'>
-            <p class='font-medium'>❌ Erreur lors du chargement</p>
-            <p>
-              <strong>Code:</strong> {usersError.code}
-            </p>
-            <p>
-              <strong>Message:</strong> {usersError.message}
-            </p>
-            {usersError.status && (
-              <p>
-                <strong>Status HTTP:</strong> {usersError.status}
-              </p>
-            )}
-            {usersError.details && (
-              <details class='mt-2'>
-                <summary class='cursor-pointer text-sm'>
-                  Détails techniques
-                </summary>
-                <pre class='mt-1 overflow-auto rounded bg-red-100 p-2 text-xs'>
-                  {JSON.stringify(usersError.details, null, 2)}
-                </pre>
-              </details>
-            )}
-          </div>
-        ) : hasValidUsersList ? (
-          <div class='space-y-2'>
-            <p class='font-medium text-green-600'>
-              ✅ {usersData.length} utilisateur(s) chargé(s)
-            </p>
-            <div class='grid gap-3 md:grid-cols-2 lg:grid-cols-3'>
-              {usersData.map((user) => (
-                <div
-                  data-id={user.id}
-                  class='rounded-lg border bg-white p-3 shadow-sm transition-shadow hover:shadow-md'>
-                  <h3 class='font-semibold text-blue-800'>{user.name}</h3>
-                  <p class='text-sm text-gray-600'>@{user.username}</p>
-                  <p class='text-sm text-blue-600'>{user.email}</p>
-                  {user.company && (
-                    <p class='mt-1 text-xs text-gray-500'>
-                      🏢 {user.company.name}
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div class='rounded border bg-gray-100 p-4 text-center text-gray-600'>
-            <p>🔄 Chargement des utilisateurs...</p>
-          </div>
-        )
-      }
-    </section>
+    </div>
   </div>
 </Layout>

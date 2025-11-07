@@ -1,8 +1,18 @@
 ---
-import { getLocale, locales, localizeHref } from '@/i18n/runtime'
+import { getLocale, localizeHref } from '@/i18n/runtime'
+import type { LocaleHrefMap } from '@/utils/multilang'
 
-const currentPage = Astro.url.pathname
+export interface Props {
+  availableLanguages?: LocaleHrefMap
+}
+
+const { availableLanguages = [] } = Astro.props
 const locale = getLocale()
+
+// Filtrer pour ne pas afficher la langue courante
+const languagesToShow = availableLanguages.filter(
+  (lang) => lang.locale !== locale,
+)
 ---
 
 <header>
@@ -25,15 +35,13 @@ const locale = getLocale()
     </div>
     <div>
       {
-        locales
-          .filter((l) => l !== locale)
-          .map((l) => (
-            <a
-              href={localizeHref(currentPage, { locale: l })}
-              class='me-4'>
-              {l.toUpperCase()}
-            </a>
-          ))
+        languagesToShow.map((language) => (
+          <a
+            href={language.href}
+            class='me-4'>
+            {language.locale.toUpperCase()}
+          </a>
+        ))
       }
     </div>
   </nav>

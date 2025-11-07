@@ -9,7 +9,7 @@ import routes from './routes'
 
 export default defineConfig({
   trailingSlash: 'never',
-  site: 'https://simple-website.example.com',
+  site: 'http://localhost:4321',
   output: 'server',
   adapter: node({
     mode: 'standalone',

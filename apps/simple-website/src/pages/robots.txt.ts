@@ -4,7 +4,6 @@ export async function GET() {
   const result = `
 User-agent: *
 Allow: /
-Disallow: /api
 
 Sitemap: ${siteUrl}/sitemap.xml
   `.trim()
