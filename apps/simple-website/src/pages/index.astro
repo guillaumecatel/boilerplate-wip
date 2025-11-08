@@ -17,6 +17,8 @@ const metadata = {
   ),
 }
 
+console.log('Current locale:', currentLocale)
+
 const allPosts = await getCollection('posts')
 const localizedPosts = allPosts.filter(
   (post) => post.data.lang === currentLocale,
