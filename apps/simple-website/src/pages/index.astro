@@ -1,45 +1,47 @@
 ---
-import { getCollection } from 'astro:content'
+import { getCollection, getEntry } from 'astro:content'
 
 import { getLocale, locales, localizeHref } from '@/i18n/runtime'
+
 import Layout from '@/layouts/Layout.astro'
-import { generateStaticPageAlternates } from '@/utils/multilang'
+
+import LatestPostsSection from '@/components/LatestPostsSection.astro'
+import NewsletterSection from '@/components/NewsletterSection.astro'
 
 const currentLocale = getLocale()
-const siteUrl = Astro.site?.href || import.meta.env.SITE
+
+const homepage = await getEntry('pages', `home-${currentLocale}`)
+
+if (homepage === undefined || homepage.data.locale !== currentLocale)
+  return Astro.rewrite('/404')
+
+const posts = await getCollection(
+  'posts',
+  ({ data }) => data.locale === currentLocale,
+)
 
 const metadata = {
-  description: 'A simple website built with Astro.',
-  alternates: generateStaticPageAlternates(
-    locales,
-    (locale) => localizeHref('/', { locale }),
-    siteUrl,
-  ),
+  title: homepage.data.title,
+  description: homepage.data.description,
+  image: `opengraph-page-${homepage.id}.png`,
+  alternates: locales.map((locale) => ({
+    locale,
+    href: localizeHref('', { locale }),
+  })),
 }
-
-console.log('Current locale:', currentLocale)
-
-const allPosts = await getCollection('posts')
-const localizedPosts = allPosts.filter(
-  (post) => post.data.lang === currentLocale,
-)
 ---
 
 <Layout metadata={metadata}>
-  <div
-    class='flex flex-1 flex-col items-center justify-center'
-    id='main-content'>
-    <h1 class='text-2xl'>Simple website</h1>
-    <div>
-      {
-        localizedPosts.map((post) => (
-          <div>
-            <h2>{post.data.title}</h2>
-            <p>{post.data.description}</p>
-            <a href={localizeHref(`/posts/${post.data.slug}`)}>Read more</a>
-          </div>
-        ))
-      }
-    </div>
-  </div>
+  <main id='main-content'>
+    <hgroup>
+      <h1>{metadata.title}</h1>
+      <p>{homepage.data.description}</p>
+    </hgroup>
+    <!-- <img
+      src={`/opengraph-page-${homepage.id}.png`}
+      alt={homepage.data.title}
+    /> -->
+    <LatestPostsSection posts={posts.map((post) => post.data)} />
+    <NewsletterSection />
+  </main>
 </Layout>

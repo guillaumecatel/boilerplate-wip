@@ -1,0 +1,35 @@
+---
+import { m } from '@/i18n/messages'
+import { getLocale, localizeHref } from '@/i18n/runtime'
+
+const currentLocale = getLocale()
+
+export interface Props {
+  items?: { href: string; label: string }[]
+}
+
+const { items = [] } = Astro.props
+---
+
+<nav aria-label={m.main_navigation()}>
+  <ul>
+    <li>
+      <a href={localizeHref('/', { locale: currentLocale })}> John Doe </a>
+    </li>
+  </ul>
+  <ul>
+    {
+      items.map((item) => (
+        <li>
+          <a
+            href={localizeHref(item.href, { locale: currentLocale })}
+            {...(Astro.url.pathname === item.href
+              ? { 'aria-current': 'page' }
+              : {})}>
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

@@ -1,15 +1,19 @@
 ---
+import { m } from '@/i18n/messages'
+
 import Layout from '@/layouts/Layout.astro'
 
 const metadata = {
-  description: 'A simple website built with Astro.',
+  title: m.not_found(),
+  description: m.not_found_description(),
 }
 ---
 
 <Layout metadata={metadata}>
-  <div
-    class='flex flex-1 flex-col items-center justify-center'
-    id='main-content'>
-    <h1 class='text-2xl'>Not found</h1>
+  <div id='main-content'>
+    <div>
+      <h1>{m.not_found()}</h1>
+      <p>{m.not_found_description()}</p>
+    </div>
   </div>
 </Layout>

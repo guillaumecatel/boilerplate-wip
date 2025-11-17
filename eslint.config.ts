@@ -94,7 +94,7 @@ const config = (config: Config) => {
     defaultConfig.push({
       files: ['**/*.md'],
       plugins: { markdown },
-      language: 'markdown/commonmark',
+      language: 'markdown/gfm',
       extends: ['markdown/recommended'],
     })
   }

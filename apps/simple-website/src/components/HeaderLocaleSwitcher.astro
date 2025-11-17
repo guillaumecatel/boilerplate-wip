@@ -1,0 +1,52 @@
+---
+import {
+  getLanguageAbbreviation,
+  getLanguageEndonym,
+  isRTLLanguage,
+} from '@myorg/shared/intl'
+
+import { m } from '@/i18n/messages'
+import { getLocale } from '@/i18n/runtime'
+
+import type { AlternativeHrefLang } from '@/types'
+
+export interface Props {
+  availableLanguages?: AlternativeHrefLang[]
+}
+
+const { availableLanguages = [] } = Astro.props
+
+const currentLocale = getLocale()
+---
+
+<nav aria-label={m.language_selector()}>
+  <ul>
+    {
+      availableLanguages.map((language) => {
+        const isCurrent = language.locale === currentLocale
+        return (
+          <li>
+            <a
+              href={language.href}
+              hreflang={language.locale}
+              lang={language.locale}
+              {...(isCurrent ? { 'aria-current': 'page' } : {})}
+              {...(isRTLLanguage(language.locale) ? { dir: 'rtl' } : {})}>
+              <span class='sr-only'>
+                {m.show_this_page_translated_in(
+                  {
+                    languageName: getLanguageEndonym(language.locale),
+                  },
+                  { locale: language.locale },
+                )}
+              </span>
+              <span aria-hidden='true'>
+                {getLanguageAbbreviation(language.locale)}
+              </span>
+            </a>
+          </li>
+        )
+      })
+    }
+  </ul>
+</nav>

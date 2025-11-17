@@ -1,0 +1,21 @@
+---
+import { m } from '@/i18n/messages'
+import { localizeHref } from '@/i18n/runtime'
+
+import type { Post } from '@/schemas'
+
+export type Props = Post
+
+const { title, description, slug } = Astro.props
+---
+
+<article>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  <a href={localizeHref(`/posts/${slug}`)}>
+    <span class='sr-only'>
+      {m.read_more_about({ title })}
+    </span>
+    {m.read_more()}
+  </a>
+</article>

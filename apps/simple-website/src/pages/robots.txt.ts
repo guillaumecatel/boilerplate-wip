@@ -1,11 +1,13 @@
-export async function GET() {
-  const siteUrl = import.meta.env.SITE
+import type { APIRoute } from 'astro'
 
+import { baseLocale, localizeHref } from '@/i18n/runtime'
+
+export const GET: APIRoute = () => {
   const result = `
-User-agent: *
-Allow: /
+    User-agent: *
+    Allow: /
 
-Sitemap: ${siteUrl}/sitemap.xml
+    Sitemap: ${localizeHref('sitemap.xml', { locale: baseLocale })}
   `.trim()
 
   return new Response(result, {

@@ -3,6 +3,7 @@ import express from 'express'
 import helmet from 'helmet'
 import permissionsPolicy from 'permissions-policy'
 
+// @ts-nocheck
 import { handler } from './dist/server/entry.mjs'
 
 const PORT = 8000

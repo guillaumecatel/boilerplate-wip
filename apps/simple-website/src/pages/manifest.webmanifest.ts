@@ -1,19 +1,29 @@
 import type { APIRoute } from 'astro'
+import { getEntry } from 'astro:content'
 
-export const GET: APIRoute = () => {
+import { PROJECT_NAME, PROJECT_SHORT_NAME } from '@/config'
+
+import { getLocale, localizeHref } from '@/i18n/runtime'
+
+export const GET: APIRoute = async ({ rewrite }) => {
+  const currentLocale = getLocale()
+
+  const homepage = await getEntry('pages', `home-${currentLocale}`)
+
+  if (homepage === undefined || homepage.data.locale !== currentLocale)
+    return rewrite('/404')
+
   return new Response(
     JSON.stringify({
-      name: 'Simple Website',
-      short_name: 'SW',
-      description: 'A simple website boilerplate built with Astro.',
-      lang: 'fr',
-      start_url: `/?utm_source=pwa`,
-      scope: `/`,
+      name: PROJECT_NAME,
+      short_name: PROJECT_SHORT_NAME,
+      description: homepage.data.description,
+      lang: currentLocale,
+      start_url: `${localizeHref('/', { locale: currentLocale })}?utm_source=pwa`,
+      scope: localizeHref('/', { locale: currentLocale }),
       display_override: ['window-controls-overlay'],
       display: 'standalone',
       orientation: 'portrait',
-      background_color: '#f6f5ec',
-      theme_color: '#000',
       screenshots: [
         {
           src: '/images/screenshot.png',

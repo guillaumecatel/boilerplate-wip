@@ -1,0 +1,16 @@
+---
+import { m } from '@/i18n/messages'
+---
+
+<form method='post'>
+  <label for='email'>{m.your_email_address()}</label>
+  <input
+    type='email'
+    id='email'
+    name='email'
+    placeholder={m.email_input_placeholder()}
+    required
+    autocomplete='email'
+  />
+  <button type='submit'>{m.subscribe()}</button>
+</form>

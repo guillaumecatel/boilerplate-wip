@@ -1,20 +1,36 @@
 ---
-import { m } from '@/i18n/messages'
+import { getEntry, render } from 'astro:content'
 
+import { getLocale, locales, localizeHref } from '@/i18n/runtime'
 import Layout from '@/layouts/Layout.astro'
 
+const currentLocale = getLocale()
+
+const accessibilityPage = await getEntry(
+  'pages',
+  `accessibility-${currentLocale}`,
+)
+
+if (
+  accessibilityPage === undefined ||
+  accessibilityPage.data.locale !== currentLocale
+)
+  return Astro.rewrite('/404')
+
 const metadata = {
-  title: m.accessibility(),
-  description: 'Accessibility information for our usersApi',
+  title: accessibilityPage.data.title,
+  description: accessibilityPage.data.description,
+  alternates: locales.map((locale) => ({
+    locale,
+    href: localizeHref('accessibility', { locale }),
+  })),
 }
+
+const { Content } = await render(accessibilityPage)
 ---
 
 <Layout metadata={metadata}>
-  <div
-    class='flex flex-1 flex-col items-center justify-center'
-    id='main-content'>
-    <h1 class='text-2xl'>
-      {m.accessibility()}
-    </h1>
-  </div>
+  <main id='main-content'>
+    <Content />
+  </main>
 </Layout>

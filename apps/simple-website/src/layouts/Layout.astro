@@ -1,6 +1,10 @@
 ---
+import { m } from '@/i18n/messages'
+import { getLocale, localizeHref } from '@/i18n/runtime'
+
 import Footer from '@/components/Footer.astro'
 import Header from '@/components/Header.astro'
+
 import Body from '@/layouts/partials/Body.astro'
 import Document from '@/layouts/partials/Document.astro'
 import Head, { type Props as HeadProps } from '@/layouts/partials/Head.astro'
@@ -11,6 +15,10 @@ export interface Props {
 }
 
 const { metadata } = Astro.props
+
+const currentLocale = getLocale()
+
+const isHome = Astro.url.pathname === '/'
 ---
 
 <Document>
@@ -20,10 +28,19 @@ const { metadata } = Astro.props
       <a
         class='sr-only'
         href='#main-content'>
-        Skip to main content
+        {m.skip_to_main_content()}
       </a>
+      {
+        !isHome && (
+          <a
+            class='sr-only'
+            href={localizeHref('/', { locale: currentLocale })}>
+            {m.go_to_homepage()}
+          </a>
+        )
+      }
       <Header availableLanguages={metadata.alternates} />
-      <slot />
+      <slot transition:animate='fade' />
       <Footer />
     </Body>
   </Html>

@@ -24,6 +24,7 @@
   "exports": {
     "./alias": "./src/alias.ts",
     "./guards": "./src/guards.ts",
+    "./intl": "./src/intl.ts",
     ".": "./src/index.ts"
   },
   "publishConfig": {
@@ -37,6 +38,11 @@
         "import": "./dist/guards.js",
         "require": "./dist/guards.cjs",
         "types": "./dist/guards.d.ts"
+      },
+      "./intl": {
+        "import": "./dist/intl.js",
+        "require": "./dist/intl.cjs",
+        "types": "./dist/intl.d.ts"
       },
       ".": {
         "import": "./dist/index.js",
