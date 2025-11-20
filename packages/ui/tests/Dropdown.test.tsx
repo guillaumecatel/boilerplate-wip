@@ -5,12 +5,12 @@ import { Dropdown } from '../src'
 
 describe('Dropdown', () => {
   it('renders correctly with children', () => {
-    render(<Dropdown >Hello world</Dropdown >)
+    render(<Dropdown>Hello world</Dropdown>)
     expect(screen.getByText('Hello world')).toBeInTheDocument()
   })
 
   it('has the correct data-component attribute', () => {
-    render(<Dropdown >Click me</Dropdown >)
+    render(<Dropdown>Click me</Dropdown>)
     expect(screen.getByText('Click me')).toHaveAttribute(
       'data-component',
       'Dropdown',

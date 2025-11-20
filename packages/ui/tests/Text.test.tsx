@@ -5,12 +5,12 @@ import { Text } from '../src'
 
 describe('Text', () => {
   it('renders correctly with children', () => {
-    render(<Text >Hello world</Text >)
+    render(<Text>Hello world</Text>)
     expect(screen.getByText('Hello world')).toBeInTheDocument()
   })
 
   it('has the correct data-component attribute', () => {
-    render(<Text >Click me</Text >)
+    render(<Text>Click me</Text>)
     expect(screen.getByText('Click me')).toHaveAttribute(
       'data-component',
       'Text',

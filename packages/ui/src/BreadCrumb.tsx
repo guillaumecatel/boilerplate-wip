@@ -1,59 +1,122 @@
-import type { ReactNode } from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
+import type { ElementType, HTMLAttributes, ReactNode } from 'react'
+import { Text } from './Text'
 
-export interface BreadCrumbProps {
-  children: ReactNode
+const breadcrumbVariants = cva('flex items-center', {
+  variants: {
+    size: {
+      sm: 'gap-1',
+      md: 'gap-2',
+      lg: 'gap-3',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+})
+
+const breadcrumbLinkVariants = cva(
+  'transition-colors hover:text-accent-600 dark:hover:text-accent-400',
+  {
+    variants: {
+      active: {
+        true: 'text-base-900 dark:text-base-100 pointer-events-none',
+        false: 'text-base-600 dark:text-base-400',
+      },
+    },
+    defaultVariants: {
+      active: false,
+    },
+  },
+)
+
+export interface BreadCrumbItem {
+  label: ReactNode
+  href?: string
+  as?: ElementType
 }
 
-export const BreadCrumb = () => {
+export interface BreadCrumbPropsBase
+  extends HTMLAttributes<HTMLElement>,
+    VariantProps<typeof breadcrumbVariants> {
+  items: BreadCrumbItem[]
+  separator?: ReactNode
+  ariaLabel?: string
+}
+
+export type BreadCrumbProps = BreadCrumbPropsBase
+
+export const BreadCrumb = ({
+  items,
+  separator,
+  size = 'md',
+  ariaLabel = 'Breadcrumb',
+  className,
+  ...props
+}: BreadCrumbProps) => {
+  const iconSize = size === 'sm' ? 14 : size === 'md' ? 16 : 18
+
   return (
-    <nav data-component='BreadCrumb' aria-label='Breadcrumb'>
-      <ol className='flex items-center gap-1 text-sm text-gray-700'>
-        <li>
-          <a href='#' className='block transition-colors hover:text-gray-900'>
-            {' '}
-            Home{' '}
-          </a>
-        </li>
+    <nav
+      data-component='BreadCrumb'
+      aria-label={ariaLabel}
+      className={className}
+      {...props}>
+      <ol className={breadcrumbVariants({ size })}>
+        {items.map((item, index) => {
+          const isLast = index === items.length - 1
+          const LinkComponent = (item.as || 'a') as ElementType
+          const linkProps: Record<string, unknown> = {}
 
-        <li className='rtl:rotate-180'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            className='size-4'
-            viewBox='0 0 20 20'
-            fill='currentColor'>
-            <path
-              fill-rule='evenodd'
-              d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z'
-              clip-rule='evenodd'></path>
-          </svg>
-        </li>
+          if (!item.as && item.href) {
+            linkProps.href = item.href
+          }
 
-        <li>
-          <a href='#' className='block transition-colors hover:text-gray-900'>
-            {' '}
-            Category{' '}
-          </a>
-        </li>
+          if (isLast) {
+            linkProps['aria-current'] = 'page'
+          }
 
-        <li className='rtl:rotate-180'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            className='size-4'
-            viewBox='0 0 20 20'
-            fill='currentColor'>
-            <path
-              fill-rule='evenodd'
-              d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z'
-              clip-rule='evenodd'></path>
-          </svg>
-        </li>
-
-        <li>
-          <a href='#' className='block transition-colors hover:text-gray-900'>
-            {' '}
-            Product{' '}
-          </a>
-        </li>
+          return (
+            <li
+              key={index}
+              className='flex items-center gap-1'>
+              <LinkComponent
+                className={breadcrumbLinkVariants({ active: isLast })}
+                {...linkProps}>
+                <Text
+                  variant={
+                    size === 'sm'
+                      ? 'body-small'
+                      : size === 'md'
+                        ? 'body-medium'
+                        : 'body-large'
+                  }
+                  color='inherit'>
+                  {item.label}
+                </Text>
+              </LinkComponent>
+              {!isLast && (
+                <span
+                  className='text-base-400 dark:text-base-600 rtl:rotate-180'
+                  aria-hidden='true'>
+                  {separator || (
+                    <svg
+                      width={iconSize}
+                      height={iconSize}
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      strokeWidth='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'>
+                      <path d='m9 18 6-6-6-6' />
+                    </svg>
+                  )}
+                </span>
+              )}
+            </li>
+          )
+        })}
       </ol>
     </nav>
   )

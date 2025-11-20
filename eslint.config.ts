@@ -102,14 +102,16 @@ const config = (config: Config) => {
   if (config.css) {
     defaultConfig.push({
       files: ['**/*.css'],
+      ignores: ['**/global.css'],
       plugins: { css },
       language: 'css/css',
       languageOptions: {
         customSyntax: tailwind4,
       },
-      extends: ['css/recommended'],
       rules: {
+        'css/no-empty-blocks': 'off',
         'css/no-invalid-at-rules': 'off',
+        'css/no-unknown-at-rules': 'off',
       },
     })
   }
@@ -129,6 +131,6 @@ export default config({
   astro: true,
   json: true,
   markdown: true,
-  css: true,
+  css: false,
   prettier: true,
 })

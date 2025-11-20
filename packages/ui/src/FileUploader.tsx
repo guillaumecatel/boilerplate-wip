@@ -29,7 +29,12 @@ export const FileUploader = ({ children }: FileUploaderProps) => {
           Browse files
         </span>
 
-        <input multiple={true} type='file' id='File' className='sr-only' />
+        <input
+          multiple={true}
+          type='file'
+          id='File'
+          className='sr-only'
+        />
       </label>
     </div>
   )

@@ -79,7 +79,10 @@ describe('Accordion', () => {
 
     it('allows multiple items open when allowMultiple is true', () => {
       const { container } = render(
-        <Accordion.Root items={defaultItems} allowMultiple={true} />,
+        <Accordion.Root
+          items={defaultItems}
+          allowMultiple={true}
+        />,
       )
       const triggers = container.querySelectorAll(
         '[data-component="AccordionTrigger"]',
@@ -101,7 +104,10 @@ describe('Accordion', () => {
 
     it('handles controlled mode with value prop', () => {
       const { rerender } = render(
-        <Accordion.Root items={defaultItems} value={['item-1']} />,
+        <Accordion.Root
+          items={defaultItems}
+          value={['item-1']}
+        />,
       )
 
       let content2 = screen
@@ -110,7 +116,12 @@ describe('Accordion', () => {
       expect(content2).toHaveAttribute('hidden')
 
       // Update to show item 2
-      rerender(<Accordion.Root items={defaultItems} value={['item-2']} />)
+      rerender(
+        <Accordion.Root
+          items={defaultItems}
+          value={['item-2']}
+        />,
+      )
 
       content2 = screen
         .getByText('Content 2')
@@ -138,7 +149,10 @@ describe('Accordion', () => {
 
     it('respects defaultValue prop in uncontrolled mode', () => {
       const { container } = render(
-        <Accordion.Root items={defaultItems} defaultValue={['item-2']} />,
+        <Accordion.Root
+          items={defaultItems}
+          defaultValue={['item-2']}
+        />,
       )
 
       const content2 = container.querySelector(
@@ -154,7 +168,10 @@ describe('Accordion', () => {
 
     it('renders with custom className', () => {
       const { container } = render(
-        <Accordion.Root items={defaultItems} className='custom-class' />,
+        <Accordion.Root
+          items={defaultItems}
+          className='custom-class'
+        />,
       )
       const accordion = container.querySelector('[data-component="Accordion"]')
       expect(accordion).toHaveClass('custom-class')
@@ -162,7 +179,10 @@ describe('Accordion', () => {
 
     it('renders as custom element when as prop is provided', () => {
       const { container } = render(
-        <Accordion.Root items={defaultItems} as='section' />,
+        <Accordion.Root
+          items={defaultItems}
+          as='section'
+        />,
       )
       const accordion = container.querySelector('section')
       expect(accordion).toBeInTheDocument()
@@ -221,7 +241,9 @@ describe('Accordion', () => {
       render(
         <Accordion.Root items={defaultItems}>
           {defaultItems.map((item) => (
-            <Accordion.Item key={item.id} id={item.id}>
+            <Accordion.Item
+              key={item.id}
+              id={item.id}>
               <Accordion.Trigger>{item.title}</Accordion.Trigger>
               <Accordion.Content>{item.content}</Accordion.Content>
             </Accordion.Item>

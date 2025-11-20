@@ -5,8 +5,10 @@
     "paths": {
       "@/*": ["./src/*"],
       "~/*": ["./*"]
-    }
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   },
-  "include": [".astro/types.d.ts", "**/*"],
+  "include": [".astro/types.d.ts", "src/**/*", "tests/**/*"],
   "exclude": ["dist", "coverage"]
 }

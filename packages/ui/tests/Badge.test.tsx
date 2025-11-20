@@ -5,12 +5,12 @@ import { Badge } from '../src'
 
 describe('Badge', () => {
   it('renders correctly with children', () => {
-    render(<Badge >Hello world</Badge >)
+    render(<Badge>Hello world</Badge>)
     expect(screen.getByText('Hello world')).toBeInTheDocument()
   })
 
   it('has the correct data-component attribute', () => {
-    render(<Badge >Click me</Badge >)
+    render(<Badge>Click me</Badge>)
     expect(screen.getByText('Click me')).toHaveAttribute(
       'data-component',
       'Badge',

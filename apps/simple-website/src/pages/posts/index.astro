@@ -34,6 +34,13 @@ const metadata = {
       <h1>{metadata.title}</h1>
       <p>{postPage.data.description}</p>
     </div>
-    {posts.map((post) => <PostCard {...post.data} />)}
+    {
+      posts.map((post) => (
+        <PostCard
+          as='h2'
+          {...post.data}
+        />
+      ))
+    }
   </main>
 </Layout>

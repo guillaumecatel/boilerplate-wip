@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content'
 
+import Prose from '@/components/Prose.astro'
 import { getLocale, localizeHref } from '@/i18n/runtime'
 import Layout from '@/layouts/Layout.astro'
 
@@ -21,11 +22,14 @@ const metadata = {
   })),
 }
 
-const { Content } = await render(post)
+const { Content, headings } = await render(post)
 ---
 
 <Layout metadata={metadata}>
-  <main id='main-content'>
+  <Prose
+    id='main-content'
+    as='main'
+    toc={headings}>
     <Content />
-  </main>
+  </Prose>
 </Layout>

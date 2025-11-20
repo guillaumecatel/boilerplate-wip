@@ -4,7 +4,7 @@
  * Explicitly registering sources
  * Use @source to explicitly register source paths relative to the stylesheet:
  *
- * @source '../node_modules/@myorg/ui-lib';
+ * @source '../node_modules/@myorg/ui';
  *
  * This is especially useful when you need to scan an external library that is built with Tailwind,
  * since dependencies are usually listed in your .gitignore file and ignored by Tailwind by default.
@@ -12,12 +12,15 @@
 
 @source '../node_modules/@myorg/ui';
 
-@theme {
-  /* Spacing: 4px → 5px */
-  --spacing: 0.25rem;
+/* eslint-disable-next-line */
+@custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --default-font-family: var(--font-inter);
+
+  --spacing: 0.25rem;
   --font-baseline: var(--spacing);
-  --base-font-size: 18px;
+  --base-font-size: 1.125rem;
   --font-scale: 1.2;
 
   --text-display-large: calc(var(--text-display-medium) * var(--font-scale));
@@ -89,4 +92,86 @@
     var(--text-caption),
     var(--font-baseline)
   );
+
+  /* Font size utilities */
+  --font-size-display-large: var(--text-display-large);
+  --font-size-display-large--line-height: var(
+    --text-display-large--line-height
+  );
+  --font-size-display-medium: var(--text-display-medium);
+  --font-size-display-medium--line-height: var(
+    --text-display-medium--line-height
+  );
+  --font-size-display-small: var(--text-display-small);
+  --font-size-display-small--line-height: var(
+    --text-display-small--line-height
+  );
+  --font-size-heading-large: var(--text-heading-large);
+  --font-size-heading-large--line-height: var(
+    --text-heading-large--line-height
+  );
+  --font-size-heading-medium: var(--text-heading-medium);
+  --font-size-heading-medium--line-height: var(
+    --text-heading-medium--line-height
+  );
+  --font-size-heading-small: var(--text-heading-small);
+  --font-size-heading-small--line-height: var(
+    --text-heading-small--line-height
+  );
+  --font-size-body-large: var(--text-body-large);
+  --font-size-body-large--line-height: var(--text-body-large--line-height);
+  --font-size-body-medium: var(--text-body-medium);
+  --font-size-body-medium--line-height: var(--text-body-medium--line-height);
+  --font-size-body-small: var(--text-body-small);
+  --font-size-body-small--line-height: var(--text-body-small--line-height);
+  --font-size-caption: var(--text-caption);
+  --font-size-caption--line-height: var(--text-caption--line-height);
+
+  --spacing: 0.25rem; /* 4px */
+
+  --color-accent-50: #dcfeef;
+  --color-accent-100: #a0fdd5;
+  --color-accent-200: #04f18a;
+  --color-accent-300: #03d379;
+  --color-accent-400: #03b065;
+  --color-accent-500: #027f49;
+  --color-accent-600: #027342;
+  --color-accent-700: #02643a;
+  --color-accent-800: #01502e;
+  --color-accent-900: #013720;
+  --color-accent-950: #012d1a;
+
+  /* Base Colors */
+  --color-base-50: #fcfcfc;
+  --color-base-100: #f0f0f0;
+  --color-base-200: #d6d6d6;
+  --color-base-300: #bdbdbd;
+  --color-base-400: #a3a3a3;
+  --color-base-500: #8a8a8a;
+  --color-base-600: #707070;
+  --color-base-700: #595959;
+  --color-base-800: #404040;
+  --color-base-900: #262626;
+  --color-base-950: #1a1a1a;
+
+  --animate-slide-up: slide-up 250ms ease-out;
+  --animate-slide-down: slide-down 250ms ease-out;
+
+  @keyframes slide-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--content-height);
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      height: var(--content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
 }

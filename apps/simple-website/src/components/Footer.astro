@@ -1,4 +1,6 @@
 ---
+import { PROJECT_NAME } from '@/config'
+
 import { m } from '@/i18n/messages'
 import { localizeHref } from '@/i18n/runtime'
 
@@ -28,6 +30,6 @@ const navigationItems = [
   <FooterNavigation items={navigationItems} />
   <div>
     © {new Date().getFullYear()}
-    <a href={localizeHref('/')}> Simple website </a>
+    <a href={localizeHref('/')}> {PROJECT_NAME} </a>
   </div>
 </footer>

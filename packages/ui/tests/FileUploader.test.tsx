@@ -5,12 +5,12 @@ import { FileUploader } from '../src'
 
 describe('FileUploader', () => {
   it('renders correctly with children', () => {
-    render(<FileUploader >Hello world</FileUploader >)
+    render(<FileUploader>Hello world</FileUploader>)
     expect(screen.getByText('Hello world')).toBeInTheDocument()
   })
 
   it('has the correct data-component attribute', () => {
-    render(<FileUploader >Click me</FileUploader >)
+    render(<FileUploader>Click me</FileUploader>)
     expect(screen.getByText('Click me')).toHaveAttribute(
       'data-component',
       'FileUploader',

@@ -7,7 +7,9 @@ export interface QuantityFieldProps {
 export const QuantityField = ({ children }: QuantityFieldProps) => {
   return (
     <div data-component='QuantityField'>
-      <label htmlFor='Quantity' className='sr-only'>
+      <label
+        htmlFor='Quantity'
+        className='sr-only'>
         {' '}
         {children}{' '}
       </label>

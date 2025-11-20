@@ -5,12 +5,12 @@ import { Divider } from '../src'
 
 describe('Divider', () => {
   it('renders correctly with children', () => {
-    render(<Divider >Hello world</Divider >)
+    render(<Divider>Hello world</Divider>)
     expect(screen.getByText('Hello world')).toBeInTheDocument()
   })
 
   it('has the correct data-component attribute', () => {
-    render(<Divider >Click me</Divider >)
+    render(<Divider>Click me</Divider>)
     expect(screen.getByText('Click me')).toHaveAttribute(
       'data-component',
       'Divider',

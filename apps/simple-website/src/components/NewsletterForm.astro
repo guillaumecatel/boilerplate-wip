@@ -1,16 +1,30 @@
 ---
+import { actions } from 'astro:actions'
+
 import { m } from '@/i18n/messages'
+
+const result = Astro.getActionResult(actions.subscribeToNewsletter)
 ---
 
-<form method='post'>
+<form
+  method='post'
+  action={actions.subscribeToNewsletter}>
   <label for='email'>{m.your_email_address()}</label>
   <input
-    type='email'
+    type='text'
     id='email'
     name='email'
     placeholder={m.email_input_placeholder()}
     required
     autocomplete='email'
   />
+  {
+    result?.error && (
+      <p class='error'>
+        Unable to sign up. Please try again later. {result.error}
+      </p>
+    )
+  }
+  {result?.data && <p class='success'>Thank you</p>}
   <button type='submit'>{m.subscribe()}</button>
 </form>

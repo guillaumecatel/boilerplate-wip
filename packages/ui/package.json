@@ -23,12 +23,23 @@
     "./dist"
   ],
   "exports": {
+    "./switch": "./src/Switch.tsx",
+    "./toggle-group": "./src/ToggleGroup.tsx",
+    "./input": "./src/Input.tsx",
+    "./popover": "./src/Popover.tsx",
+    "./input-field": "./src/InputField.tsx",
+    "./form-field": "./src/FormField.tsx",
+    "./label": "./src/Label.tsx",
+    "./polymorphic": "./src/Polymorphic.tsx",
+    "./header": "./src/Header.tsx",
+    "./opengraph-image": "./src/OpengraphImage.tsx",
     "./text": "./src/Text.tsx",
     "./accordion": "./src/Accordion.tsx",
     "./toggle": "./src/Toggle.tsx",
     "./textarea": "./src/Textarea.tsx",
     "./table": "./src/Table.tsx",
     "./select": "./src/Select.tsx",
+    "./multi-select": "./src/MultiSelect.tsx",
     "./quantity-field": "./src/QuantityField.tsx",
     "./pagination": "./src/Pagination.tsx",
     "./modal": "./src/Modal.tsx",
@@ -47,6 +58,56 @@
   },
   "publishConfig": {
     "exports": {
+      "./switch": {
+        "import": "./dist/Switch.js",
+        "require": "./dist/Switch.cjs",
+        "types": "./dist/Switch.d.ts"
+      },
+      "./toggle-group": {
+        "import": "./dist/ToggleGroup.js",
+        "require": "./dist/ToggleGroup.cjs",
+        "types": "./dist/ToggleGroup.d.ts"
+      },
+      "./input": {
+        "import": "./dist/Input.js",
+        "require": "./dist/Input.cjs",
+        "types": "./dist/Input.d.ts"
+      },
+      "./popover": {
+        "import": "./dist/Popover.js",
+        "require": "./dist/Popover.cjs",
+        "types": "./dist/Popover.d.ts"
+      },
+      "./input-field": {
+        "import": "./dist/InputField.js",
+        "require": "./dist/InputField.cjs",
+        "types": "./dist/InputField.d.ts"
+      },
+      "./form-field": {
+        "import": "./dist/FormField.js",
+        "require": "./dist/FormField.cjs",
+        "types": "./dist/FormField.d.ts"
+      },
+      "./label": {
+        "import": "./dist/Label.js",
+        "require": "./dist/Label.cjs",
+        "types": "./dist/Label.d.ts"
+      },
+      "./polymorphic": {
+        "import": "./dist/Polymorphic.js",
+        "require": "./dist/Polymorphic.cjs",
+        "types": "./dist/Polymorphic.d.ts"
+      },
+      "./header": {
+        "import": "./dist/Header.js",
+        "require": "./dist/Header.cjs",
+        "types": "./dist/Header.d.ts"
+      },
+      "./opengraph-image": {
+        "import": "./dist/OpengraphImage.js",
+        "require": "./dist/OpengraphImage.cjs",
+        "types": "./dist/OpengraphImage.d.ts"
+      },
       "./text": {
         "import": "./dist/Text.js",
         "require": "./dist/Text.cjs",

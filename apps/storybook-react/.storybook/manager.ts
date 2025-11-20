@@ -12,10 +12,31 @@ addons.setConfig({
       badge: {
         text: 'Native',
         style: {
-          backgroundColor: '#4F47E6',
+          backgroundColor: '#e54b22',
           color: '#fff',
         },
         tooltip: 'This component can be used in native HTML environments',
+      },
+      display: {
+        sidebar: [
+          {
+            type: 'component',
+            skipInherited: true,
+          },
+        ],
+        toolbar: false,
+        mdx: true,
+      },
+    },
+    {
+      tags: 'radix-ui',
+      badge: {
+        text: 'Radix UI',
+        style: {
+          backgroundColor: '#10b981',
+          color: '#fff',
+        },
+        tooltip: 'This component needs React and Radix UI to work',
       },
       display: {
         sidebar: [

@@ -1,16 +1,18 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types'
+
 import { m } from '@/i18n/messages'
 import { localizeHref } from '@/i18n/runtime'
 
 import type { Post } from '@/schemas'
 
-export type Props = Post
+export type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & Post
 
-const { title, description, slug } = Astro.props
+const { title, description, slug, as: Heading = 'h3' } = Astro.props
 ---
 
 <article>
-  <h3>{title}</h3>
+  <Heading>{title}</Heading>
   <p>{description}</p>
   <a href={localizeHref(`/posts/${slug}`)}>
     <span class='sr-only'>

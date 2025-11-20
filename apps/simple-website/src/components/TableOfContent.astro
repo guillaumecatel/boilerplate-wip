@@ -1,0 +1,48 @@
+---
+import { m } from '@/i18n/messages'
+import type { MarkdownHeading } from 'astro'
+import TableOfContentItem from './TableOfContentItem.astro'
+
+export type Props = {
+  headings: MarkdownHeading[]
+}
+
+type NestedHeading = MarkdownHeading & {
+  children: NestedHeading[]
+}
+
+const { headings } = Astro.props
+
+function buildNestedHeadings(items: MarkdownHeading[]): NestedHeading[] {
+  const root: NestedHeading[] = []
+  const stack: NestedHeading[] = []
+
+  for (const item of items) {
+    const node: NestedHeading = { ...item, children: [] }
+
+    while (stack.length > 0 && stack[stack.length - 1].depth >= item.depth) {
+      stack.pop()
+    }
+
+    if (stack.length === 0) {
+      root.push(node)
+    } else {
+      stack[stack.length - 1].children.push(node)
+    }
+
+    stack.push(node)
+  }
+
+  return root
+}
+
+const nestedHeadings = buildNestedHeadings(headings)
+---
+
+<nav
+  class='sticky top-0'
+  aria-label={m.table_of_contents()}>
+  <ol class='list-outside list-[revert] ps-6 [&_ol]:list-[revert] [&_ol]:ps-6'>
+    {nestedHeadings.map((item) => <TableOfContentItem item={item} />)}
+  </ol>
+</nav>

@@ -23,5 +23,8 @@
   "about": "Über",
   "legal_navigation": "Rechtliche Navigation",
   "not_found": "Seite nicht gefunden",
-  "not_found_description": "Die von Ihnen gesuchte Seite existiert nicht."
+  "not_found_description": "Die von Ihnen gesuchte Seite existiert nicht.",
+  "table_of_contents": "Inhaltsverzeichnis",
+  "loading": "Laden...",
+  "sample_text": "Dies ist ein Beispieltext auf Deutsch. Er wird verwendet, um die Übersetzungsfunktionalität in der Anwendung zu demonstrieren."
 }

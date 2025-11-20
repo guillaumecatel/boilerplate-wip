@@ -2,7 +2,10 @@
 import { getEntry, render } from 'astro:content'
 
 import { getLocale, locales, localizeHref } from '@/i18n/runtime'
+
 import Layout from '@/layouts/Layout.astro'
+
+import Prose from '@/components/Prose.astro'
 
 const currentLocale = getLocale()
 
@@ -30,7 +33,9 @@ const { Content } = await render(cookiePolicyPage)
 ---
 
 <Layout metadata={metadata}>
-  <main id='main-content'>
+  <Prose
+    id='main-content'
+    as='main'>
     <Content />
-  </main>
+  </Prose>
 </Layout>

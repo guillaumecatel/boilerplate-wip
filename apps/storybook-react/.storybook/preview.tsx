@@ -1,6 +1,9 @@
+import { getLanguageEndonym, isRTLLanguage } from '@myorg/shared/intl'
 import type { Preview } from '@storybook/react-vite'
 
+import withTheme from './decorators/withTheme'
 import withTranslations from './decorators/withTranslations'
+
 import { baseLocale, locales } from './i18n/runtime'
 
 import './style.css'
@@ -13,27 +16,43 @@ const preview: Preview = {
         title: 'Language',
         icon: 'globe',
         items: locales.map((locale) => {
-          const localeInformation = new Intl.Locale(locale)
-          const displayLanguageName = new Intl.DisplayNames([locale], {
-            type: 'language',
-          })
-          // @ts-expect-error TextInfo is not yet in TS lib
-          const dir = localeInformation.getTextInfo().direction
-
           return {
             value: locale,
-            title: displayLanguageName.of(locale),
-            right: dir,
+            title: getLanguageEndonym(locale),
+            right: isRTLLanguage(locale) ? 'rtl' : 'ltr',
           }
         }),
+        dynamicTitle: true,
+      },
+    },
+    theme: {
+      description: 'Global theme for components',
+      toolbar: {
+        title: 'Theme',
+        icon: 'circlehollow',
+        items: [
+          { value: 'light', title: 'Light' },
+          { value: 'dark', title: 'Dark' },
+          { value: 'system', title: 'System' },
+        ],
         dynamicTitle: true,
       },
     },
   },
   initialGlobals: {
     locale: baseLocale,
+    theme: 'system',
   },
   parameters: {
+    backgrounds: {
+      grid: {
+        cellSize: 8,
+        opacity: 0.2,
+        cellAmount: 10,
+        offsetX: 16, // Default is 0 if story has 'fullscreen' layout, 16 if layout is 'padded'
+        offsetY: 16, // Default is 0 if story has 'fullscreen' layout, 16 if layout is 'padded'
+      },
+    },
     options: {
       storySort: {
         method: '',
@@ -51,7 +70,7 @@ const preview: Preview = {
       test: 'todo',
     },
   },
-  decorators: [withTranslations],
+  decorators: [withTranslations, withTheme],
 }
 
 export default preview
