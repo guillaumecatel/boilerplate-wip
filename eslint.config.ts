@@ -22,7 +22,7 @@ const gitignorePath = fileURLToPath(new URL('.gitignore', import.meta.url))
 
 const config = (config: Config) => {
   const defaultConfig: ConfigWithExtendsArray = [
-    globalIgnores(['./.husky', 'pnpm-lock.yaml']),
+    globalIgnores(['./.husky/**', 'pnpm-lock.yaml']),
     includeIgnoreFile(gitignorePath),
 
     tseslint.configs.recommended,
