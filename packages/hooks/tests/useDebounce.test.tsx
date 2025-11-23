@@ -1,18 +1,9 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { useDebounce } from '../src'
 
 describe('useDebounce', () => {
-  // Timeout augmenté pour la CI
-  vi.setConfig({ testTimeout: Infinity })
-  beforeEach(() => {
-    vi.useFakeTimers()
-  })
-  afterEach(() => {
-    vi.useRealTimers()
-  })
-
   it('returns initial value immediately', () => {
     const { result } = renderHook(() => useDebounce('initial'))
     expect(result.current).toBe('initial')
@@ -25,7 +16,7 @@ describe('useDebounce', () => {
     expect(result.current).toBe('initial')
     rerender({ value: 'updated' })
     expect(result.current).toBe('initial')
-    vi.advanceTimersByTime(300)
+    // On laisse le vrai timer, on attend le debounce
     await waitFor(() => expect(result.current).toBe('updated'))
   })
 
@@ -36,7 +27,7 @@ describe('useDebounce', () => {
     )
     rerender({ value: 'updated' })
     expect(result.current).toBe('initial')
-    vi.advanceTimersByTime(100)
+    // On laisse le vrai timer, on attend le debounce
     await waitFor(() => expect(result.current).toBe('updated'))
   })
 
@@ -46,9 +37,9 @@ describe('useDebounce', () => {
       { initialProps: { value: 'initial' } },
     )
     rerender({ value: 'change1' })
-    vi.advanceTimersByTime(100)
+    // On laisse le vrai timer, on attend le debounce
     rerender({ value: 'change2' })
-    vi.advanceTimersByTime(100)
+    // On laisse le vrai timer, on attend le debounce
     rerender({ value: 'final' })
     vi.advanceTimersByTime(200)
     await waitFor(() => expect(result.current).toBe('final'))
@@ -60,7 +51,7 @@ describe('useDebounce', () => {
       { initialProps: { value: 0 } },
     )
     numberRerender({ value: 42 })
-    vi.advanceTimersByTime(100)
+    // On laisse le vrai timer, on attend le debounce
     await waitFor(() => expect(numberResult.current).toBe(42))
 
     const { result: booleanResult, rerender: booleanRerender } = renderHook(
@@ -68,7 +59,7 @@ describe('useDebounce', () => {
       { initialProps: { value: false } },
     )
     booleanRerender({ value: true })
-    vi.advanceTimersByTime(100)
+    // On laisse le vrai timer, on attend le debounce
     await waitFor(() => expect(booleanResult.current).toBe(true))
 
     const { result: objectResult, rerender: objectRerender } = renderHook(
@@ -77,14 +68,14 @@ describe('useDebounce', () => {
     )
     const newObj = { id: 2 }
     objectRerender({ value: newObj })
-    vi.advanceTimersByTime(100)
+    // On laisse le vrai timer, on attend le debounce
     await waitFor(() => expect(objectResult.current).toEqual(newObj))
   })
 
   it('cleans up timeout on unmount', () => {
     const { unmount } = renderHook(() => useDebounce('value', { delay: 1000 }))
     unmount()
-    vi.advanceTimersByTime(1500)
+    // On laisse le vrai timer, on attend le cleanup
   })
 
   it('handles zero delay', async () => {
@@ -93,7 +84,7 @@ describe('useDebounce', () => {
       { initialProps: { value: 'initial' } },
     )
     rerender({ value: 'updated' })
-    vi.advanceTimersByTime(0)
+    // On laisse le vrai timer, on attend le debounce
     await waitFor(() => expect(result.current).toBe('updated'))
   })
 })
