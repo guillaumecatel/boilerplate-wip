@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import { useDebounce } from '../src'
 
@@ -41,7 +41,7 @@ describe('useDebounce', () => {
     rerender({ value: 'change2' })
     // On laisse le vrai timer, on attend le debounce
     rerender({ value: 'final' })
-    vi.advanceTimersByTime(200)
+    // On laisse le vrai timer, on attend le debounce
     await waitFor(() => expect(result.current).toBe('final'))
   })
 
