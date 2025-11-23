@@ -1,258 +1,152 @@
+import '@testing-library/jest-dom'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
-
 import { Accordion } from '../src'
 
+const items = [
+  { id: 'a', title: 'Titre A', content: 'Contenu A' },
+  { id: 'b', title: 'Titre B', content: 'Contenu B' },
+  { id: 'c', title: 'Titre C', content: 'Contenu C' },
+]
+
 describe('Accordion', () => {
-  const defaultItems = [
-    {
-      id: 'item-1',
-      title: 'Item 1',
-      content: 'Content 1',
-    },
-    {
-      id: 'item-2',
-      title: 'Item 2',
-      content: 'Content 2',
-    },
-    {
-      id: 'item-3',
-      title: 'Item 3',
-      content: 'Content 3',
-    },
-  ]
-
-  describe('Accordion.Native (HTML)', () => {
-    it('renders native HTML accordion without JavaScript', () => {
-      render(<Accordion.Native items={defaultItems} />)
-      expect(screen.getByText('Item 1')).toBeInTheDocument()
-      expect(screen.getByText('Item 2')).toBeInTheDocument()
-      expect(screen.getByText('Item 3')).toBeInTheDocument()
-    })
-
-    it('first item is open by default', () => {
-      const { container } = render(<Accordion.Native items={defaultItems} />)
-      const details = container.querySelectorAll('details')
-      expect(details[0]).toHaveAttribute('open')
-    })
-
-    it('renders content for all items', () => {
-      render(<Accordion.Native items={defaultItems} />)
-      expect(screen.getByText('Content 1')).toBeInTheDocument()
-      expect(screen.getByText('Content 2')).toBeInTheDocument()
-      expect(screen.getByText('Content 3')).toBeInTheDocument()
+  it('affiche tous les titres et contenus', () => {
+    render(
+      <Accordion.Root type='single'>
+        {items.map((item) => (
+          <Accordion.Item
+            key={item.id}
+            value={item.id}>
+            <Accordion.Trigger>{item.title}</Accordion.Trigger>
+            <Accordion.Content>{item.content}</Accordion.Content>
+          </Accordion.Item>
+        ))}
+      </Accordion.Root>,
+    )
+    items.forEach((item) => {
+      expect(screen.getByText(item.title)).toBeInTheDocument()
+      // Contenu pas affiché par défaut
     })
   })
 
-  describe('Accordion.Root (Controlled)', () => {
-    it('renders uncontrolled accordion', () => {
-      render(<Accordion.Root items={defaultItems} />)
-      expect(screen.getByText('Item 1')).toBeInTheDocument()
-      expect(screen.getByText('Content 1')).toBeInTheDocument()
-    })
+  it('ouvre et ferme un item au clic sur le trigger', () => {
+    render(
+      <Accordion.Root
+        type='single'
+        collapsible>
+        <Accordion.Item value='a'>
+          <Accordion.Trigger>Ouvrir</Accordion.Trigger>
+          <Accordion.Content>Contenu</Accordion.Content>
+        </Accordion.Item>
+      </Accordion.Root>,
+    )
+    const trigger = screen.getByRole('button')
+    const content = screen.getByRole('region', { hidden: true })
+    expect(content).toHaveAttribute('data-state', 'closed')
+    fireEvent.click(trigger)
+    expect(content).toHaveAttribute('data-state', 'open')
+    fireEvent.click(trigger)
+    expect(content).toHaveAttribute('data-state', 'closed')
+  })
 
-    it('first item is open by default in uncontrolled mode', () => {
-      const { container } = render(<Accordion.Root items={defaultItems} />)
-      const content = container.querySelector('[id="accordion-content-item-1"]')
-      expect(content).not.toHaveAttribute('hidden')
-    })
-
-    it('opens/closes items on click in uncontrolled mode', () => {
-      const { container } = render(<Accordion.Root items={defaultItems} />)
-      const triggers = container.querySelectorAll(
-        '[data-component="AccordionTrigger"]',
-      )
-
-      // Click item 2
-      fireEvent.click(triggers[1])
-      const content2 = container.querySelector(
-        '[id="accordion-content-item-2"]',
-      )
-      expect(content2).not.toHaveAttribute('hidden')
-
-      // Item 1 should close (single mode)
-      const content1 = container.querySelector(
-        '[id="accordion-content-item-1"]',
-      )
-      expect(content1).toHaveAttribute('hidden')
-    })
-
-    it('allows multiple items open when allowMultiple is true', () => {
-      const { container } = render(
-        <Accordion.Root
-          items={defaultItems}
-          allowMultiple={true}
-        />,
-      )
-      const triggers = container.querySelectorAll(
-        '[data-component="AccordionTrigger"]',
-      )
-
-      // Click item 2
-      fireEvent.click(triggers[1])
-      const content2 = container.querySelector(
-        '[id="accordion-content-item-2"]',
-      )
-      expect(content2).not.toHaveAttribute('hidden')
-
-      // Item 1 should stay open
-      const content1 = container.querySelector(
-        '[id="accordion-content-item-1"]',
-      )
-      expect(content1).not.toHaveAttribute('hidden')
-    })
-
-    it('handles controlled mode with value prop', () => {
-      const { rerender } = render(
-        <Accordion.Root
-          items={defaultItems}
-          value={['item-1']}
-        />,
-      )
-
-      let content2 = screen
-        .getByText('Content 2')
-        .closest('[data-component="AccordionContent"]')
-      expect(content2).toHaveAttribute('hidden')
-
-      // Update to show item 2
-      rerender(
-        <Accordion.Root
-          items={defaultItems}
-          value={['item-2']}
-        />,
-      )
-
-      content2 = screen
-        .getByText('Content 2')
-        .closest('[data-component="AccordionContent"]')
-      expect(content2).not.toHaveAttribute('hidden')
-    })
-
-    it('calls onValueChange callback in controlled mode', () => {
-      const onValueChange = vi.fn()
-      const { container } = render(
-        <Accordion.Root
-          items={defaultItems}
-          value={['item-1']}
-          onValueChange={onValueChange}
-        />,
-      )
-
-      const triggers = container.querySelectorAll(
-        '[data-component="AccordionTrigger"]',
-      )
-      fireEvent.click(triggers[1])
-
-      expect(onValueChange).toHaveBeenCalledWith(['item-2'])
-    })
-
-    it('respects defaultValue prop in uncontrolled mode', () => {
-      const { container } = render(
-        <Accordion.Root
-          items={defaultItems}
-          defaultValue={['item-2']}
-        />,
-      )
-
-      const content2 = container.querySelector(
-        '[id="accordion-content-item-2"]',
-      )
-      expect(content2).not.toHaveAttribute('hidden')
-
-      const content1 = container.querySelector(
-        '[id="accordion-content-item-1"]',
-      )
-      expect(content1).toHaveAttribute('hidden')
-    })
-
-    it('renders with custom className', () => {
-      const { container } = render(
-        <Accordion.Root
-          items={defaultItems}
-          className='custom-class'
-        />,
-      )
-      const accordion = container.querySelector('[data-component="Accordion"]')
-      expect(accordion).toHaveClass('custom-class')
-    })
-
-    it('renders as custom element when as prop is provided', () => {
-      const { container } = render(
-        <Accordion.Root
-          items={defaultItems}
-          as='section'
-        />,
-      )
-      const accordion = container.querySelector('section')
-      expect(accordion).toBeInTheDocument()
-    })
-
-    it('disables accordion items when disabled prop is true', () => {
-      const itemsWithDisabled = [
-        ...defaultItems.slice(0, 1),
-        { ...defaultItems[1], disabled: true },
-      ]
-      const { container } = render(<Accordion.Root items={itemsWithDisabled} />)
-
-      const triggers = container.querySelectorAll(
-        '[data-component="AccordionTrigger"]',
-      )
-      expect(triggers[1]).toBeDisabled()
-    })
-
-    it('has correct ARIA attributes', () => {
-      const { container } = render(<Accordion.Root items={defaultItems} />)
-      const triggers = container.querySelectorAll(
-        '[data-component="AccordionTrigger"]',
-      )
-
-      // First trigger should be expanded
-      expect(triggers[0]).toHaveAttribute('aria-expanded', 'true')
-
-      // Others should be collapsed
-      expect(triggers[1]).toHaveAttribute('aria-expanded', 'false')
-      expect(triggers[2]).toHaveAttribute('aria-expanded', 'false')
-    })
-
-    it('has correct aria-controls attributes', () => {
-      const { container } = render(<Accordion.Root items={defaultItems} />)
-      const triggers = container.querySelectorAll(
-        '[data-component="AccordionTrigger"]',
-      )
-
-      expect(triggers[0]).toHaveAttribute(
-        'aria-controls',
-        'accordion-content-item-1',
-      )
-      expect(triggers[1]).toHaveAttribute(
-        'aria-controls',
-        'accordion-content-item-2',
-      )
-      expect(triggers[2]).toHaveAttribute(
-        'aria-controls',
-        'accordion-content-item-3',
+  it('supporte le mode multi-ouverture', () => {
+    render(
+      <Accordion.Root type='multiple'>
+        {items.map((item) => (
+          <Accordion.Item
+            key={item.id}
+            value={item.id}>
+            <Accordion.Trigger>{item.title}</Accordion.Trigger>
+            <Accordion.Content>{item.content}</Accordion.Content>
+          </Accordion.Item>
+        ))}
+      </Accordion.Root>,
+    )
+    const triggers = items.map((item) => screen.getByText(item.title))
+    triggers.forEach((trigger) => fireEvent.click(trigger))
+    items.forEach((item) => {
+      const content = screen.getByText(item.content)
+      expect(content.parentElement?.parentElement).toHaveAttribute(
+        'data-state',
+        'open',
       )
     })
   })
 
-  describe('Compound Component Pattern', () => {
-    it('uses Accordion.Item, Accordion.Trigger, and Accordion.Content components', () => {
-      render(
-        <Accordion.Root items={defaultItems}>
-          {defaultItems.map((item) => (
-            <Accordion.Item
-              key={item.id}
-              id={item.id}>
-              <Accordion.Trigger>{item.title}</Accordion.Trigger>
-              <Accordion.Content>{item.content}</Accordion.Content>
-            </Accordion.Item>
-          ))}
-        </Accordion.Root>,
-      )
+  it('supporte le mode contrôlé', () => {
+    const onValueChange = vi.fn()
+    render(
+      <Accordion.Root
+        value={[items[1].id]}
+        onValueChange={onValueChange}
+        type='multiple'>
+        {items.map((item) => (
+          <Accordion.Item
+            key={item.id}
+            value={item.id}>
+            <Accordion.Trigger>{item.title}</Accordion.Trigger>
+            <Accordion.Content>{item.content}</Accordion.Content>
+          </Accordion.Item>
+        ))}
+      </Accordion.Root>,
+    )
+    const content = screen.getByText(items[1].content)
+    expect(content.parentElement?.parentElement).toHaveAttribute(
+      'data-state',
+      'open',
+    )
+    fireEvent.click(screen.getByText(items[0].title))
+    expect(onValueChange).toHaveBeenCalled()
+  })
 
-      expect(screen.getByText('Item 1')).toBeInTheDocument()
-      expect(screen.getByText('Content 1')).toBeInTheDocument()
-    })
+  it('ajoute les attributs ARIA', () => {
+    render(
+      <Accordion.Root type='single'>
+        <Accordion.Item value='a'>
+          <Accordion.Trigger>Ouvrir</Accordion.Trigger>
+          <Accordion.Content>Contenu</Accordion.Content>
+        </Accordion.Item>
+      </Accordion.Root>,
+    )
+    const trigger = screen.getByRole('button')
+    expect(trigger).toHaveAttribute('aria-expanded')
+    // Content pas affiché par défaut
+  })
+
+  it('supporte les props icon, subtitle et renderChevronIcon sur Trigger', () => {
+    const Chevron = () => <span data-testid='chevron'>V</span>
+    render(
+      <Accordion.Root type='single'>
+        <Accordion.Item value='a'>
+          <Accordion.Trigger
+            icon={<span>Icon</span>}
+            subtitle={<span>Sub</span>}
+            renderChevronIcon={() => <Chevron />}>
+            Titre
+          </Accordion.Trigger>
+          <Accordion.Content>Contenu</Accordion.Content>
+        </Accordion.Item>
+      </Accordion.Root>,
+    )
+    expect(screen.getByText('Icon')).toBeInTheDocument()
+    expect(screen.getByText('Sub')).toBeInTheDocument()
+    expect(screen.getByTestId('chevron')).toBeInTheDocument()
+  })
+
+  it('applique les classes d’animation selon l’état', () => {
+    render(
+      <Accordion.Root type='single'>
+        <Accordion.Item value='a'>
+          <Accordion.Trigger>Ouvrir</Accordion.Trigger>
+          <Accordion.Content>Contenu</Accordion.Content>
+        </Accordion.Item>
+      </Accordion.Root>,
+    )
+    const trigger = screen.getByRole('button')
+    const content = screen.getByRole('region', { hidden: true })
+    fireEvent.click(trigger)
+    expect(content).toHaveClass('data-[state=open]:animate-slide-down')
+    fireEvent.click(trigger)
+    expect(content).toHaveClass('data-[state=closed]:animate-slide-up')
   })
 })

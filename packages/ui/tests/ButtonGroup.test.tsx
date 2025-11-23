@@ -1,19 +1,55 @@
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-
-import { ButtonGroup } from '../src'
+import { Button, ButtonGroup } from '../src'
 
 describe('ButtonGroup', () => {
-  it('renders correctly with children', () => {
-    render(<ButtonGroup>Hello world</ButtonGroup>)
-    expect(screen.getByText('Hello world')).toBeInTheDocument()
+  it('affiche le contenu enfant', () => {
+    render(
+      <ButtonGroup label='actions'>
+        <Button>Un</Button>
+        <Button>Deux</Button>
+      </ButtonGroup>,
+    )
+    expect(screen.getByText('Un')).toBeInTheDocument()
+    expect(screen.getByText('Deux')).toBeInTheDocument()
   })
 
-  it('has the correct data-component attribute', () => {
-    render(<ButtonGroup>Click me</ButtonGroup>)
-    expect(screen.getByText('Click me')).toHaveAttribute(
-      'data-component',
-      'ButtonGroup',
+  it('ajoute l’attribut data-component', () => {
+    render(
+      <ButtonGroup label='test'>
+        <Button>Test</Button>
+      </ButtonGroup>,
     )
+    expect(screen.getByRole('button')).toHaveAttribute(
+      'data-component',
+      'Button',
+    )
+    const group = screen.getByRole('group')
+    expect(group).toHaveAttribute('data-component', 'ButtonGroup')
+  })
+
+  it('supporte la prop aria-label', () => {
+    render(
+      <ButtonGroup
+        label='actions'
+        aria-label='actions'>
+        <Button>Action</Button>
+      </ButtonGroup>,
+    )
+    const group = screen.getByLabelText('actions')
+    expect(group).toBeInTheDocument()
+  })
+
+  it('accepte une classe personnalisée', () => {
+    render(
+      <ButtonGroup
+        label='perso'
+        className='custom-group'>
+        <Button>Perso</Button>
+      </ButtonGroup>,
+    )
+    const group = screen.getByRole('group')
+    expect(group).toHaveClass('custom-group')
   })
 })

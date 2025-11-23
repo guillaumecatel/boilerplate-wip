@@ -1,19 +1,17 @@
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-
 import { Popover } from '../src'
 
 describe('Popover', () => {
-  it('renders correctly with children', () => {
-    render(<Popover>Hello world</Popover>)
-    expect(screen.getByText('Hello world')).toBeInTheDocument()
+  it('affiche le contenu enfant', () => {
+    render(<Popover>Contenu du popover</Popover>)
+    expect(screen.getByText('Contenu du popover')).toBeInTheDocument()
   })
 
-  it('has the correct data-component attribute', () => {
-    render(<Popover>Click me</Popover>)
-    expect(screen.getByText('Click me')).toHaveAttribute(
-      'data-component',
-      'Popover',
-    )
+  it('ajoute l’attribut data-component', () => {
+    render(<Popover>Test</Popover>)
+    const popover = screen.getByText('Test').closest('[data-component]')
+    expect(popover).toHaveAttribute('data-component', 'Popover')
   })
 })

@@ -1,14 +1,22 @@
+import reactRenderer from '@astrojs/react/server.js'
 import { experimental_AstroContainer as AstroContainer } from 'astro/container'
-import { expect, test } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
 
 import { overwriteGetLocale } from '@/i18n/runtime.js'
 
 import Index from '@/pages/index.astro'
 
-test('Index page', async () => {
-  overwriteGetLocale(() => 'en')
-  const container = await AstroContainer.create()
-  const result = await container.renderToString(Index)
-  console.log(result)
-  expect(result).toContain('Simple website')
+describe('Index page', async () => {
+  let container: AstroContainer
+
+  beforeAll(async () => {
+    overwriteGetLocale(() => 'en')
+    container = await AstroContainer.create()
+    container.addServerRenderer({ renderer: reactRenderer })
+  })
+
+  it('should render the index page', async () => {
+    const result = await container.renderToString(Index)
+    expect(result).toContain('Simple Website')
+  })
 })

@@ -71,3 +71,5 @@ export * from './Stack'
 export * from './Grid'
 
 export * from './Text'
+
+export * from './Polymorphic'

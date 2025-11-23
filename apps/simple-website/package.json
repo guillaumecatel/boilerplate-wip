@@ -4,10 +4,10 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": " astro build",
     "start": "ts-node server.ts",
     "test": "vitest",
-    "typecheck": "astro check --root='./src'",
+    "typecheck": "astro sync && astro check --root='./src'",
     "astro": "astro",
     "clean": "shx rm -rf {node_modules,.turbo,dist,coverage,.astro}"
   },
