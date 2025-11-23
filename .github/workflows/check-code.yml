@@ -45,7 +45,7 @@ jobs:
         run: pnpm format
 
       - name: 🧪 Unit tests
-        run: pnpm test
+        run: pnpm test -- --coverage
 
       - name: 🏗️ Build
         run: pnpm build
