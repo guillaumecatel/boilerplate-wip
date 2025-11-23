@@ -1,3 +1,4 @@
+import '@myorg/fonts/inter.css'
 import { getLanguageEndonym, isRTLLanguage } from '@myorg/shared/intl'
 import type { Preview } from '@storybook/react-vite'
 

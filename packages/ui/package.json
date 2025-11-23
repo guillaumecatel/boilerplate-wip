@@ -23,6 +23,7 @@
     "./dist"
   ],
   "exports": {
+    "./list": "./src/List.tsx",
     "./split-panes": "./src/SplitPanes.tsx",
     "./form": "./src/Form.tsx",
     "./input-upload": "./src/InputUpload.tsx",
@@ -67,6 +68,11 @@
   },
   "publishConfig": {
     "exports": {
+      "./list": {
+        "import": "./dist/List.js",
+        "require": "./dist/List.cjs",
+        "types": "./dist/List.d.ts"
+      },
       "./split-panes": {
         "import": "./dist/SplitPanes.js",
         "require": "./dist/SplitPanes.cjs",
