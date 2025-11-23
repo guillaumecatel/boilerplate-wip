@@ -20,51 +20,15 @@
     "./dist"
   ],
   "exports": {
-    "./use-keyboard-navigation": {
-      "import": "./dist/useKeyboardNavigation.js",
-      "require": "./dist/useKeyboardNavigation.cjs",
-      "types": "./dist/useKeyboardNavigation.d.ts"
-    },
-    "./use-click-outside": {
-      "import": "./dist/useClickOutside.js",
-      "require": "./dist/useClickOutside.cjs",
-      "types": "./dist/useClickOutside.d.ts"
-    },
-    "./use-debounce": {
-      "import": "./dist/useDebounce.js",
-      "require": "./dist/useDebounce.cjs",
-      "types": "./dist/useDebounce.d.ts"
-    },
-    "./use-controlled-state": {
-      "import": "./dist/useControlledState.js",
-      "require": "./dist/useControlledState.cjs",
-      "types": "./dist/useControlledState.d.ts"
-    },
-    "./use-toggle-visibility": {
-      "import": "./dist/useToggleVisibility.js",
-      "require": "./dist/useToggleVisibility.cjs",
-      "types": "./dist/useToggleVisibility.d.ts"
-    },
-    "./use-multi-select": {
-      "import": "./dist/useMultiSelect.js",
-      "require": "./dist/useMultiSelect.cjs",
-      "types": "./dist/useMultiSelect.d.ts"
-    },
-    "./use-pagination": {
-      "import": "./dist/usePagination.js",
-      "require": "./dist/usePagination.cjs",
-      "types": "./dist/usePagination.d.ts"
-    },
-    "./use-counter": {
-      "import": "./dist/useCounter.js",
-      "require": "./dist/useCounter.cjs",
-      "types": "./dist/useCounter.d.ts"
-    },
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
-    }
+    "./use-keyboard-navigation": "./src/useKeyboardNavigation.tsx",
+    "./use-click-outside": "./src/useClickOutside.tsx",
+    "./use-debounce": "./src/useDebounce.tsx",
+    "./use-controlled-state": "./src/useControlledState.tsx",
+    "./use-toggle-visibility": "./src/useToggleVisibility.tsx",
+    "./use-multi-select": "./src/useMultiSelect.tsx",
+    "./use-pagination": "./src/usePagination.tsx",
+    "./use-counter": "./src/useCounter.tsx",
+    ".": "./src/index.ts"
   },
   "publishConfig": {
     "exports": {
