@@ -1,42 +1,17 @@
-import { Button, Input, InputField, Select, Text, Textarea } from '@myorg/ui'
+import {
+  Button,
+  Form,
+  Input,
+  InputField,
+  Select,
+  Text,
+  Textarea,
+} from '@myorg/ui'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { type FormEvent, useState } from 'react'
+import { useState } from 'react'
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  })
-  const [errors, setErrors] = useState<Record<string, string>>({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setErrors({})
-
-    const newErrors: Record<string, string> = {}
-    if (!formData.name) newErrors.name = 'Name is required'
-    if (!formData.email) newErrors.email = 'Email is required'
-    else if (!formData.email.includes('@'))
-      newErrors.email = 'Invalid email address'
-    if (!formData.subject) newErrors.subject = 'Subject is required'
-    if (!formData.message) newErrors.message = 'Message is required'
-    else if (formData.message.length < 10)
-      newErrors.message = 'Message must be at least 10 characters'
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
-    }
-
-    setIsSubmitting(true)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-  }
 
   if (isSubmitted) {
     return (
@@ -60,10 +35,7 @@ const ContactForm = () => {
             </Text>
             <Button
               variant='primary'
-              onClick={() => {
-                setIsSubmitted(false)
-                setFormData({ name: '', email: '', subject: '', message: '' })
-              }}>
+              onClick={() => setIsSubmitted(false)}>
               Send another message
             </Button>
           </div>
@@ -91,115 +63,156 @@ const ContactForm = () => {
           </Text>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className='border-base-300 bg-base-50 dark:border-base-700 dark:bg-base-950 flex flex-col gap-6 rounded-xl border p-8 shadow-lg'>
-          <div className='grid gap-5 md:grid-cols-2'>
-            <InputField
-              label='Your name'
-              htmlFor='contact-name'
-              error={errors.name}
-              required>
-              <Input
-                type='text'
-                id='contact-name'
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                placeholder='John Doe'
-                error={!!errors.name}
-                disabled={isSubmitting}
-              />
-            </InputField>
+        <Form
+          initialValues={{
+            name: '',
+            email: '',
+            subject: '',
+            message: '',
+          }}
+          validationSchema={{
+            name: { required: 'Name is required' },
+            email: {
+              required: 'Email is required',
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: 'Invalid email address',
+              },
+            },
+            subject: { required: 'Subject is required' },
+            message: {
+              required: 'Message is required',
+              minLength: {
+                value: 10,
+                message: 'Message must be at least 10 characters',
+              },
+            },
+          }}
+          onSubmit={async () => {
+            await new Promise((resolve) => setTimeout(resolve, 1500))
+            setIsSubmitted(true)
+          }}
+          spacing='lg'
+          className='border-base-300 bg-base-50 dark:border-base-700 dark:bg-base-950 rounded-xl border p-8 shadow-lg'>
+          {({
+            values,
+            errors,
+            touched,
+            setFieldValue,
+            setFieldTouched,
+            isSubmitting,
+          }) => (
+            <>
+              <div className='grid gap-5 md:grid-cols-2'>
+                <InputField
+                  label='Your name'
+                  htmlFor='contact-name'
+                  error={touched.name ? errors.name : undefined}
+                  required>
+                  <Input
+                    type='text'
+                    id='contact-name'
+                    value={(values.name as string) || ''}
+                    onChange={(e) => setFieldValue('name', e.target.value)}
+                    onBlur={() => setFieldTouched('name', true)}
+                    placeholder='John Doe'
+                    error={!!(touched.name && errors.name)}
+                    disabled={isSubmitting}
+                  />
+                </InputField>
 
-            <InputField
-              label='Email address'
-              htmlFor='contact-email'
-              error={errors.email}
-              required>
-              <Input
-                type='email'
-                id='contact-email'
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                placeholder='you@example.com'
-                error={!!errors.email}
-                disabled={isSubmitting}
-              />
-            </InputField>
-          </div>
+                <InputField
+                  label='Email address'
+                  htmlFor='contact-email'
+                  error={touched.email ? errors.email : undefined}
+                  required>
+                  <Input
+                    type='email'
+                    id='contact-email'
+                    value={(values.email as string) || ''}
+                    onChange={(e) => setFieldValue('email', e.target.value)}
+                    onBlur={() => setFieldTouched('email', true)}
+                    placeholder='you@example.com'
+                    error={!!(touched.email && errors.email)}
+                    disabled={isSubmitting}
+                  />
+                </InputField>
+              </div>
 
-          <InputField
-            label='Subject'
-            htmlFor='contact-subject'
-            error={errors.subject}
-            required>
-            <Select.Root
-              value={formData.subject}
-              onValueChange={(value: string) =>
-                setFormData({ ...formData, subject: value })
-              }
-              disabled={isSubmitting}>
-              <Select.Trigger
-                error={!!errors.subject}
-                id='contact-subject'>
-                <Select.Value placeholder='Select a subject' />
-              </Select.Trigger>
-              <Select.Content>
-                <Select.Item value='general'>General inquiry</Select.Item>
-                <Select.Item value='support'>Technical support</Select.Item>
-                <Select.Item value='billing'>Billing question</Select.Item>
-                <Select.Item value='feature'>Feature request</Select.Item>
-                <Select.Item value='bug'>Bug report</Select.Item>
-                <Select.Item value='other'>Other</Select.Item>
-              </Select.Content>
-            </Select.Root>
-          </InputField>
+              <InputField
+                label='Subject'
+                htmlFor='contact-subject'
+                error={touched.subject ? errors.subject : undefined}
+                required>
+                <Select.Root
+                  value={(values.subject as string) || ''}
+                  onValueChange={(value: string) =>
+                    setFieldValue('subject', value)
+                  }
+                  disabled={isSubmitting}>
+                  <Select.Trigger
+                    error={!!(touched.subject && errors.subject)}
+                    id='contact-subject'
+                    onBlur={() => setFieldTouched('subject', true)}>
+                    <Select.Value placeholder='Select a subject' />
+                  </Select.Trigger>
+                  <Select.Content
+                    onCloseAutoFocus={() => setFieldTouched('subject', true)}>
+                    <Select.Item value='general'>General inquiry</Select.Item>
+                    <Select.Item value='support'>Technical support</Select.Item>
+                    <Select.Item value='billing'>Billing question</Select.Item>
+                    <Select.Item value='feature'>Feature request</Select.Item>
+                    <Select.Item value='bug'>Bug report</Select.Item>
+                    <Select.Item value='other'>Other</Select.Item>
+                  </Select.Content>
+                </Select.Root>
+              </InputField>
 
-          <InputField
-            label='Message'
-            htmlFor='contact-message'
-            description='Please provide as much detail as possible'
-            error={errors.message}
-            required>
-            <Textarea
-              id='contact-message'
-              value={formData.message}
-              onChange={(e) =>
-                setFormData({ ...formData, message: e.target.value })
-              }
-              placeholder='Tell us more about your inquiry...'
-              rows={6}
-              error={!!errors.message}
-              disabled={isSubmitting}
-            />
-          </InputField>
+              <InputField
+                label='Message'
+                htmlFor='contact-message'
+                description='Please provide as much detail as possible'
+                error={touched.message ? errors.message : undefined}
+                required>
+                <Textarea
+                  id='contact-message'
+                  value={(values.message as string) || ''}
+                  onChange={(e) => setFieldValue('message', e.target.value)}
+                  onBlur={() => setFieldTouched('message', true)}
+                  placeholder='Tell us more about your inquiry...'
+                  rows={6}
+                  error={!!(touched.message && errors.message)}
+                  disabled={isSubmitting}
+                />
+              </InputField>
 
-          <div className='flex gap-4'>
-            <Button
-              type='button'
-              variant='secondary'
-              size='lg'
-              className='flex-1'
-              disabled={isSubmitting}
-              onClick={() =>
-                setFormData({ name: '', email: '', subject: '', message: '' })
-              }>
-              Clear
-            </Button>
-            <Button
-              type='submit'
-              variant='primary'
-              size='lg'
-              className='flex-1'
-              disabled={isSubmitting}>
-              {isSubmitting ? 'Sending...' : 'Send message'}
-            </Button>
-          </div>
-        </form>
+              <div className='flex gap-4'>
+                <Button
+                  type='button'
+                  variant='secondary'
+                  size='lg'
+                  className='flex-1'
+                  disabled={isSubmitting}
+                  onClick={() => {
+                    setFieldValue('name', '')
+                    setFieldValue('email', '')
+                    setFieldValue('subject', '')
+                    setFieldValue('message', '')
+                  }}>
+                  Clear
+                </Button>
+                <Button
+                  type='submit'
+                  variant='primary'
+                  size='lg'
+                  className='flex-1'
+                  disabled={isSubmitting}>
+                  {isSubmitting ? 'Sending...' : 'Send message'}
+                </Button>
+              </div>
+            </>
+          )}
+        </Form>
       </div>
     </div>
   )
@@ -214,7 +227,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A contact form with name, email, subject dropdown, and message textarea. Features a success screen after submission with the ability to send another message.',
+          'A contact form using Form controller with InputField components. Includes name, email, subject dropdown, and message textarea with validation. Features a success screen after submission with the ability to send another message.',
       },
     },
   },

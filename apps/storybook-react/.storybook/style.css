@@ -68,28 +68,28 @@
   --text-body-large: calc(var(--text-body-medium) * var(--font-scale));
   --text-body-large--line-height: round(
     up,
-    var(--text-body-large),
+    calc(var(--text-body-large) * 1.2),
     var(--font-baseline)
   );
 
   --text-body-medium: var(--base-font-size);
   --text-body-medium--line-height: round(
     up,
-    var(--text-body-medium),
+    calc(var(--text-body-medium) * 1.5),
     var(--font-baseline)
   );
 
   --text-body-small: calc(var(--text-body-medium) / var(--font-scale));
   --text-body-small--line-height: round(
     up,
-    var(--text-body-small),
+    calc(var(--text-body-small) * 1.5),
     var(--font-baseline)
   );
 
   --text-caption: calc(var(--text-body-small) / var(--font-scale));
   --text-caption--line-height: round(
     up,
-    var(--text-caption),
+    calc(var(--text-caption) * 1.5),
     var(--font-baseline)
   );
 

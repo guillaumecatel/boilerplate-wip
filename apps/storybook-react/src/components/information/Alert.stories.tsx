@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Alert } from '@myorg/ui'
 
 const meta = {
-  title: 'Components/Messaging/Alert',
+  title: 'Components/Information/Alert',
   component: Alert,
   tags: ['autodocs'],
   parameters: {

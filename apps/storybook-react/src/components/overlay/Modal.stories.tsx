@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Modal } from '@myorg/ui'
 
 const meta = {
-  title: 'Components/Modal',
+  title: 'Components/Overlay/Modal',
   component: Modal,
   tags: ['autodocs'],
   args: {

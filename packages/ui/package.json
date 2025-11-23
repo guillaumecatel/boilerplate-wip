@@ -23,6 +23,15 @@
     "./dist"
   ],
   "exports": {
+    "./split-panes": "./src/SplitPanes.tsx",
+    "./form": "./src/Form.tsx",
+    "./input-upload": "./src/InputUpload.tsx",
+    "./tooltip": "./src/Tooltip.tsx",
+    "./tabs": "./src/Tabs.tsx",
+    "./input-search": "./src/InputSearch.tsx",
+    "./input-one-time-password": "./src/InputOneTimePassword.tsx",
+    "./input-password": "./src/InputPassword.tsx",
+    "./input-quantity": "./src/InputQuantity.tsx",
     "./switch": "./src/Switch.tsx",
     "./toggle-group": "./src/ToggleGroup.tsx",
     "./input": "./src/Input.tsx",
@@ -58,6 +67,51 @@
   },
   "publishConfig": {
     "exports": {
+      "./split-panes": {
+        "import": "./dist/SplitPanes.js",
+        "require": "./dist/SplitPanes.cjs",
+        "types": "./dist/SplitPanes.d.ts"
+      },
+      "./form": {
+        "import": "./dist/Form.js",
+        "require": "./dist/Form.cjs",
+        "types": "./dist/Form.d.ts"
+      },
+      "./input-upload": {
+        "import": "./dist/InputUpload.js",
+        "require": "./dist/InputUpload.cjs",
+        "types": "./dist/InputUpload.d.ts"
+      },
+      "./tooltip": {
+        "import": "./dist/Tooltip.js",
+        "require": "./dist/Tooltip.cjs",
+        "types": "./dist/Tooltip.d.ts"
+      },
+      "./tabs": {
+        "import": "./dist/Tabs.js",
+        "require": "./dist/Tabs.cjs",
+        "types": "./dist/Tabs.d.ts"
+      },
+      "./input-search": {
+        "import": "./dist/InputSearch.js",
+        "require": "./dist/InputSearch.cjs",
+        "types": "./dist/InputSearch.d.ts"
+      },
+      "./input-one-time-password": {
+        "import": "./dist/InputOneTimePassword.js",
+        "require": "./dist/InputOneTimePassword.cjs",
+        "types": "./dist/InputOneTimePassword.d.ts"
+      },
+      "./input-password": {
+        "import": "./dist/InputPassword.js",
+        "require": "./dist/InputPassword.cjs",
+        "types": "./dist/InputPassword.d.ts"
+      },
+      "./input-quantity": {
+        "import": "./dist/InputQuantity.js",
+        "require": "./dist/InputQuantity.cjs",
+        "types": "./dist/InputQuantity.d.ts"
+      },
       "./switch": {
         "import": "./dist/Switch.js",
         "require": "./dist/Switch.cjs",

@@ -2,7 +2,7 @@ import { Button, Popover, Text } from '@myorg/ui'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 const meta = {
-  title: 'Components/Messaging/Popover',
+  title: 'Components/Overlay/Popover',
   component: Popover.Root,
   tags: ['autodocs'],
   argTypes: {

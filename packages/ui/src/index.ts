@@ -14,15 +14,9 @@ export * from './DefinitionList'
 
 export * from './Divider'
 
-export * from './Dropdown'
-
-export * from './FileUploader'
-
 export * from './Modal'
 
 export * from './Pagination'
-
-export * from './QuantityField'
 
 export * from './Select'
 
@@ -37,8 +31,6 @@ export * from './Toggle'
 export * from './Accordion'
 
 export * from './Text'
-
-export * from './Header'
 
 export * from './Polymorphic'
 
@@ -55,3 +47,21 @@ export * from './Input'
 export * from './ToggleGroup'
 
 export * from './Switch'
+
+export * from './InputQuantity'
+
+export * from './InputPassword'
+
+export * from './InputOneTimePassword'
+
+export * from './InputSearch'
+
+export * from './Tabs'
+
+export * from './Tooltip'
+
+export * from './InputUpload'
+
+export * from './Form'
+
+export * from './SplitPanes'

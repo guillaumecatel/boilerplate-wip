@@ -1,35 +1,15 @@
-import { Button, Checkbox, Input, InputField, Label, Text } from '@myorg/ui'
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  InputField,
+  Label,
+  Text,
+} from '@myorg/ui'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { type FormEvent, useState } from 'react'
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [rememberMe, setRememberMe] = useState(false)
-  const [errors, setErrors] = useState<Record<string, string>>({})
-  const [isLoading, setIsLoading] = useState(false)
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setErrors({})
-
-    const newErrors: Record<string, string> = {}
-    if (!email) newErrors.email = 'Email is required'
-    else if (!email.includes('@'))
-      newErrors.email = 'Please enter a valid email'
-    if (!password) newErrors.password = 'Password is required'
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
-    }
-
-    setIsLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsLoading(false)
-    alert(`Login successful!\nEmail: ${email}\nRemember me: ${rememberMe}`)
-  }
-
   return (
     <div className='bg-base-100 dark:bg-base-900 flex min-h-[600px] items-center justify-center'>
       <div className='w-full max-w-md'>
@@ -50,87 +30,124 @@ const LoginForm = () => {
             </Text>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className='flex flex-col gap-5'>
-            <InputField
-              label='Email address'
-              htmlFor='login-email'
-              error={errors.email}
-              required>
-              <Input
-                type='email'
-                id='login-email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder='you@example.com'
-                error={!!errors.email}
-                disabled={isLoading}
-              />
-            </InputField>
+          <Form
+            initialValues={{
+              email: '',
+              password: '',
+              rememberMe: false,
+            }}
+            validationSchema={{
+              email: {
+                required: 'Email is required',
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: 'Please enter a valid email',
+                },
+              },
+              password: {
+                required: 'Password is required',
+              },
+            }}
+            onSubmit={async (values) => {
+              await new Promise((resolve) => setTimeout(resolve, 1500))
+              alert(
+                `Login successful!\nEmail: ${values.email}\nRemember me: ${values.rememberMe}`,
+              )
+            }}
+            spacing='lg'>
+            {({
+              values,
+              errors,
+              touched,
+              setFieldValue,
+              setFieldTouched,
+              isSubmitting,
+            }) => (
+              <>
+                <InputField
+                  label='Email address'
+                  htmlFor='login-email'
+                  error={touched.email ? errors.email : undefined}
+                  required>
+                  <Input
+                    type='email'
+                    id='login-email'
+                    value={(values.email as string) || ''}
+                    onChange={(e) => setFieldValue('email', e.target.value)}
+                    onBlur={() => setFieldTouched('email', true)}
+                    placeholder='you@example.com'
+                    error={!!(touched.email && errors.email)}
+                    disabled={isSubmitting}
+                  />
+                </InputField>
 
-            <InputField
-              label='Password'
-              htmlFor='login-password'
-              error={errors.password}
-              required>
-              <Input
-                type='password'
-                id='login-password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder='••••••••'
-                error={!!errors.password}
-                disabled={isLoading}
-              />
-            </InputField>
+                <InputField
+                  label='Password'
+                  htmlFor='login-password'
+                  error={touched.password ? errors.password : undefined}
+                  required>
+                  <Input
+                    type='password'
+                    id='login-password'
+                    value={(values.password as string) || ''}
+                    onChange={(e) => setFieldValue('password', e.target.value)}
+                    onBlur={() => setFieldTouched('password', true)}
+                    placeholder='••••••••'
+                    error={!!(touched.password && errors.password)}
+                    disabled={isSubmitting}
+                  />
+                </InputField>
 
-            <div className='flex items-center justify-between'>
-              <div className='flex items-center gap-2'>
-                <Checkbox
-                  id='remember-me'
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  disabled={isLoading}
-                />
-                <Label htmlFor='remember-me'>Remember me</Label>
-              </div>
-              <Button
-                as='a'
-                href='#'
-                variant='ghost'
-                size='sm'
-                type='button'
-                disabled={isLoading}>
-                Forgot password?
-              </Button>
-            </div>
+                <div className='flex items-center justify-between'>
+                  <div className='flex items-center gap-2'>
+                    <Checkbox
+                      id='remember-me'
+                      checked={values.rememberMe as boolean}
+                      onChange={(e) =>
+                        setFieldValue('rememberMe', e.target.checked)
+                      }
+                      disabled={isSubmitting}
+                    />
+                    <Label htmlFor='remember-me'>Remember me</Label>
+                  </div>
+                  <Button
+                    as='a'
+                    href='#'
+                    variant='ghost'
+                    size='sm'
+                    type='button'
+                    disabled={isSubmitting}>
+                    Forgot password?
+                  </Button>
+                </div>
 
-            <Button
-              type='submit'
-              variant='primary'
-              size='lg'
-              className='w-full'
-              disabled={isLoading}>
-              {isLoading ? 'Signing in...' : 'Sign in'}
-            </Button>
+                <Button
+                  type='submit'
+                  variant='primary'
+                  size='lg'
+                  className='w-full'
+                  disabled={isSubmitting}>
+                  {isSubmitting ? 'Signing in...' : 'Sign in'}
+                </Button>
 
-            <Text
-              variant='body-small'
-              color='secondary'
-              className='text-center'>
-              Don't have an account?{' '}
-              <Button
-                as='a'
-                href='#'
-                variant='ghost'
-                size='sm'
-                type='button'
-                disabled={isLoading}>
-                Sign up
-              </Button>
-            </Text>
-          </form>
+                <Text
+                  variant='body-small'
+                  color='secondary'
+                  className='text-center'>
+                  Don't have an account?{' '}
+                  <Button
+                    as='a'
+                    href='#'
+                    variant='ghost'
+                    size='sm'
+                    type='button'
+                    disabled={isSubmitting}>
+                    Sign up
+                  </Button>
+                </Text>
+              </>
+            )}
+          </Form>
         </div>
       </div>
     </div>
