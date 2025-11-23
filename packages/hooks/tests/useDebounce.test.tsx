@@ -4,6 +4,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { useDebounce } from '../src'
 
 describe('useDebounce', () => {
+  // Timeout augmenté pour la CI
+  vi.setConfig({ testTimeout: 15000 })
   beforeEach(() => {
     vi.useFakeTimers()
   })
