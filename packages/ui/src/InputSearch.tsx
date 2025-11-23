@@ -1,5 +1,12 @@
+import { useDebounce } from '@myorg/hooks'
 import { cva, cx, type VariantProps } from 'class-variance-authority'
-import { forwardRef, type ComponentPropsWithoutRef } from 'react'
+import {
+  forwardRef,
+  useEffect,
+  useState,
+  type ChangeEvent,
+  type ComponentPropsWithoutRef,
+} from 'react'
 
 // Search Icon
 const SearchIcon = ({ size = 16 }: { size?: number }) => (
@@ -141,6 +148,15 @@ export interface InputSearchProps
   showClearButton?: boolean
   showIcon?: boolean
   iconPosition?: 'start' | 'end' | 'none'
+  /**
+   * Debounce delay in milliseconds
+   * @default 300
+   */
+  debounceDelay?: number
+  /**
+   * Callback when debounced value changes
+   */
+  onDebouncedValueChange?: (value: string) => void
 }
 
 export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
@@ -152,11 +168,42 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
       showIcon = true,
       onClear,
       showClearButton = true,
-      value,
+      value: controlledValue,
+      onChange,
+      debounceDelay = 300,
+      onDebouncedValueChange,
       ...props
     },
     ref,
   ) => {
+    const [internalValue, setInternalValue] = useState<string>('')
+    const value =
+      controlledValue !== undefined ? controlledValue : internalValue
+
+    // Debounce the search value
+    const debouncedValue = useDebounce(String(value), { delay: debounceDelay })
+
+    // Call callback when debounced value changes
+    useEffect(() => {
+      if (onDebouncedValueChange) {
+        onDebouncedValueChange(debouncedValue)
+      }
+    }, [debouncedValue, onDebouncedValueChange])
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      if (controlledValue === undefined) {
+        setInternalValue(e.target.value)
+      }
+      onChange?.(e)
+    }
+
+    const handleClear = () => {
+      if (controlledValue === undefined) {
+        setInternalValue('')
+      }
+      onClear?.()
+    }
+
     const iconSize = size === 'sm' ? 14 : size === 'lg' ? 18 : 16
 
     const showClear = showClearButton && value && String(value).length > 0
@@ -176,6 +223,7 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
           ref={ref}
           type='search'
           value={value}
+          onChange={handleChange}
           className={cx(
             inputSearchInputVariants({
               size,
@@ -185,10 +233,10 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
           )}
           {...props}
         />
-        {showClear && onClear && (
+        {showClear && (
           <button
             type='button'
-            onClick={onClear}
+            onClick={handleClear}
             className={cx(
               inputSearchClearButtonVariants({
                 size,

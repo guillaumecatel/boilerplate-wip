@@ -3,7 +3,7 @@ import type { LabelHTMLAttributes, ReactNode } from 'react'
 import { Text } from './Text'
 
 const labelVariants = cva(
-  'font-medium transition-colors select-none cursor-pointer',
+  ['font-medium', 'transition-colors', 'select-none', 'cursor-pointer'],
   {
     variants: {
       size: {
@@ -12,17 +12,17 @@ const labelVariants = cva(
         lg: 'text-lg',
       },
       variant: {
-        default: 'text-base-700 dark:text-base-300',
-        muted: 'text-base-500 dark:text-base-400',
-        accent: 'text-accent-700 dark:text-accent-300',
-        destructive: 'text-red-700 dark:text-red-300',
+        default: ['text-base-700', 'dark:text-base-300'],
+        muted: ['text-base-500', 'dark:text-base-400'],
+        accent: ['text-accent-700', 'dark:text-accent-300'],
+        destructive: ['text-red-700', 'dark:text-red-300'],
       },
       required: {
         true: '',
         false: '',
       },
       disabled: {
-        true: 'cursor-not-allowed opacity-50',
+        true: ['cursor-not-allowed', 'opacity-50'],
         false: '',
       },
     },

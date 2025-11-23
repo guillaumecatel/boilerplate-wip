@@ -1,24 +1,7 @@
+import { usePagination } from '@myorg/hooks'
 import { cva, cx, type VariantProps } from 'class-variance-authority'
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
-
-const paginationVariants = cva('flex items-center gap-1', {
-  variants: {
-    align: {
-      left: 'justify-start',
-      center: 'justify-center',
-      right: 'justify-end',
-    },
-    size: {
-      sm: 'gap-0.5',
-      md: 'gap-1',
-      lg: 'gap-1.5',
-    },
-  },
-  defaultVariants: {
-    align: 'center',
-    size: 'md',
-  },
-})
+import { Stack } from './Stack'
 
 const paginationItemVariants = cva(
   'inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
@@ -66,9 +49,7 @@ const paginationEllipsisVariants = cva(
   },
 )
 
-export interface PaginationProps
-  extends ComponentPropsWithoutRef<'nav'>,
-    VariantProps<typeof paginationVariants> {
+export interface PaginationProps extends ComponentPropsWithoutRef<'nav'> {
   currentPage: number
   totalPages: number
   onPageChange?: (page: number) => void
@@ -79,6 +60,8 @@ export interface PaginationProps
   disabled?: boolean
   itemSize?: VariantProps<typeof paginationItemVariants>['size']
   itemShape?: VariantProps<typeof paginationItemVariants>['shape']
+  align?: 'left' | 'center' | 'right'
+  size?: 'sm' | 'md' | 'lg'
 }
 
 const ChevronLeftIcon = () => (
@@ -137,69 +120,6 @@ const ChevronsRightIcon = () => (
   </svg>
 )
 
-const getPageRange = (
-  currentPage: number,
-  totalPages: number,
-  siblingCount: number,
-  boundaryCount: number,
-): (number | 'ellipsis')[] => {
-  const totalNumbers = siblingCount * 2 + 3 + boundaryCount * 2
-
-  if (totalPages <= totalNumbers) {
-    return Array.from({ length: totalPages }, (_, i) => i + 1)
-  }
-
-  const leftSiblingIndex = Math.max(
-    currentPage - siblingCount,
-    boundaryCount + 1,
-  )
-  const rightSiblingIndex = Math.min(
-    currentPage + siblingCount,
-    totalPages - boundaryCount,
-  )
-
-  const shouldShowLeftEllipsis = leftSiblingIndex > boundaryCount + 2
-  const shouldShowRightEllipsis =
-    rightSiblingIndex < totalPages - boundaryCount - 1
-
-  const items: (number | 'ellipsis')[] = []
-
-  // First pages
-  for (let i = 1; i <= boundaryCount; i++) {
-    items.push(i)
-  }
-
-  // Left ellipsis
-  if (shouldShowLeftEllipsis) {
-    items.push('ellipsis')
-  } else if (boundaryCount + 1 < leftSiblingIndex) {
-    for (let i = boundaryCount + 1; i < leftSiblingIndex; i++) {
-      items.push(i)
-    }
-  }
-
-  // Sibling pages
-  for (let i = leftSiblingIndex; i <= rightSiblingIndex; i++) {
-    items.push(i)
-  }
-
-  // Right ellipsis
-  if (shouldShowRightEllipsis) {
-    items.push('ellipsis')
-  } else if (rightSiblingIndex < totalPages - boundaryCount) {
-    for (let i = rightSiblingIndex + 1; i <= totalPages - boundaryCount; i++) {
-      items.push(i)
-    }
-  }
-
-  // Last pages
-  for (let i = totalPages - boundaryCount + 1; i <= totalPages; i++) {
-    items.push(i)
-  }
-
-  return items
-}
-
 export const Pagination = forwardRef<HTMLElement, PaginationProps>(
   (
     {
@@ -220,18 +140,28 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     },
     ref,
   ) => {
-    const handlePageChange = (page: number) => {
-      if (page < 1 || page > totalPages || disabled) return
-      onPageChange?.(page)
-    }
-
-    const pages = getPageRange(
+    const {
+      pages,
+      goToPage,
+      goToNext,
+      goToPrev,
+      goToFirst,
+      goToLast,
+      canGoNext,
+      canGoPrev,
+    } = usePagination({
       currentPage,
       totalPages,
       siblingCount,
       boundaryCount,
-    )
+      onPageChange,
+    })
+
     const effectiveItemSize = itemSize || size
+
+    const gapSize = size === 'sm' ? 'xs' : size === 'lg' ? 'sm' : 'xs'
+    const justifyContent =
+      align === 'left' ? 'start' : align === 'right' ? 'end' : 'center'
 
     return (
       <nav
@@ -240,13 +170,19 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
         aria-label='Pagination'
         data-component='Pagination'
         {...props}>
-        <ul className={cx(paginationVariants({ align, size }), className)}>
+        <Stack
+          as='ul'
+          direction='row'
+          align='center'
+          justify={justifyContent}
+          gap={gapSize}
+          className={className}>
           {showFirstLast && (
             <li>
               <button
                 type='button'
-                onClick={() => handlePageChange(1)}
-                disabled={disabled || currentPage === 1}
+                onClick={goToFirst}
+                disabled={disabled || !canGoPrev}
                 className={cx(
                   paginationItemVariants({
                     variant: 'ghost',
@@ -264,8 +200,8 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
             <li>
               <button
                 type='button'
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={disabled || currentPage === 1}
+                onClick={goToPrev}
+                disabled={disabled || !canGoPrev}
                 className={cx(
                   paginationItemVariants({
                     variant: 'ghost',
@@ -293,7 +229,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
               <li key={page}>
                 <button
                   type='button'
-                  onClick={() => handlePageChange(page)}
+                  onClick={() => goToPage(page)}
                   disabled={disabled}
                   className={cx(
                     paginationItemVariants({
@@ -314,8 +250,8 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
             <li>
               <button
                 type='button'
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={disabled || currentPage === totalPages}
+                onClick={goToNext}
+                disabled={disabled || !canGoNext}
                 className={cx(
                   paginationItemVariants({
                     variant: 'ghost',
@@ -333,8 +269,8 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
             <li>
               <button
                 type='button'
-                onClick={() => handlePageChange(totalPages)}
-                disabled={disabled || currentPage === totalPages}
+                onClick={goToLast}
+                disabled={disabled || !canGoNext}
                 className={cx(
                   paginationItemVariants({
                     variant: 'ghost',
@@ -347,7 +283,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
               </button>
             </li>
           )}
-        </ul>
+        </Stack>
       </nav>
     )
   },

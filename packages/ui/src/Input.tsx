@@ -1,32 +1,35 @@
+import { useControlledState } from '@myorg/hooks'
 import { cva, type VariantProps } from 'class-variance-authority'
-import type { InputHTMLAttributes } from 'react'
+import type { ChangeEvent, InputHTMLAttributes } from 'react'
 
 const inputVariants = cva(
   [
-    'w-full rounded-lg border transition-colors duration-200',
-    'bg-white dark:bg-base-900',
-    'text-base-900 dark:text-base-50',
-    'placeholder:text-base-400 dark:placeholder:text-base-500',
-    'focus:outline-none focus:ring-2 focus:ring-offset-0',
-    'disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-base-50 dark:disabled:bg-base-800',
+    'w-full rounded-[var(--control-border-radius)] border-[var(--control-border-width)] transition-colors duration-200',
+    'bg-[var(--control-background-color-default)]',
+    'text-[var(--control-foreground-color-default)]',
+    'placeholder:text-[var(--control-placeholder-color-default)]',
+    'focus:outline-none focus:ring-[var(--control-focus-ring-width)] focus:ring-offset-[var(--control-focus-ring-offset)]',
+    'disabled:cursor-not-allowed disabled:opacity-[var(--control-opacity-disabled)] disabled:bg-[var(--control-background-color-disabled)]',
   ],
   {
     variants: {
       size: {
-        sm: 'h-8 px-3 text-sm',
-        md: 'h-10 px-4 text-base',
-        lg: 'h-12 px-5 text-lg',
+        sm: 'h-[var(--control-height-sm)] px-[var(--control-padding-x-sm)] text-sm',
+        md: 'h-[var(--control-height-md)] px-[var(--control-padding-x-md)] text-base',
+        lg: 'h-[var(--control-height-lg)] px-[var(--control-padding-x-lg)] text-lg',
       },
       variant: {
         default: [
-          'border-base-300 dark:border-base-700',
-          'focus:border-accent-500 focus:ring-accent-500/20',
-          'hover:border-base-400 dark:hover:border-base-600',
+          'border-[var(--control-border-color-default)]',
+          'focus:border-[var(--control-border-color-focus)]',
+          'focus:ring-[var(--control-focus-ring-color)]/[var(--control-focus-ring-opacity)]',
+          'hover:border-[var(--control-border-color-hover)]',
         ],
         error: [
-          'border-red-500 dark:border-red-600',
-          'focus:border-red-500 focus:ring-red-500/20',
-          'text-red-900 dark:text-red-100',
+          'border-[var(--control-border-color-error)]',
+          'focus:border-[var(--control-border-color-error)]',
+          'focus:ring-[var(--control-focus-ring-color-error)]/[var(--control-focus-ring-opacity)]',
+          'text-[var(--control-foreground-color-error)]',
         ],
       },
     },
@@ -47,12 +50,30 @@ export const Input = ({
   size = 'md',
   variant,
   error,
+  value: valueProp,
+  defaultValue = '',
+  onChange: onChangeProp,
   className,
   ...props
 }: InputProps) => {
+  const { value, setValue } = useControlledState<string>({
+    value: valueProp as string | undefined,
+    defaultValue: defaultValue as string,
+    onChange: (newValue) => {
+      if (onChangeProp) {
+        const event = {
+          target: { value: newValue },
+        } as ChangeEvent<HTMLInputElement>
+        onChangeProp(event)
+      }
+    },
+  })
+
   return (
     <input
       data-component='Input'
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
       className={inputVariants({
         size,
         variant: error ? 'error' : variant,

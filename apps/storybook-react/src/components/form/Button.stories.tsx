@@ -1,6 +1,7 @@
 import { Button } from '@myorg/ui'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Magnet } from 'lucide-react'
+
 import { m } from '~/.storybook/i18n/messages'
 
 const meta = {

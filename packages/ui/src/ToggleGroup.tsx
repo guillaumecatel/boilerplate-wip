@@ -1,16 +1,12 @@
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva, cx, type VariantProps } from 'class-variance-authority'
 import { ToggleGroup as RadixToggleGroup } from 'radix-ui'
 import type { ComponentPropsWithoutRef, ElementRef } from 'react'
 import { forwardRef } from 'react'
 
-const toggleGroupVariants = cva(['inline-flex'], {
+const attachedVariants = cva([], {
   variants: {
     orientation: {
-      horizontal: 'flex-row',
-      vertical: 'flex-col',
-    },
-    attached: {
-      true: [
+      horizontal: [
         '[&>button]:rounded-none',
         '[&>button:first-child]:rounded-l-full',
         '[&>button:last-child]:rounded-r-full',
@@ -19,36 +15,29 @@ const toggleGroupVariants = cva(['inline-flex'], {
         '[&>button:focus-visible]:z-10',
         '[&>button[data-state=on]]:z-10',
       ],
-      false: 'gap-2',
-    },
-  },
-  compoundVariants: [
-    {
-      orientation: 'vertical',
-      attached: true,
-      className: [
-        '[&>button:first-child]:!rounded-tl-full',
-        '[&>button:first-child]:!rounded-tr-full',
-        '[&>button:first-child]:!rounded-bl-none',
-        '[&>button:first-child]:!rounded-br-none',
-        '[&>button:last-child]:!rounded-tl-none',
-        '[&>button:last-child]:!rounded-tr-none',
-        '[&>button:last-child]:!rounded-bl-full',
-        '[&>button:last-child]:!rounded-br-full',
-        '[&>button:not(:first-child)]:!-mt-px',
-        '[&>button:not(:first-child)]:!ml-0',
+      vertical: [
+        '[&>button]:rounded-none',
+        '[&>button:first-child]:rounded-t-full',
+        '[&>button:last-child]:rounded-b-full',
+        '[&>button:not(:first-child)]:-mt-px',
+        '[&>button:hover]:z-10',
+        '[&>button:focus-visible]:z-10',
+        '[&>button[data-state=on]]:z-10',
       ],
     },
-  ],
+  },
   defaultVariants: {
     orientation: 'horizontal',
-    attached: true,
   },
 })
 
-interface BaseToggleGroupProps
-  extends VariantProps<typeof toggleGroupVariants> {
+interface BaseToggleGroupProps extends VariantProps<typeof attachedVariants> {
   className?: string
+  /**
+   * Whether toggles are attached together (no gap)
+   * @default true
+   */
+  attached?: boolean
 }
 
 export interface ToggleGroupSingleProps
@@ -80,13 +69,23 @@ export type ToggleGroupProps = ToggleGroupSingleProps | ToggleGroupMultipleProps
 export const ToggleGroup = forwardRef<
   ElementRef<typeof RadixToggleGroup.Root>,
   ToggleGroupProps
->(({ className, orientation, attached, ...props }, ref) => (
-  <RadixToggleGroup.Root
-    ref={ref}
-    className={toggleGroupVariants({ orientation, attached, className })}
-    {...props}
-  />
-))
+>(
+  (
+    { className, orientation = 'horizontal', attached = true, ...props },
+    ref,
+  ) => (
+    <RadixToggleGroup.Root
+      ref={ref}
+      className={cx(
+        'inline-flex',
+        orientation === 'horizontal' ? 'flex-row' : 'flex-col',
+        attached ? attachedVariants({ orientation }) : 'gap-2',
+        className,
+      )}
+      {...props}
+    />
+  ),
+)
 
 ToggleGroup.displayName = 'ToggleGroup'
 

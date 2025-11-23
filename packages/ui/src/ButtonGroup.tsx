@@ -1,30 +1,33 @@
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva, cx, type VariantProps } from 'class-variance-authority'
 import { type ButtonHTMLAttributes } from 'react'
+import { Stack } from './Stack'
 
-const variants = cva(['inline-flex'], {
+const attachedVariants = cva([], {
   variants: {
     orientation: {
-      horizontal: 'flex-row',
-      vertical: 'flex-col',
-    },
-    attached: {
-      true: '[&>*]:rounded-none [&>*:first-child]:rounded-l-full [&>*:last-child]:rounded-r-full [&>*:not(:first-child)]:-ml-px [&>*:hover]:z-10 [&>*:focus-visible]:z-10',
-      false: 'gap-2',
+      horizontal: [
+        '[&>*]:rounded-none',
+        '[&>*:first-child]:rounded-l-full',
+        '[&>*:last-child]:rounded-r-full',
+        '[&>*:not(:first-child)]:-ml-px',
+        '[&>*:hover]:z-10',
+        '[&>*:focus-visible]:z-10',
+      ],
+      vertical: [
+        '[&>*]:rounded-none',
+        '[&>*:first-child]:rounded-t-full',
+        '[&>*:last-child]:rounded-b-full',
+        '[&>*:not(:first-child)]:-mt-px',
+        '[&>*:hover]:z-10',
+        '[&>*:focus-visible]:z-10',
+      ],
     },
   },
-  compoundVariants: [
-    {
-      orientation: 'vertical',
-      attached: true,
-      className:
-        '[&>*:first-child]:!rounded-tl-full [&>*:first-child]:!rounded-tr-full [&>*:first-child]:!rounded-bl-none [&>*:first-child]:!rounded-br-none [&>*:last-child]:!rounded-tl-none [&>*:last-child]:!rounded-tr-none [&>*:last-child]:!rounded-bl-full [&>*:last-child]:!rounded-br-full [&>*:not(:first-child)]:-mt-px',
-    },
-  ],
 })
 
 export interface ButtonGroupProps
   extends Omit<ButtonHTMLAttributes<HTMLDivElement>, 'role'>,
-    VariantProps<typeof variants> {
+    VariantProps<typeof attachedVariants> {
   /**
    * Accessible label for the button group
    * Required for screen readers to announce the group's purpose
@@ -38,6 +41,11 @@ export interface ButtonGroupProps
    * - 'radiogroup': Group where only one can be selected (manage aria-checked on buttons)
    */
   role?: 'group' | 'toolbar' | 'radiogroup'
+  /**
+   * Whether buttons are attached together (no gap)
+   * @default true
+   */
+  attached?: boolean
 }
 
 export const ButtonGroup = ({
@@ -54,17 +62,20 @@ export const ButtonGroup = ({
   const shouldIncludeOrientation = role !== 'group'
 
   return (
-    <div
+    <Stack
+      as='div'
       data-component='ButtonGroup'
       role={role}
       aria-orientation={
         shouldIncludeOrientation ? (orientation ?? undefined) : undefined
       }
       aria-label={label}
-      className={variants({ orientation, attached, className })}
+      direction={orientation === 'horizontal' ? 'row' : 'column'}
+      gap={attached ? 'none' : 'sm'}
+      className={cx(attached && attachedVariants({ orientation }), className)}
       {...props}>
       {children}
-    </div>
+    </Stack>
   )
 }
 

@@ -1,45 +1,41 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import {
-  forwardRef,
-  type ComponentPropsWithoutRef,
-  type ReactNode,
-} from 'react'
+import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { Stack } from './Stack'
 import { Text } from './Text'
 
-const formFieldVariants = cva(
-  [
-    'flex flex-col gap-4',
-    'border rounded-lg p-4',
-    'transition-colors duration-200',
-  ],
-  {
-    variants: {
-      variant: {
-        default: ['border-base-300', 'dark:border-base-700'],
-        muted: [
-          'border-base-200 bg-base-50',
-          'dark:border-base-800 dark:bg-base-950',
-        ],
-        accent: [
-          'border-accent-300 bg-accent-50',
-          'dark:border-accent-700 dark:bg-accent-950',
-        ],
-        destructive: [
-          'border-destructive-300 bg-destructive-50',
-          'dark:border-destructive-700 dark:bg-destructive-950',
-        ],
-      },
-      disabled: {
-        true: 'opacity-50 cursor-not-allowed',
-        false: '',
-      },
+const formFieldVariants = cva(['p-2', 'transition-colors duration-200'], {
+  variants: {
+    variant: {
+      default: ['border-base-300', 'dark:border-base-700'],
+      muted: [
+        'border-base-200',
+        'bg-base-50',
+        'dark:border-base-800',
+        'dark:bg-base-950',
+      ],
+      accent: [
+        'border-accent-300',
+        'bg-accent-50',
+        'dark:border-accent-700',
+        'dark:bg-accent-950',
+      ],
+      destructive: [
+        'border-destructive-300',
+        'bg-destructive-50',
+        'dark:border-destructive-700',
+        'dark:bg-destructive-950',
+      ],
     },
-    defaultVariants: {
-      variant: 'default',
-      disabled: false,
+    disabled: {
+      true: ['opacity-50', 'cursor-not-allowed'],
+      false: '',
     },
   },
-)
+  defaultVariants: {
+    variant: 'default',
+    disabled: false,
+  },
+})
 
 const legendVariants = cva(['font-medium', 'transition-colors duration-200'], {
   variants: {
@@ -99,75 +95,70 @@ export interface FormFieldProps
   size?: 'sm' | 'md' | 'lg'
 }
 
-export const FormField = forwardRef<HTMLFieldSetElement, FormFieldProps>(
-  (
-    {
-      legend,
-      children,
-      description,
-      error,
-      required = false,
-      disabled = false,
-      size = 'md',
-      variant = 'default',
-      className,
-      ...props
-    },
-    ref,
-  ) => {
-    const effectiveVariant = error ? 'destructive' : variant
+export const FormField = ({
+  legend,
+  children,
+  description,
+  error,
+  required = false,
+  disabled = false,
+  size = 'md',
+  variant = 'default',
+  className,
+  ...props
+}: FormFieldProps) => {
+  const effectiveVariant = error ? 'destructive' : variant
 
-    return (
-      <fieldset
-        ref={ref}
-        data-component='FormField'
-        disabled={disabled}
-        className={formFieldVariants({
+  return (
+    <Stack
+      as='fieldset'
+      data-component='FormField'
+      disabled={disabled}
+      direction='column'
+      gap='md'
+      className={formFieldVariants({
+        variant: effectiveVariant,
+        disabled,
+        className,
+      })}
+      {...props}>
+      <legend
+        className={legendVariants({
           variant: effectiveVariant,
+          size,
           disabled,
-          className,
-        })}
-        {...props}>
-        <legend
-          className={legendVariants({
-            variant: effectiveVariant,
-            size,
-            disabled,
-          })}>
-          {legend}
-          {required && (
-            <span
-              className='text-destructive-500 ml-1'
-              aria-label='required'>
-              *
-            </span>
-          )}
-        </legend>
-
-        {description && (
-          <Text
-            variant='body-small'
-            color={effectiveVariant === 'destructive' ? 'error' : 'secondary'}
-            className='-mt-2'>
-            {description}
-          </Text>
+        })}>
+        {legend}
+        {required && (
+          <span
+            className='text-destructive-500 ml-1'
+            aria-label='required'>
+            *
+          </span>
         )}
+      </legend>
 
-        {children}
+      {description && (
+        <Text
+          variant='body-small'
+          color={effectiveVariant === 'destructive' ? 'error' : 'secondary'}
+          className='-mt-2'>
+          {description}
+        </Text>
+      )}
 
-        {error && (
-          <Text
-            variant='body-small'
-            color='error'
-            role='alert'>
-            {error}
-          </Text>
-        )}
-      </fieldset>
-    )
-  },
-)
+      {children}
 
-FormField.displayName = 'FormField'
+      {error && (
+        <Text
+          variant='body-small'
+          color='error'
+          role='alert'>
+          {error}
+        </Text>
+      )}
+    </Stack>
+  )
+}
 
 export default FormField

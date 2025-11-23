@@ -1,19 +1,7 @@
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 import type { ElementType, HTMLAttributes, ReactNode } from 'react'
+import { Stack } from './Stack'
 import { Text } from './Text'
-
-const breadcrumbVariants = cva('flex items-center', {
-  variants: {
-    size: {
-      sm: 'gap-1',
-      md: 'gap-2',
-      lg: 'gap-3',
-    },
-  },
-  defaultVariants: {
-    size: 'md',
-  },
-})
 
 const breadcrumbLinkVariants = cva(
   'transition-colors hover:text-accent-600 dark:hover:text-accent-400',
@@ -36,12 +24,11 @@ export interface BreadCrumbItem {
   as?: ElementType
 }
 
-export interface BreadCrumbPropsBase
-  extends HTMLAttributes<HTMLElement>,
-    VariantProps<typeof breadcrumbVariants> {
+export interface BreadCrumbPropsBase extends HTMLAttributes<HTMLElement> {
   items: BreadCrumbItem[]
   separator?: ReactNode
   ariaLabel?: string
+  size?: 'sm' | 'md' | 'lg'
 }
 
 export type BreadCrumbProps = BreadCrumbPropsBase
@@ -55,6 +42,7 @@ export const BreadCrumb = ({
   ...props
 }: BreadCrumbProps) => {
   const iconSize = size === 'sm' ? 14 : size === 'md' ? 16 : 18
+  const gapSize = size === 'sm' ? 'xs' : size === 'md' ? 'sm' : 'md'
 
   return (
     <nav
@@ -62,7 +50,11 @@ export const BreadCrumb = ({
       aria-label={ariaLabel}
       className={className}
       {...props}>
-      <ol className={breadcrumbVariants({ size })}>
+      <Stack
+        as='ol'
+        direction='row'
+        align='center'
+        gap={gapSize}>
         {items.map((item, index) => {
           const isLast = index === items.length - 1
           const LinkComponent = (item.as || 'a') as ElementType
@@ -117,7 +109,7 @@ export const BreadCrumb = ({
             </li>
           )
         })}
-      </ol>
+      </Stack>
     </nav>
   )
 }

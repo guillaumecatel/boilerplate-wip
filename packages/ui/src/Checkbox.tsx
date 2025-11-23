@@ -2,19 +2,34 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import type { InputHTMLAttributes } from 'react'
 
 const checkboxVariants = cva(
-  'rounded border shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+  [
+    'rounded-[var(--control-checkbox-border-radius)]',
+    'border-[var(--control-border-width)]',
+    'shadow-[var(--control-shadow)]',
+    'transition-colors',
+    'focus-visible:outline-none',
+    'focus-visible:ring-[var(--control-focus-ring-width)]',
+    'focus-visible:ring-offset-[var(--control-focus-ring-offset)]',
+    'disabled:cursor-not-allowed',
+    'disabled:opacity-[var(--control-opacity-disabled)]',
+    'cursor-pointer',
+  ],
   {
     variants: {
       size: {
-        sm: 'size-4',
-        md: 'size-5',
-        lg: 'size-6',
+        sm: 'size-[var(--control-checkbox-size-sm)]',
+        md: 'size-[var(--control-checkbox-size-md)]',
+        lg: 'size-[var(--control-checkbox-size-lg)]',
       },
       variant: {
-        primary:
-          'border-base-300 text-accent-600 focus-visible:ring-accent-500 dark:border-base-600 dark:bg-base-800',
-        destructive:
-          'border-base-300 text-red-600 focus-visible:ring-red-500 dark:border-base-600 dark:bg-base-800',
+        primary: [
+          'accent-[var(--control-checkbox-checked-background)]',
+          'focus-visible:ring-[var(--control-focus-ring-color)]',
+        ],
+        destructive: [
+          'accent-[var(--control-border-color-error)]',
+          'focus-visible:ring-[var(--control-focus-ring-color-error)]',
+        ],
       },
     },
     defaultVariants: {

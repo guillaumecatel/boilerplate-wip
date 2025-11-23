@@ -1,5 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes, ReactNode } from 'react'
+import { Grid } from './Grid'
+import { Stack } from './Stack'
 import { Text } from './Text'
 
 const definitionListVariants = cva('', {
@@ -14,47 +16,6 @@ const definitionListVariants = cva('', {
       lg: '',
     },
   },
-  defaultVariants: {
-    layout: 'horizontal',
-    size: 'md',
-  },
-})
-
-const itemVariants = cva('', {
-  variants: {
-    layout: {
-      horizontal:
-        'grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4',
-      vertical: 'flex flex-col gap-1',
-    },
-    size: {
-      sm: '',
-      md: '',
-      lg: '',
-    },
-  },
-  compoundVariants: [
-    {
-      layout: 'horizontal',
-      size: 'sm',
-      className: 'py-2',
-    },
-    {
-      layout: 'horizontal',
-      size: 'lg',
-      className: 'py-4',
-    },
-    {
-      layout: 'vertical',
-      size: 'sm',
-      className: 'gap-0.5',
-    },
-    {
-      layout: 'vertical',
-      size: 'lg',
-      className: 'gap-2',
-    },
-  ],
   defaultVariants: {
     layout: 'horizontal',
     size: 'md',
@@ -82,35 +43,60 @@ export const DefinitionList = ({
   const textVariant =
     size === 'sm' ? 'body-small' : size === 'md' ? 'body-medium' : 'body-large'
 
+  const gapSize = size === 'sm' ? 'xs' : size === 'lg' ? 'sm' : 'xs'
+
   return (
     <dl
       data-component='DefinitionList'
       className={definitionListVariants({ layout, size, className })}
       {...props}>
-      {items.map((item, index) => (
-        <div
-          key={index}
-          className={itemVariants({ layout, size })}>
-          <dt>
-            <Text
-              variant={textVariant}
-              weight='semibold'
-              color='primary'>
-              {item.term}
-            </Text>
-          </dt>
-          <dd
-            className={
-              layout === 'horizontal' ? 'sm:col-span-2 md:col-span-3' : ''
-            }>
-            <Text
-              variant={textVariant}
-              color='secondary'>
-              {item.description}
-            </Text>
-          </dd>
-        </div>
-      ))}
+      {items.map((item, index) =>
+        layout === 'horizontal' ? (
+          <Grid
+            key={index}
+            cols={1}
+            gap={gapSize}
+            className='py-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4'>
+            <dt>
+              <Text
+                variant={textVariant}
+                weight='semibold'
+                color='primary'>
+                {item.term}
+              </Text>
+            </dt>
+            <dd className='sm:col-span-2 md:col-span-3'>
+              <Text
+                variant={textVariant}
+                color='secondary'>
+                {item.description}
+              </Text>
+            </dd>
+          </Grid>
+        ) : (
+          <Stack
+            key={index}
+            as='div'
+            direction='column'
+            gap={gapSize}>
+            <dt>
+              <Text
+                variant={textVariant}
+                weight='semibold'
+                color='primary'>
+                {item.term}
+              </Text>
+            </dt>
+            <dd>
+              <Text
+                variant={textVariant}
+                color='secondary'>
+                {item.description}
+              </Text>
+            </dd>
+          </Stack>
+        ),
+      )}
     </dl>
   )
 }

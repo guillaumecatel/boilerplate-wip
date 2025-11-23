@@ -1,9 +1,12 @@
+import { useCounter } from '@myorg/hooks'
 import { cva, cx, type VariantProps } from 'class-variance-authority'
 import {
   forwardRef,
+  useEffect,
   type ChangeEvent,
   type ComponentPropsWithoutRef,
 } from 'react'
+import { Stack } from './Stack'
 
 // Icons
 const MinusIcon = ({ size = 16 }: { size?: number }) => (
@@ -37,7 +40,14 @@ const PlusIcon = ({ size = 16 }: { size?: number }) => (
 
 // InputQuantity Container Variants
 const inputQuantityVariants = cva(
-  'inline-flex items-center rounded-lg border border-base-300 dark:border-base-700 bg-base-0 dark:bg-base-950',
+  [
+    'rounded-lg',
+    'border',
+    'border-base-300',
+    'dark:border-base-700',
+    'bg-base-0',
+    'dark:bg-base-950',
+  ],
   {
     variants: {
       size: {
@@ -54,7 +64,23 @@ const inputQuantityVariants = cva(
 
 // Button Variants
 const buttonVariants = cva(
-  'flex items-center justify-center border-base-300 dark:border-base-700 text-base-700 dark:text-base-300 transition-colors hover:bg-base-100 dark:hover:bg-base-900 active:bg-base-200 dark:active:bg-base-800 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent',
+  [
+    'flex',
+    'items-center',
+    'justify-center',
+    'border-base-300',
+    'dark:border-base-700',
+    'text-base-700',
+    'dark:text-base-300',
+    'transition-colors',
+    'hover:bg-base-100',
+    'dark:hover:bg-base-900',
+    'active:bg-base-200',
+    'dark:active:bg-base-800',
+    'disabled:opacity-50',
+    'disabled:cursor-not-allowed',
+    'disabled:hover:bg-transparent',
+  ],
   {
     variants: {
       size: {
@@ -63,8 +89,8 @@ const buttonVariants = cva(
         lg: 'w-12 h-12',
       },
       position: {
-        left: 'rounded-l-lg border-r',
-        right: 'rounded-r-lg border-l',
+        left: ['rounded-l-lg', 'border-r'],
+        right: ['rounded-r-lg', 'border-l'],
       },
     },
     defaultVariants: {
@@ -75,13 +101,23 @@ const buttonVariants = cva(
 
 // Input Variants
 const inputVariants = cva(
-  'flex-1 text-center bg-transparent text-base-900 dark:text-base-100 outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
+  [
+    'flex-1',
+    'text-center',
+    'bg-transparent',
+    'text-base-900',
+    'dark:text-base-100',
+    'outline-none',
+    'appearance-none',
+    '[&::-webkit-inner-spin-button]:appearance-none',
+    '[&::-webkit-outer-spin-button]:appearance-none',
+  ],
   {
     variants: {
       size: {
-        sm: 'text-sm px-2 min-w-[40px]',
-        md: 'text-base px-3 min-w-[48px]',
-        lg: 'text-lg px-4 min-w-[56px]',
+        sm: ['text-sm', 'px-2', 'min-w-[40px]'],
+        md: ['text-base', 'px-3', 'min-w-[48px]'],
+        lg: ['text-lg', 'px-4', 'min-w-[56px]'],
       },
     },
     defaultVariants: {
@@ -107,7 +143,7 @@ export const InputQuantity = forwardRef<HTMLInputElement, InputQuantityProps>(
     {
       className,
       size,
-      value,
+      value: controlledValue,
       defaultValue = 0,
       min = 0,
       max,
@@ -120,28 +156,30 @@ export const InputQuantity = forwardRef<HTMLInputElement, InputQuantityProps>(
     },
     ref,
   ) => {
+    const { value, increment, decrement, setValue, isMin, isMax } = useCounter({
+      defaultValue,
+      min,
+      max,
+      step,
+      onValueChange,
+    })
+
+    // Sync with controlled value if provided
+    useEffect(() => {
+      if (controlledValue !== undefined && controlledValue !== value) {
+        setValue(controlledValue)
+      }
+    }, [controlledValue, value, setValue])
+
     const handleDecrement = () => {
-      if (disabled) return
-
-      const currentValue = value ?? defaultValue
-      const newValue = Math.max(min, currentValue - step)
-
-      if (newValue !== currentValue) {
-        onValueChange?.(newValue)
+      if (!disabled) {
+        decrement()
       }
     }
 
     const handleIncrement = () => {
-      if (disabled) return
-
-      const currentValue = value ?? defaultValue
-      const newValue =
-        max !== undefined
-          ? Math.min(max, currentValue + step)
-          : currentValue + step
-
-      if (newValue !== currentValue) {
-        onValueChange?.(newValue)
+      if (!disabled) {
+        increment()
       }
     }
 
@@ -149,11 +187,7 @@ export const InputQuantity = forwardRef<HTMLInputElement, InputQuantityProps>(
       const newValue = e.target.value === '' ? min : Number(e.target.value)
 
       if (!isNaN(newValue)) {
-        let clampedValue = Math.max(min, newValue)
-        if (max !== undefined) {
-          clampedValue = Math.min(max, clampedValue)
-        }
-        onValueChange?.(clampedValue)
+        setValue(newValue)
       }
 
       onChange?.(e)
@@ -162,7 +196,11 @@ export const InputQuantity = forwardRef<HTMLInputElement, InputQuantityProps>(
     const iconSize = size === 'sm' ? 14 : size === 'lg' ? 18 : 16
 
     return (
-      <div
+      <Stack
+        as='div'
+        direction='row'
+        align='center'
+        gap='none'
         className={cx(
           inputQuantityVariants({ size }),
           disabled && 'cursor-not-allowed opacity-50',
@@ -172,7 +210,7 @@ export const InputQuantity = forwardRef<HTMLInputElement, InputQuantityProps>(
           <button
             type='button'
             onClick={handleDecrement}
-            disabled={disabled || value === min}
+            disabled={disabled || isMin}
             className={cx(buttonVariants({ size, position: 'left' }))}
             aria-label='Decrease value'>
             <MinusIcon size={iconSize} />
@@ -183,7 +221,6 @@ export const InputQuantity = forwardRef<HTMLInputElement, InputQuantityProps>(
           ref={ref}
           type='number'
           value={value}
-          defaultValue={defaultValue}
           min={min}
           max={max}
           step={step}
@@ -197,13 +234,13 @@ export const InputQuantity = forwardRef<HTMLInputElement, InputQuantityProps>(
           <button
             type='button'
             onClick={handleIncrement}
-            disabled={disabled || (max !== undefined && value === max)}
+            disabled={disabled || isMax}
             className={cx(buttonVariants({ size, position: 'right' }))}
             aria-label='Increase value'>
             <PlusIcon size={iconSize} />
           </button>
         )}
-      </div>
+      </Stack>
     )
   },
 )

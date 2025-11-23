@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Grid } from './Grid'
 
 export interface ModalProps {
   children: ReactNode
@@ -6,9 +7,13 @@ export interface ModalProps {
 
 export const Modal = ({ children }: ModalProps) => {
   return (
-    <div
+    <Grid
+      as='div'
       data-component='Modal'
-      className='relative inset-0 z-50 grid place-content-center bg-black/50 p-4'
+      cols={1}
+      align='center'
+      justify='center'
+      className='relative inset-0 z-50 bg-black/50 p-4'
       role='dialog'
       aria-modal='true'
       aria-labelledby='modalTitle'>
@@ -23,7 +28,7 @@ export const Modal = ({ children }: ModalProps) => {
           <p className='text-pretty text-gray-700'>{children}</p>
         </div>
       </div>
-    </div>
+    </Grid>
   )
 }
 

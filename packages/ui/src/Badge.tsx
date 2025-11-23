@@ -4,27 +4,56 @@ import type { PolymorphicProps } from './Polymorphic'
 import { Text } from './Text'
 
 const badgeVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-full transition-colors',
+  [
+    'inline-flex',
+    'items-center',
+    'justify-center',
+    'whitespace-nowrap',
+    'rounded-[var(--status-border-radius)]',
+    'transition-colors',
+  ],
   {
     variants: {
       variant: {
-        primary:
-          'bg-accent-100 text-accent-700 dark:bg-accent-900 dark:text-accent-300',
-        secondary:
-          'bg-base-100 text-base-700 dark:bg-base-800 dark:text-base-300',
-        outline:
-          'border border-base-300 text-base-700 dark:border-base-600 dark:text-base-300',
-        success:
-          'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300',
-        warning:
-          'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300',
-        destructive:
-          'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300',
+        primary: [
+          'bg-[var(--status-primary-background-color)]',
+          'text-[var(--status-primary-foreground-color)]',
+        ],
+        secondary: [
+          'bg-[var(--status-secondary-background-color)]',
+          'text-[var(--status-secondary-foreground-color)]',
+        ],
+        outline: [
+          'border-[var(--status-border-width)]',
+          'border-[var(--status-outline-border-color)]',
+          'text-[var(--status-outline-foreground-color)]',
+        ],
+        success: [
+          'bg-[var(--status-success-background-color)]',
+          'text-[var(--status-success-foreground-color)]',
+        ],
+        warning: [
+          'bg-[var(--status-warning-background-color)]',
+          'text-[var(--status-warning-foreground-color)]',
+        ],
+        destructive: [
+          'bg-[var(--status-danger-background-color)]',
+          'text-[var(--status-danger-foreground-color)]',
+        ],
       },
       size: {
-        sm: 'px-2 py-0.5',
-        md: 'px-2.5 py-0.5',
-        lg: 'px-3 py-1',
+        sm: [
+          'px-[var(--status-padding-x-sm)]',
+          'py-[var(--status-padding-y-sm)]',
+        ],
+        md: [
+          'px-[var(--status-padding-x-md)]',
+          'py-[var(--status-padding-y-md)]',
+        ],
+        lg: [
+          'px-[var(--status-padding-x-lg)]',
+          'py-[var(--status-padding-y-lg)]',
+        ],
       },
     },
     defaultVariants: {

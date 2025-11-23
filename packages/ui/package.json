@@ -23,6 +23,8 @@
     "./dist"
   ],
   "exports": {
+    "./grid": "./src/Grid.tsx",
+    "./stack": "./src/Stack.tsx",
     "./list": "./src/List.tsx",
     "./split-panes": "./src/SplitPanes.tsx",
     "./form": "./src/Form.tsx",
@@ -68,6 +70,16 @@
   },
   "publishConfig": {
     "exports": {
+      "./grid": {
+        "import": "./dist/Grid.js",
+        "require": "./dist/Grid.cjs",
+        "types": "./dist/Grid.d.ts"
+      },
+      "./stack": {
+        "import": "./dist/Stack.js",
+        "require": "./dist/Stack.cjs",
+        "types": "./dist/Stack.d.ts"
+      },
       "./list": {
         "import": "./dist/List.js",
         "require": "./dist/List.cjs",
@@ -287,6 +299,7 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
+    "@myorg/hooks": "workspace:*",
     "@myorg/shared": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "radix-ui": "^1.4.3"

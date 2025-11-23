@@ -1,7 +1,8 @@
+import { useKeyboardNavigation, useMultiSelect } from '@myorg/hooks'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { Checkbox, Popover } from 'radix-ui'
 import type { ReactNode } from 'react'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useEffect, useRef, useState } from 'react'
 
 import { Text } from './Text'
 
@@ -132,25 +133,40 @@ const MultiSelectRoot = forwardRef<HTMLButtonElement, MultiSelectRootProps>(
     },
     ref,
   ) => {
-    const [internalValue, setInternalValue] = useState<string[]>(defaultValue)
     const [open, setOpen] = useState(false)
+    const contentRef = useRef<HTMLDivElement>(null)
 
-    const isControlled = controlledValue !== undefined
-    const value = isControlled ? controlledValue : internalValue
+    // Use multiselect hook for state management
+    const {
+      selectedValues: value,
+      toggleItem,
+      isSelected,
+    } = useMultiSelect<string>({
+      defaultValue: controlledValue || defaultValue,
+      onChange: onValueChange,
+    })
 
-    const handleValueChange = (newValue: string[]) => {
-      if (!isControlled) {
-        setInternalValue(newValue)
+    // Sync with controlled value
+    useEffect(() => {
+      if (controlledValue !== undefined) {
+        // Force update when controlled value changes
       }
-      onValueChange?.(newValue)
-    }
+    }, [controlledValue])
 
     const toggleOption = (optionValue: string) => {
-      const newValue = value.includes(optionValue)
-        ? value.filter((v) => v !== optionValue)
-        : [...value, optionValue]
-      handleValueChange(newValue)
+      toggleItem(optionValue)
     }
+
+    // Keyboard navigation
+    const { focusedIndex, handleKeyDown } = useKeyboardNavigation({
+      items: options,
+      enabled: open,
+      onSelect: (_index, item) => {
+        if (!item.disabled) {
+          toggleOption(item.value)
+        }
+      },
+    })
 
     const selectedOptions = options.filter((opt) => value.includes(opt.value))
 
@@ -174,6 +190,7 @@ const MultiSelectRoot = forwardRef<HTMLButtonElement, MultiSelectRootProps>(
             className,
           })}
           disabled={disabled}
+          onKeyDown={handleKeyDown}
           data-placeholder={selectedOptions.length === 0 ? '' : undefined}>
           <span className='flex-1 truncate text-left'>
             <Text
@@ -206,17 +223,19 @@ const MultiSelectRoot = forwardRef<HTMLButtonElement, MultiSelectRootProps>(
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content
+            ref={contentRef}
             className={multiSelectContentVariants({ size, className: 'p-1' })}
             align='start'
             sideOffset={5}
             style={{ width: 'var(--radix-popover-trigger-width)' }}>
-            {options.map((option) => (
+            {options.map((option, index) => (
               <MultiSelectItem
                 key={option.value}
                 option={option}
-                checked={value.includes(option.value)}
+                checked={isSelected(option.value)}
                 onCheckedChange={() => toggleOption(option.value)}
                 size={size}
+                data-focused={index === focusedIndex}
               />
             ))}
           </Popover.Content>

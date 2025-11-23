@@ -8,59 +8,47 @@ const switchVariants = cva(
     'group relative inline-flex shrink-0 cursor-pointer items-center',
     'rounded-full border-2 border-transparent',
     'transition-colors duration-200 ease-in-out',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
-    'disabled:cursor-not-allowed disabled:opacity-50',
+    'focus-visible:outline-none focus-visible:ring-[var(--control-focus-ring-width)] focus-visible:ring-offset-[var(--control-focus-ring-offset)]',
+    'disabled:cursor-not-allowed disabled:opacity-[var(--control-opacity-disabled)]',
   ],
   {
     variants: {
       variant: {
         default: [
-          'bg-base-300',
-          'data-[state=checked]:bg-accent-500',
-          'dark:bg-base-700',
-          'dark:data-[state=checked]:bg-accent-400',
-          'focus-visible:ring-base-400',
+          'bg-[var(--control-switch-background-default)]',
+          'data-[state=checked]:bg-[var(--control-switch-background-checked)]',
+          'focus-visible:ring-[var(--control-focus-ring-color)]',
         ],
         primary: [
-          'bg-base-300',
-          'data-[state=checked]:bg-accent-500',
-          'dark:bg-base-700',
-          'dark:data-[state=checked]:bg-accent-400',
-          'focus-visible:ring-accent-500',
+          'bg-[var(--control-switch-background-default)]',
+          'data-[state=checked]:bg-[var(--control-switch-background-checked)]',
+          'focus-visible:ring-[var(--control-focus-ring-color)]',
         ],
         secondary: [
-          'bg-base-300',
-          'data-[state=checked]:bg-base-600',
-          'dark:bg-base-700',
-          'dark:data-[state=checked]:bg-base-400',
-          'focus-visible:ring-base-400',
+          'bg-[var(--control-switch-background-default)]',
+          'data-[state=checked]:bg-[var(--control-border-color-default)]',
+          'focus-visible:ring-[var(--control-focus-ring-color)]',
         ],
         accent: [
-          'bg-base-300',
-          'data-[state=checked]:bg-accent-300',
-          'dark:bg-base-700',
-          'dark:data-[state=checked]:bg-accent-600',
-          'focus-visible:ring-accent-400',
+          'bg-[var(--control-switch-background-default)]',
+          'data-[state=checked]:bg-[var(--color-accent-300)]',
+          'focus-visible:ring-[var(--color-accent-400)]',
         ],
         success: [
-          'bg-base-300',
-          'data-[state=checked]:bg-success-500',
-          'dark:bg-base-700',
-          'dark:data-[state=checked]:bg-success-400',
-          'focus-visible:ring-success-500',
+          'bg-[var(--control-switch-background-default)]',
+          'data-[state=checked]:bg-[var(--control-border-color-success)]',
+          'focus-visible:ring-[var(--control-focus-ring-color-success)]',
         ],
         destructive: [
-          'bg-base-300',
-          'data-[state=checked]:bg-destructive-500',
-          'dark:bg-base-700',
-          'dark:data-[state=checked]:bg-destructive-400',
-          'focus-visible:ring-destructive-500',
+          'bg-[var(--control-switch-background-default)]',
+          'data-[state=checked]:bg-[var(--control-border-color-error)]',
+          'focus-visible:ring-[var(--control-focus-ring-color-error)]',
         ],
       },
       size: {
-        sm: 'h-5 w-9',
-        md: 'h-6 w-11',
-        lg: 'h-7 w-14',
+        sm: 'h-[var(--control-switch-height-sm)] w-[var(--control-switch-width-sm)]',
+        md: 'h-[var(--control-switch-height-md)] w-[var(--control-switch-width-md)]',
+        lg: 'h-[var(--control-switch-height-lg)] w-[var(--control-switch-width-lg)]',
       },
     },
     defaultVariants: {
@@ -72,9 +60,8 @@ const switchVariants = cva(
 
 const switchThumbVariants = cva(
   [
-    'pointer-events-none block rounded-full bg-base-50 shadow-lg',
+    'pointer-events-none block rounded-full bg-[var(--control-switch-thumb-background)] shadow-lg',
     'transition-transform duration-200 ease-in-out',
-    'dark:bg-base-950',
   ],
   {
     variants: {

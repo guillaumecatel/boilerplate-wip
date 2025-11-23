@@ -5,12 +5,12 @@ import { Form } from '../src'
 
 describe('Form', () => {
   it('renders correctly with children', () => {
-    render(<Form >Hello world</Form >)
+    render(<Form>Hello world</Form>)
     expect(screen.getByText('Hello world')).toBeInTheDocument()
   })
 
   it('has the correct data-component attribute', () => {
-    render(<Form >Click me</Form >)
+    render(<Form>Click me</Form>)
     expect(screen.getByText('Click me')).toHaveAttribute(
       'data-component',
       'Form',
