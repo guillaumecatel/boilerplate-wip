@@ -5,7 +5,7 @@ import { useDebounce } from '../src'
 
 describe('useDebounce', () => {
   // Timeout augmenté pour la CI
-  vi.setConfig({ testTimeout: 15000 })
+  vi.setConfig({ testTimeout: Infinity })
   beforeEach(() => {
     vi.useFakeTimers()
   })

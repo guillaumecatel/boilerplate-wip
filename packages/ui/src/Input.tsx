@@ -1,9 +1,6 @@
 import { useControlledState } from '@myorg/hooks'
-import { isArray } from '@myorg/shared'
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { ChangeEvent, InputHTMLAttributes } from 'react'
-
-console.log(isArray)
 
 const inputVariants = cva(
   [
