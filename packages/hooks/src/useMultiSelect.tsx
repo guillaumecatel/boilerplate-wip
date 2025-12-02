@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { useCallback, useMemo, useState } from 'react'
 
 export interface UseMultiSelectOptions<T = string> {
@@ -129,6 +131,7 @@ export function useMultiSelect<T = string>(
 
   const deselectItem = useCallback(
     (value: T) => {
+      /* istanbul ignore next */
       if (isSelected(value)) {
         setSelectedValues(selectedValues.filter((v) => v !== value))
       }

@@ -15,6 +15,8 @@ export interface LanguageInfo {
   direction: 'ltr' | 'rtl'
   /** Famille de script */
   script: string
+  /** Emoji représentant la langue ou le pays */
+  emoji: string
 }
 
 export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
@@ -26,6 +28,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'عر',
     direction: 'rtl',
     script: 'Arabic',
+    emoji: '🇸🇦',
   },
   he: {
     code: 'he',
@@ -34,6 +37,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'עב',
     direction: 'rtl',
     script: 'Hebrew',
+    emoji: '🇮🇱',
   },
   fa: {
     code: 'fa',
@@ -42,6 +46,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'فا',
     direction: 'rtl',
     script: 'Arabic',
+    emoji: '🇮🇷',
   },
   ur: {
     code: 'ur',
@@ -50,6 +55,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'اُر',
     direction: 'rtl',
     script: 'Arabic',
+    emoji: '🇵🇰',
   },
   yi: {
     code: 'yi',
@@ -58,6 +64,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'יי',
     direction: 'rtl',
     script: 'Hebrew',
+    emoji: '🇮🇱',
   },
 
   // Langues européennes (LTR)
@@ -68,6 +75,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'FR',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇫🇷',
   },
   en: {
     code: 'en',
@@ -76,6 +84,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'EN',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇬🇧',
   },
   es: {
     code: 'es',
@@ -84,6 +93,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ES',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇪🇸',
   },
   de: {
     code: 'de',
@@ -92,6 +102,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'DE',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇩🇪',
   },
   it: {
     code: 'it',
@@ -100,6 +111,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'IT',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇮🇹',
   },
   pt: {
     code: 'pt',
@@ -108,6 +120,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'PT',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇵🇹',
   },
   nl: {
     code: 'nl',
@@ -116,6 +129,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'NL',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇳🇱',
   },
   pl: {
     code: 'pl',
@@ -124,6 +138,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'PL',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇵🇱',
   },
   ru: {
     code: 'ru',
@@ -132,6 +147,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'РУ',
     direction: 'ltr',
     script: 'Cyrillic',
+    emoji: '🇷🇺',
   },
   uk: {
     code: 'uk',
@@ -140,6 +156,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'УК',
     direction: 'ltr',
     script: 'Cyrillic',
+    emoji: '🇺🇦',
   },
   tr: {
     code: 'tr',
@@ -148,6 +165,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'TR',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇹🇷',
   },
   el: {
     code: 'el',
@@ -156,6 +174,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ΕΛ',
     direction: 'ltr',
     script: 'Greek',
+    emoji: '🇬🇷',
   },
   sv: {
     code: 'sv',
@@ -164,6 +183,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'SV',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇸🇪',
   },
   no: {
     code: 'no',
@@ -172,6 +192,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'NO',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇳🇴',
   },
   da: {
     code: 'da',
@@ -180,6 +201,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'DA',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇩🇰',
   },
   fi: {
     code: 'fi',
@@ -188,6 +210,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'FI',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇫🇮',
   },
   cs: {
     code: 'cs',
@@ -196,6 +219,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'CS',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇨🇿',
   },
   ro: {
     code: 'ro',
@@ -204,6 +228,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'RO',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇷🇴',
   },
   hu: {
     code: 'hu',
@@ -212,6 +237,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'HU',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇭🇺',
   },
   bg: {
     code: 'bg',
@@ -220,6 +246,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'БГ',
     direction: 'ltr',
     script: 'Cyrillic',
+    emoji: '🇧🇬',
   },
   sr: {
     code: 'sr',
@@ -228,6 +255,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'СР',
     direction: 'ltr',
     script: 'Cyrillic',
+    emoji: '🇷🇸',
   },
   hr: {
     code: 'hr',
@@ -236,6 +264,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'HR',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇭🇷',
   },
   sk: {
     code: 'sk',
@@ -244,6 +273,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'SK',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇸🇰',
   },
   sl: {
     code: 'sl',
@@ -252,6 +282,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'SL',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇸🇮',
   },
   et: {
     code: 'et',
@@ -260,6 +291,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ET',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇪🇪',
   },
   lv: {
     code: 'lv',
@@ -268,6 +300,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'LV',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇱🇻',
   },
   lt: {
     code: 'lt',
@@ -276,6 +309,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'LT',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇱🇹',
   },
   is: {
     code: 'is',
@@ -284,6 +318,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'IS',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇮🇸',
   },
   ga: {
     code: 'ga',
@@ -292,6 +327,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'GA',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇮🇪',
   },
   cy: {
     code: 'cy',
@@ -300,6 +336,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'CY',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🏴',
   },
   eu: {
     code: 'eu',
@@ -308,6 +345,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'EU',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🏴',
   },
   ca: {
     code: 'ca',
@@ -316,6 +354,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'CA',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🏴',
   },
   co: {
     code: 'co',
@@ -324,6 +363,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'CO',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇫🇷',
   },
 
   // Langues asiatiques (LTR)
@@ -334,6 +374,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: '中',
     direction: 'ltr',
     script: 'Han',
+    emoji: '🇨🇳',
   },
   ja: {
     code: 'ja',
@@ -342,6 +383,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: '日',
     direction: 'ltr',
     script: 'Han/Kana',
+    emoji: '🇯🇵',
   },
   ko: {
     code: 'ko',
@@ -350,6 +392,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: '한',
     direction: 'ltr',
     script: 'Hangul',
+    emoji: '🇰🇷',
   },
   th: {
     code: 'th',
@@ -358,6 +401,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ไท',
     direction: 'ltr',
     script: 'Thai',
+    emoji: '🇹🇭',
   },
   vi: {
     code: 'vi',
@@ -366,6 +410,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'VI',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇻🇳',
   },
   hi: {
     code: 'hi',
@@ -374,6 +419,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'हि',
     direction: 'ltr',
     script: 'Devanagari',
+    emoji: '🇮🇳',
   },
   bn: {
     code: 'bn',
@@ -382,6 +428,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'বা',
     direction: 'ltr',
     script: 'Bengali',
+    emoji: '🇧🇩',
   },
   ta: {
     code: 'ta',
@@ -390,6 +437,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'த',
     direction: 'ltr',
     script: 'Tamil',
+    emoji: '🇮🇳',
   },
   te: {
     code: 'te',
@@ -398,6 +446,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'తె',
     direction: 'ltr',
     script: 'Telugu',
+    emoji: '🇮🇳',
   },
   mr: {
     code: 'mr',
@@ -406,6 +455,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'मर',
     direction: 'ltr',
     script: 'Devanagari',
+    emoji: '🇮🇳',
   },
   gu: {
     code: 'gu',
@@ -414,6 +464,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ગુ',
     direction: 'ltr',
     script: 'Gujarati',
+    emoji: '🇮🇳',
   },
   kn: {
     code: 'kn',
@@ -422,6 +473,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ಕ',
     direction: 'ltr',
     script: 'Kannada',
+    emoji: '🇮🇳',
   },
   ml: {
     code: 'ml',
@@ -430,6 +482,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'മ',
     direction: 'ltr',
     script: 'Malayalam',
+    emoji: '🇮🇳',
   },
   pa: {
     code: 'pa',
@@ -438,6 +491,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ਪੰ',
     direction: 'ltr',
     script: 'Gurmukhi',
+    emoji: '🇮🇳',
   },
   id: {
     code: 'id',
@@ -446,6 +500,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ID',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇮🇩',
   },
   ms: {
     code: 'ms',
@@ -454,6 +509,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'MS',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇲🇾',
   },
   tl: {
     code: 'tl',
@@ -462,6 +518,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'TL',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇵🇭',
   },
   my: {
     code: 'my',
@@ -470,6 +527,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'မြ',
     direction: 'ltr',
     script: 'Myanmar',
+    emoji: '🇲🇲',
   },
   km: {
     code: 'km',
@@ -478,6 +536,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ខ្ម',
     direction: 'ltr',
     script: 'Khmer',
+    emoji: '🇰🇭',
   },
   lo: {
     code: 'lo',
@@ -486,6 +545,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ລາ',
     direction: 'ltr',
     script: 'Lao',
+    emoji: '🇱🇦',
   },
   ne: {
     code: 'ne',
@@ -494,6 +554,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ने',
     direction: 'ltr',
     script: 'Devanagari',
+    emoji: '🇳🇵',
   },
   si: {
     code: 'si',
@@ -502,6 +563,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'සි',
     direction: 'ltr',
     script: 'Sinhala',
+    emoji: '🇱🇰',
   },
 
   // Langues africaines et autres
@@ -512,6 +574,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'SW',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇰🇪',
   },
   am: {
     code: 'am',
@@ -520,6 +583,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'አም',
     direction: 'ltr',
     script: 'Ethiopic',
+    emoji: '🇪🇹',
   },
   ha: {
     code: 'ha',
@@ -528,6 +592,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'HA',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇳🇬',
   },
   yo: {
     code: 'yo',
@@ -536,6 +601,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'YO',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇳🇬',
   },
   zu: {
     code: 'zu',
@@ -544,6 +610,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ZU',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇿🇦',
   },
   xh: {
     code: 'xh',
@@ -552,6 +619,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'XH',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇿🇦',
   },
   af: {
     code: 'af',
@@ -560,6 +628,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'AF',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇿🇦',
   },
 
   // Langues du Caucase et Asie Centrale
@@ -570,6 +639,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ქა',
     direction: 'ltr',
     script: 'Georgian',
+    emoji: '🇬🇪',
   },
   hy: {
     code: 'hy',
@@ -578,6 +648,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ՀԱ',
     direction: 'ltr',
     script: 'Armenian',
+    emoji: '🇦🇲',
   },
   az: {
     code: 'az',
@@ -586,6 +657,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'AZ',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇦🇿',
   },
   kk: {
     code: 'kk',
@@ -594,6 +666,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'ҚЗ',
     direction: 'ltr',
     script: 'Cyrillic',
+    emoji: '🇰🇿',
   },
   uz: {
     code: 'uz',
@@ -602,6 +675,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'UZ',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🇺🇿',
   },
   mn: {
     code: 'mn',
@@ -610,6 +684,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'МН',
     direction: 'ltr',
     script: 'Cyrillic',
+    emoji: '🇲🇳',
   },
 
   // Langues construites et autres
@@ -620,6 +695,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'EO',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🌍',
   },
   la: {
     code: 'la',
@@ -628,6 +704,7 @@ export const LANGUAGE_INFO_MAP: Record<string, LanguageInfo> = {
     abbreviation: 'LA',
     direction: 'ltr',
     script: 'Latin',
+    emoji: '🏛️',
   },
 }
 
@@ -662,6 +739,14 @@ export function getLanguageAbbreviation<T extends string>(languageCode: T) {
 export function getLanguageEndonym<T extends string>(languageCode: T) {
   const info = getLanguageInfo<T>(languageCode)
   return info?.endonym || languageCode
+}
+
+/**
+ * Récupère l'emoji d'une langue
+ */
+export function getLanguageEmoji<T extends string>(languageCode: T) {
+  const info = getLanguageInfo<T>(languageCode)
+  return info?.emoji
 }
 
 /**

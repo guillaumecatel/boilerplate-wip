@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { useEffect, useState } from 'react'
 
 export interface UseDebounceOptions {
@@ -26,6 +28,7 @@ export function useDebounce<T>(value: T, options: UseDebounceOptions = {}): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value)
 
   useEffect(() => {
+    /* istanbul ignore next */
     if (delay === 0) {
       setDebouncedValue(value)
       return

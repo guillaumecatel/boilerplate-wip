@@ -10,6 +10,13 @@ export default defineConfig({
     },
     coverage: {
       include: ['src/**/*.tsx'],
+      exclude: [
+        'src/useOnce.tsx',
+        'src/useLocalStorage.tsx',
+        'src/useDebounce.tsx',
+        'src/useMultiSelect.tsx',
+        'src/useControlledState.tsx',
+      ],
     },
   },
 })

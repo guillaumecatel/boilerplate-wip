@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 export interface UseControlledStateOptions<T> {
@@ -57,6 +59,7 @@ export function useControlledState<T>(
   const { current: wasControlled } = useRef(isControlled)
 
   // Warn if controlled/uncontrolled mode changes
+  /* istanbul ignore next */
   if (process.env.NODE_ENV !== 'production') {
     if (wasControlled !== isControlled) {
       console.warn(

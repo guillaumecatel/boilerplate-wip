@@ -1,0 +1,647 @@
+@import 'tailwindcss';
+
+/* eslint-disable-next-line */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --default-font-family: 'Inter', sans-serif;
+
+  --spacing: 0.25rem;
+  --font-baseline: var(--spacing);
+  --base-font-size: 1.125rem;
+  --font-scale: 1.2;
+
+  --text-display-large: calc(var(--text-display-medium) * var(--font-scale));
+  --text-display-large--line-height: round(
+    down,
+    var(--text-display-large),
+    var(--font-baseline)
+  );
+
+  --text-display-medium: calc(var(--text-display-small) * var(--font-scale));
+  --text-display-medium--line-height: round(
+    down,
+    var(--text-display-medium),
+    var(--font-baseline)
+  );
+
+  --text-display-small: calc(var(--text-heading-large) * var(--font-scale));
+  --text-display-small--line-height: round(
+    down,
+    var(--text-display-small),
+    var(--font-baseline)
+  );
+
+  --text-heading-large: calc(var(--text-heading-medium) * var(--font-scale));
+  --text-heading-large--line-height: round(
+    down,
+    var(--text-heading-large),
+    var(--font-baseline)
+  );
+
+  --text-heading-medium: calc(var(--text-heading-small) * var(--font-scale));
+  --text-heading-medium--line-height: round(
+    down,
+    var(--text-heading-medium),
+    var(--font-baseline)
+  );
+
+  --text-heading-small: calc(var(--text-body-large) * var(--font-scale));
+  --text-heading-small--line-height: round(
+    down,
+    var(--text-heading-small),
+    var(--font-baseline)
+  );
+
+  --text-body-large: calc(var(--text-body-medium) * var(--font-scale));
+  --text-body-large--line-height: round(
+    up,
+    calc(var(--text-body-large) * 1.2),
+    var(--font-baseline)
+  );
+
+  --text-body-medium: var(--base-font-size);
+  --text-body-medium--line-height: round(
+    up,
+    calc(var(--text-body-medium) * 1.5),
+    var(--font-baseline)
+  );
+
+  --text-body-small: calc(var(--text-body-medium) / var(--font-scale));
+  --text-body-small--line-height: round(
+    up,
+    calc(var(--text-body-small) * 1.5),
+    var(--font-baseline)
+  );
+
+  --text-caption: calc(var(--text-body-small) / var(--font-scale));
+  --text-caption--line-height: round(
+    up,
+    calc(var(--text-caption) * 1.5),
+    var(--font-baseline)
+  );
+
+  /* Font size utilities */
+  --font-size-display-large: var(--text-display-large);
+  --font-size-display-large--line-height: var(
+    --text-display-large--line-height
+  );
+  --font-size-display-medium: var(--text-display-medium);
+  --font-size-display-medium--line-height: var(
+    --text-display-medium--line-height
+  );
+  --font-size-display-small: var(--text-display-small);
+  --font-size-display-small--line-height: var(
+    --text-display-small--line-height
+  );
+  --font-size-heading-large: var(--text-heading-large);
+  --font-size-heading-large--line-height: var(
+    --text-heading-large--line-height
+  );
+  --font-size-heading-medium: var(--text-heading-medium);
+  --font-size-heading-medium--line-height: var(
+    --text-heading-medium--line-height
+  );
+  --font-size-heading-small: var(--text-heading-small);
+  --font-size-heading-small--line-height: var(
+    --text-heading-small--line-height
+  );
+  --font-size-body-large: var(--text-body-large);
+  --font-size-body-large--line-height: var(--text-body-large--line-height);
+  --font-size-body-medium: var(--text-body-medium);
+  --font-size-body-medium--line-height: var(--text-body-medium--line-height);
+  --font-size-body-small: var(--text-body-small);
+  --font-size-body-small--line-height: var(--text-body-small--line-height);
+  --font-size-caption: var(--text-caption);
+  --font-size-caption--line-height: var(--text-caption--line-height);
+
+  --spacing: 0.25rem; /* 4px */
+
+  --color-accent-50: #dcfeef;
+  --color-accent-100: #a0fdd5;
+  --color-accent-200: #04f18a;
+  --color-accent-300: #03d379;
+  --color-accent-400: #03b065;
+  --color-accent-500: #027f49;
+  --color-accent-600: #027342;
+  --color-accent-700: #02643a;
+  --color-accent-800: #01502e;
+  --color-accent-900: #013720;
+  --color-accent-950: #012d1a;
+
+  /* Base Colors */
+  --color-base-50: #fcfcfc;
+  --color-base-100: #f0f0f0;
+  --color-base-200: #d6d6d6;
+  --color-base-300: #bdbdbd;
+  --color-base-400: #a3a3a3;
+  --color-base-500: #8a8a8a;
+  --color-base-600: #707070;
+  --color-base-700: #595959;
+  --color-base-800: #404040;
+  --color-base-900: #262626;
+  --color-base-950: #1a1a1a;
+
+  --animate-slide-up: slide-up 250ms ease-out;
+  --animate-slide-down: slide-down 250ms ease-out;
+
+  @keyframes slide-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--content-height);
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      height: var(--content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  /* ==================================
+     CONTEXTUAL TOKENS - Actions
+    Actions are interactive elements that trigger or represent user actions. action.* design tokens give a common visual style for interactive elements across the UI.
+     ================================== */
+
+  /* Action - Neutral context (default/secondary) */
+  --action-neutral-background-color-default: var(--color-base-100);
+  --action-neutral-foreground-color-default: var(--color-base-900);
+  --action-neutral-border-color-default: var(--color-base-300);
+  --action-neutral-background-color-hover: var(--color-base-200);
+  --action-neutral-border-color-hover: var(--color-base-400);
+  --action-neutral-background-color-focus: var(--color-base-100);
+  --action-neutral-border-color-focus: var(--color-base-400);
+  --action-neutral-background-color-active: var(--color-base-300);
+
+  /* Action - Primary context (confirm/success) */
+  --action-confirm-background-color-default: var(--color-accent-500);
+  --action-confirm-foreground-color-default: white;
+  --action-confirm-border-color-default: var(--color-accent-500);
+  --action-confirm-background-color-hover: var(--color-accent-600);
+  --action-confirm-border-color-hover: var(--color-accent-600);
+  --action-confirm-background-color-focus: var(--color-accent-500);
+  --action-confirm-border-color-focus: var(--color-accent-500);
+  --action-confirm-background-color-active: var(--color-accent-700);
+
+  /* Action - Danger context (destructive) */
+  --action-danger-background-color-default: rgb(220 38 38);
+  --action-danger-foreground-color-default: white;
+  --action-danger-border-color-default: rgb(220 38 38);
+  --action-danger-background-color-hover: rgb(185 28 28);
+  --action-danger-border-color-hover: rgb(185 28 28);
+  --action-danger-background-color-focus: rgb(220 38 38);
+  --action-danger-border-color-focus: rgb(220 38 38);
+  --action-danger-background-color-active: rgb(153 27 27);
+
+  /* Action - Ghost variant */
+  --action-ghost-foreground-color-default: var(--color-base-900);
+  --action-ghost-background-color-hover: var(--color-base-100);
+  --action-ghost-background-color-active: var(--color-base-200);
+
+  /* Action - Accent context */
+  --action-accent-background-color-default: var(--color-accent-200);
+  --action-accent-foreground-color-default: var(--color-accent-950);
+  --action-accent-background-color-hover: var(--color-accent-300);
+  --action-accent-background-color-active: var(--color-accent-400);
+
+  /* Action - Common properties */
+  --action-border-width: 2px;
+
+  /* Border radius variants */
+  --action-border-radius-none: 0;
+  --action-border-radius-sm: 0.375rem; /* 6px */
+  --action-border-radius-md: 0.5rem; /* 8px */
+  --action-border-radius-lg: 0.75rem; /* 12px */
+  --action-border-radius-xl: 1rem; /* 16px */
+  --action-border-radius-full: 9999px;
+  --action-border-radius: var(--action-border-radius-full); /* default */
+
+  /* Gap variants */
+  --action-gap-none: 0;
+  --action-gap-xs: 0.25rem; /* 4px */
+  --action-gap-sm: 0.375rem; /* 6px */
+  --action-gap-md: 0.5rem; /* 8px */
+  --action-gap-lg: 0.75rem; /* 12px */
+  --action-gap-xl: 1rem; /* 16px */
+  --action-gap: var(--action-gap-md); /* default */
+
+  --action-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --action-shadow-md:
+    0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+  /* Action - Focus ring */
+  --action-focus-ring-width: 2px;
+  --action-focus-ring-offset: 2px;
+  --action-focus-ring-color-neutral: var(--color-base-400);
+  --action-focus-ring-color-confirm: var(--color-accent-500);
+  --action-focus-ring-color-danger: rgb(220 38 38);
+
+  /* Action - Sizes */
+  --action-height-sm: 2.25rem;
+  --action-height-md: 2.5rem;
+  --action-height-lg: 2.75rem;
+  --action-padding-x-sm: 1rem;
+  --action-padding-x-md: 1.25rem;
+  --action-padding-x-lg: 1.5rem;
+
+  /* ==================================
+     CONTEXTUAL TOKENS - Controls
+     Controls are form elements that accept user input. control.* design tokens provide consistent styling for inputs, selects, and other form controls.
+     ================================== */
+
+  /* Control - Default state */
+  --control-background-color-default: white;
+  --control-foreground-color-default: var(--color-base-900);
+  --control-border-color-default: var(--color-base-300);
+  --control-placeholder-color-default: var(--color-base-400);
+
+  /* Control - Hover state */
+  --control-border-color-hover: var(--color-base-400);
+
+  /* Control - Focus state */
+  --control-border-color-focus: var(--color-accent-500);
+  --control-focus-ring-color: var(--color-accent-500);
+  --control-focus-ring-opacity: 0.2;
+
+  /* Control - Disabled state */
+  --control-background-color-disabled: var(--color-base-50);
+  --control-opacity-disabled: 0.5;
+
+  /* Control - Error state */
+  --control-border-color-error: rgb(239 68 68);
+  --control-foreground-color-error: rgb(127 29 29);
+  --control-focus-ring-color-error: rgb(239 68 68);
+
+  /* Control - Success state (optional) */
+  --control-border-color-success: var(--color-accent-500);
+  --control-focus-ring-color-success: var(--color-accent-500);
+
+  /* Control - Common properties */
+  --control-border-width: 1px;
+  --control-border-radius-sm: 0.375rem; /* 6px */
+  --control-border-radius-md: 0.5rem; /* 8px */
+  --control-border-radius-lg: 0.75rem; /* 12px */
+  --control-border-radius: var(--control-border-radius-md); /* default */
+
+  /* Control - Shadow */
+  --control-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --control-shadow: var(--control-shadow-sm); /* default */
+
+  /* Control - Focus ring */
+  --control-focus-ring-width: 2px;
+  --control-focus-ring-offset: 0px;
+
+  /* Control - Sizes */
+  --control-height-sm: 2rem; /* 32px */
+  --control-height-md: 2.5rem; /* 40px */
+  --control-height-lg: 3rem; /* 48px */
+  --control-padding-x-sm: 0.75rem; /* 12px */
+  --control-padding-x-md: 1rem; /* 16px */
+  --control-padding-x-lg: 1.25rem; /* 20px */
+  --control-padding-y-sm: 0.5rem; /* 8px */
+  --control-padding-y-md: 0.625rem; /* 10px */
+  --control-padding-y-lg: 0.75rem; /* 12px */
+
+  /* Control - Checkbox & Radio specific */
+  --control-checkbox-size-sm: 1rem; /* 16px */
+  --control-checkbox-size-md: 1.25rem; /* 20px */
+  --control-checkbox-size-lg: 1.5rem; /* 24px */
+  --control-checkbox-border-radius: 0.25rem; /* 4px */
+  --control-checkbox-checked-background: var(--color-accent-600);
+  --control-checkbox-checked-foreground: white;
+
+  /* Control - Switch specific */
+  --control-switch-width-sm: 2.25rem; /* 36px */
+  --control-switch-width-md: 2.75rem; /* 44px */
+  --control-switch-width-lg: 3.5rem; /* 56px */
+  --control-switch-height-sm: 1.25rem; /* 20px */
+  --control-switch-height-md: 1.5rem; /* 24px */
+  --control-switch-height-lg: 1.75rem; /* 28px */
+  --control-switch-background-default: var(--color-base-300);
+  --control-switch-background-checked: var(--color-accent-500);
+  --control-switch-thumb-background: var(--color-base-50);
+
+  /* ==================================
+     CONTEXTUAL TOKENS - Feedback
+     Feedback tokens are used for alert messages, notifications, and status indicators. feedback.* design tokens provide consistent styling for communicating system states.
+     ================================== */
+
+  /* Feedback - Info context */
+  --feedback-info-background-color: rgb(239 246 255); /* blue-50 */
+  --feedback-info-foreground-color: rgb(30 58 138); /* blue-900 */
+  --feedback-info-border-color: rgb(191 219 254); /* blue-200 */
+  --feedback-info-icon-color: rgb(37 99 235); /* blue-600 */
+
+  /* Feedback - Success context */
+  --feedback-success-background-color: rgb(240 253 244); /* green-50 */
+  --feedback-success-foreground-color: rgb(20 83 45); /* green-900 */
+  --feedback-success-border-color: rgb(187 247 208); /* green-200 */
+  --feedback-success-icon-color: rgb(22 163 74); /* green-600 */
+
+  /* Feedback - Warning context */
+  --feedback-warning-background-color: rgb(254 252 232); /* yellow-50 */
+  --feedback-warning-foreground-color: rgb(113 63 18); /* yellow-900 */
+  --feedback-warning-border-color: rgb(254 240 138); /* yellow-200 */
+  --feedback-warning-icon-color: rgb(202 138 4); /* yellow-600 */
+
+  /* Feedback - Error/Danger context */
+  --feedback-error-background-color: rgb(254 242 242); /* red-50 */
+  --feedback-error-foreground-color: rgb(127 29 29); /* red-900 */
+  --feedback-error-border-color: rgb(254 202 202); /* red-200 */
+  --feedback-error-icon-color: rgb(220 38 38); /* red-600 */
+
+  /* Feedback - Common properties */
+  --feedback-border-width: 1px;
+  --feedback-border-radius: 0.5rem; /* 8px */
+  --feedback-gap: 0.75rem; /* 12px */
+
+  /* Feedback - Sizes */
+  --feedback-padding-sm: 0.75rem; /* 12px */
+  --feedback-padding-md: 1rem; /* 16px */
+  --feedback-padding-lg: 1.25rem; /* 20px */
+  --feedback-icon-size-sm: 1rem; /* 16px */
+  --feedback-icon-size-md: 1.25rem; /* 20px */
+  --feedback-icon-size-lg: 1.5rem; /* 24px */
+
+  /* ==================================
+     CONTEXTUAL TOKENS - Status
+     Status tokens are used for badges, labels, and status indicators. status.* design tokens provide consistent styling for displaying states and categories.
+     ================================== */
+
+  /* Status - Primary context */
+  --status-primary-background-color: var(--color-accent-100);
+  --status-primary-foreground-color: var(--color-accent-700);
+
+  /* Status - Secondary/Neutral context */
+  --status-secondary-background-color: var(--color-base-100);
+  --status-secondary-foreground-color: var(--color-base-700);
+
+  /* Status - Success context */
+  --status-success-background-color: rgb(220 252 231); /* green-100 */
+  --status-success-foreground-color: rgb(21 128 61); /* green-700 */
+
+  /* Status - Warning context */
+  --status-warning-background-color: rgb(254 249 195); /* yellow-100 */
+  --status-warning-foreground-color: rgb(161 98 7); /* yellow-700 */
+
+  /* Status - Danger/Error context */
+  --status-danger-background-color: rgb(254 226 226); /* red-100 */
+  --status-danger-foreground-color: rgb(185 28 28); /* red-700 */
+
+  /* Status - Outline variant */
+  --status-outline-border-color: var(--color-base-300);
+  --status-outline-foreground-color: var(--color-base-700);
+
+  /* Status - Common properties */
+  --status-border-width: 1px;
+  --status-border-radius: 9999px; /* full */
+
+  /* Status - Sizes */
+  --status-padding-x-sm: 0.5rem; /* 8px */
+  --status-padding-y-sm: 0.125rem; /* 2px */
+  --status-padding-x-md: 0.625rem; /* 10px */
+  --status-padding-y-md: 0.125rem; /* 2px */
+  --status-padding-x-lg: 0.75rem; /* 12px */
+  --status-padding-y-lg: 0.25rem; /* 4px */
+}
+
+/* ==================================
+   DARK MODE - Action Tokens
+   ================================== */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    /* ===== Action Tokens ===== */
+    /* Neutral context */
+    --action-neutral-background-color-default: var(--color-base-800);
+    --action-neutral-foreground-color-default: var(--color-base-50);
+    --action-neutral-border-color-default: var(--color-base-700);
+    --action-neutral-background-color-hover: var(--color-base-700);
+    --action-neutral-border-color-hover: var(--color-base-600);
+    --action-neutral-background-color-active: var(--color-base-600);
+
+    /* Confirm context */
+    --action-confirm-background-color-default: var(--color-accent-400);
+    --action-confirm-foreground-color-default: var(--color-accent-950);
+    --action-confirm-border-color-default: var(--color-accent-400);
+    --action-confirm-background-color-hover: var(--color-accent-300);
+    --action-confirm-border-color-hover: var(--color-accent-300);
+    --action-confirm-background-color-active: var(--color-accent-200);
+
+    /* Danger context */
+    --action-danger-background-color-default: rgb(185 28 28);
+    --action-danger-background-color-hover: rgb(220 38 38);
+    --action-danger-background-color-active: rgb(239 68 68);
+
+    /* Ghost variant */
+    --action-ghost-foreground-color-default: var(--color-base-50);
+    --action-ghost-background-color-hover: var(--color-base-800);
+    --action-ghost-background-color-active: var(--color-base-700);
+
+    /* Accent context */
+    --action-accent-background-color-default: var(--color-accent-700);
+    --action-accent-foreground-color-default: var(--color-accent-50);
+    --action-accent-background-color-hover: var(--color-accent-600);
+    --action-accent-background-color-active: var(--color-accent-500);
+
+    /* ===== Control Tokens ===== */
+    /* Control - Default state */
+    --control-background-color-default: var(--color-base-900);
+    --control-foreground-color-default: var(--color-base-50);
+    --control-border-color-default: var(--color-base-700);
+    --control-placeholder-color-default: var(--color-base-500);
+
+    /* Control - Hover state */
+    --control-border-color-hover: var(--color-base-600);
+
+    /* Control - Focus state */
+    --control-border-color-focus: var(--color-accent-400);
+    --control-focus-ring-color: var(--color-accent-400);
+
+    /* Control - Disabled state */
+    --control-background-color-disabled: var(--color-base-800);
+
+    /* Control - Error state */
+    --control-border-color-error: rgb(239 68 68);
+    --control-foreground-color-error: rgb(254 202 202);
+    --control-focus-ring-color-error: rgb(239 68 68);
+
+    /* Control - Checkbox & Radio specific */
+    --control-checkbox-checked-background: var(--color-accent-400);
+
+    /* Control - Switch specific */
+    --control-switch-background-default: var(--color-base-700);
+    --control-switch-background-checked: var(--color-accent-400);
+    --control-switch-thumb-background: var(--color-base-950);
+
+    /* ===== Feedback Tokens ===== */
+    /* Feedback - Info context */
+    --feedback-info-background-color: rgb(23 37 84); /* blue-950 */
+    --feedback-info-foreground-color: rgb(219 234 254); /* blue-100 */
+    --feedback-info-border-color: rgb(30 58 138); /* blue-800 */
+    --feedback-info-icon-color: rgb(96 165 250); /* blue-400 */
+
+    /* Feedback - Success context */
+    --feedback-success-background-color: rgb(20 83 45); /* green-950 */
+    --feedback-success-foreground-color: rgb(220 252 231); /* green-100 */
+    --feedback-success-border-color: rgb(22 101 52); /* green-800 */
+    --feedback-success-icon-color: rgb(74 222 128); /* green-400 */
+
+    /* Feedback - Warning context */
+    --feedback-warning-background-color: rgb(66 32 6); /* yellow-950 */
+    --feedback-warning-foreground-color: rgb(254 249 195); /* yellow-100 */
+    --feedback-warning-border-color: rgb(133 77 14); /* yellow-800 */
+    --feedback-warning-icon-color: rgb(250 204 21); /* yellow-400 */
+
+    /* Feedback - Error context */
+    --feedback-error-background-color: rgb(69 10 10); /* red-950 */
+    --feedback-error-foreground-color: rgb(254 226 226); /* red-100 */
+    --feedback-error-border-color: rgb(153 27 27); /* red-800 */
+    --feedback-error-icon-color: rgb(248 113 113); /* red-400 */
+
+    /* ===== Status Tokens ===== */
+    /* Status - Primary context */
+    --status-primary-background-color: var(--color-accent-700);
+    --status-primary-foreground-color: var(--color-accent-50);
+
+    /* Status - Secondary context */
+    --status-secondary-background-color: var(--color-base-800);
+    --status-secondary-foreground-color: var(--color-base-50);
+
+    /* Status - Success context */
+    --status-success-background-color: rgb(20 83 45); /* green-900 */
+    --status-success-foreground-color: rgb(187 247 208); /* green-200 */
+
+    /* Status - Warning context */
+    --status-warning-background-color: rgb(113 63 18); /* yellow-900 */
+    --status-warning-foreground-color: rgb(254 249 195); /* yellow-100 */
+
+    /* Status - Danger context */
+    --status-danger-background-color: rgb(127 29 29); /* red-900 */
+    --status-danger-foreground-color: rgb(254 226 226); /* red-100 */
+
+    /* Status - Outline context */
+    --status-outline-border-color: var(--color-base-700);
+    --status-outline-foreground-color: var(--color-base-50);
+  }
+}
+
+/* Explicit dark class overrides */
+:root:where(.dark, .dark *) {
+  /* ===== Action Tokens ===== */
+  /* Neutral context */
+  --action-neutral-background-color-default: var(--color-base-800);
+  --action-neutral-foreground-color-default: var(--color-base-50);
+  --action-neutral-border-color-default: var(--color-base-700);
+  --action-neutral-background-color-hover: var(--color-base-700);
+  --action-neutral-border-color-hover: var(--color-base-600);
+  --action-neutral-background-color-active: var(--color-base-600);
+
+  /* Confirm context */
+  --action-confirm-background-color-default: var(--color-accent-400);
+  --action-confirm-foreground-color-default: var(--color-accent-950);
+  --action-confirm-border-color-default: var(--color-accent-400);
+  --action-confirm-background-color-hover: var(--color-accent-300);
+  --action-confirm-border-color-hover: var(--color-accent-300);
+  --action-confirm-background-color-active: var(--color-accent-200);
+
+  /* Danger context */
+  --action-danger-background-color-default: rgb(185 28 28);
+  --action-danger-background-color-hover: rgb(220 38 38);
+  --action-danger-background-color-active: rgb(239 68 68);
+
+  /* Ghost variant */
+  --action-ghost-foreground-color-default: var(--color-base-50);
+  --action-ghost-background-color-hover: var(--color-base-800);
+  --action-ghost-background-color-active: var(--color-base-700);
+
+  /* Accent context */
+  --action-accent-background-color-default: var(--color-accent-700);
+  --action-accent-foreground-color-default: var(--color-accent-50);
+  --action-accent-background-color-hover: var(--color-accent-600);
+  --action-accent-background-color-active: var(--color-accent-500);
+
+  /* ===== Feedback Tokens ===== */
+  /* Feedback - Info context */
+  --feedback-info-background-color: rgb(23 37 84); /* blue-950 */
+  --feedback-info-foreground-color: rgb(219 234 254); /* blue-100 */
+  --feedback-info-border-color: rgb(30 58 138); /* blue-800 */
+  --feedback-info-icon-color: rgb(96 165 250); /* blue-400 */
+
+  /* Feedback - Success context */
+  --feedback-success-background-color: rgb(20 83 45); /* green-950 */
+  --feedback-success-foreground-color: rgb(220 252 231); /* green-100 */
+  --feedback-success-border-color: rgb(22 101 52); /* green-800 */
+  --feedback-success-icon-color: rgb(74 222 128); /* green-400 */
+
+  /* Feedback - Warning context */
+  --feedback-warning-background-color: rgb(66 32 6); /* yellow-950 */
+  --feedback-warning-foreground-color: rgb(254 249 195); /* yellow-100 */
+  --feedback-warning-border-color: rgb(133 77 14); /* yellow-800 */
+  --feedback-warning-icon-color: rgb(250 204 21); /* yellow-400 */
+
+  /* Feedback - Error context */
+  --feedback-error-background-color: rgb(69 10 10); /* red-950 */
+  --feedback-error-foreground-color: rgb(254 226 226); /* red-100 */
+  --feedback-error-border-color: rgb(153 27 27); /* red-800 */
+  --feedback-error-icon-color: rgb(248 113 113); /* red-400 */
+
+  /* ===== Control Tokens ===== */
+  /* Control - Default state */
+  --control-background-color-default: var(--color-base-900);
+  --control-foreground-color-default: var(--color-base-50);
+  --control-border-color-default: var(--color-base-700);
+  --control-placeholder-color-default: var(--color-base-500);
+
+  /* Control - Hover state */
+  --control-border-color-hover: var(--color-base-600);
+
+  /* Control - Focus state */
+  --control-border-color-focus: var(--color-accent-400);
+  --control-focus-ring-color: var(--color-accent-400);
+
+  /* Control - Disabled state */
+  --control-background-color-disabled: var(--color-base-800);
+
+  /* Control - Error state */
+  --control-border-color-error: rgb(239 68 68);
+  --control-foreground-color-error: rgb(254 202 202);
+  --control-focus-ring-color-error: rgb(239 68 68);
+
+  /* Control - Checkbox & Radio specific */
+  --control-checkbox-checked-background: var(--color-accent-400);
+
+  /* Control - Switch specific */
+  --control-switch-background-default: var(--color-base-700);
+  --control-switch-background-checked: var(--color-accent-400);
+  --control-switch-thumb-background: var(--color-base-950);
+
+  /* ===== Status Tokens ===== */
+  /* Status - Primary context */
+  --status-primary-background-color: var(--color-accent-700);
+  --status-primary-foreground-color: var(--color-accent-50);
+
+  /* Status - Secondary context */
+  --status-secondary-background-color: var(--color-base-800);
+  --status-secondary-foreground-color: var(--color-base-50);
+
+  /* Status - Success context */
+  --status-success-background-color: rgb(20 83 45); /* green-900 */
+  --status-success-foreground-color: rgb(187 247 208); /* green-200 */
+
+  /* Status - Warning context */
+  --status-warning-background-color: rgb(113 63 18); /* yellow-900 */
+  --status-warning-foreground-color: rgb(254 249 195); /* yellow-100 */
+
+  /* Status - Danger context */
+  --status-danger-background-color: rgb(127 29 29); /* red-900 */
+  --status-danger-foreground-color: rgb(254 226 226); /* red-100 */
+
+  /* Status - Outline context */
+  --status-outline-border-color: var(--color-base-700);
+  --status-outline-foreground-color: var(--color-base-50);
+}

@@ -1,25 +1,29 @@
-import { isRTLLanguage } from '@myorg/shared/intl'
-import { Suspense, useEffect } from 'react'
+import { getLanguageInfo } from '@myorg/shared/intl'
+import { useEffect, useMemo } from 'react'
+import { useGlobals } from 'storybook/internal/preview-api'
 import type { DecoratorFunction } from 'storybook/internal/types'
 
-import { m } from '../i18n/messages'
-import { locales, setLocale } from '../i18n/runtime'
+import { Locale, setLocale } from '../i18n/runtime'
 
-const withLocale: DecoratorFunction = (Story, context) => {
-  const { locale } = context.globals as { locale: (typeof locales)[number] }
+const withLocale: DecoratorFunction = (Story) => {
+  const [global] = useGlobals()
+
+  const locale = global.locale as Locale
 
   useEffect(() => {
-    setLocale(locale)
+    setLocale(locale, { reload: false })
+  }, [locale])
+
+  const { code, direction } = useMemo(() => {
+    return getLanguageInfo(locale)
   }, [locale])
 
   return (
-    <Suspense fallback={<div>{m.loading()}</div>}>
-      <div
-        lang={locale}
-        dir={isRTLLanguage(locale) ? 'rtl' : 'ltr'}>
-        <Story />
-      </div>
-    </Suspense>
+    <div
+      lang={code}
+      dir={direction}>
+      <Story />
+    </div>
   )
 }
 

@@ -1,6 +1,7 @@
-import '@myorg/fonts/inter.css'
-import { getLanguageEndonym, isRTLLanguage } from '@myorg/shared/intl'
+import { getLanguageEmoji, getLanguageEndonym } from '@myorg/shared/intl'
 import type { Preview } from '@storybook/react-vite'
+
+import '@myorg/fonts/inter.css'
 
 import withTheme from './decorators/withTheme'
 import withTranslations from './decorators/withTranslations'
@@ -20,7 +21,7 @@ const preview: Preview = {
           return {
             value: locale,
             title: getLanguageEndonym(locale),
-            right: isRTLLanguage(locale) ? 'rtl' : 'ltr',
+            right: getLanguageEmoji(locale),
           }
         }),
         dynamicTitle: true,
@@ -32,9 +33,9 @@ const preview: Preview = {
         title: 'Theme',
         icon: 'circlehollow',
         items: [
-          { value: 'light', title: 'Light' },
-          { value: 'dark', title: 'Dark' },
-          { value: 'system', title: 'System' },
+          { value: 'light', title: 'Light', icon: 'sun' },
+          { value: 'dark', title: 'Dark', icon: 'moon' },
+          { value: 'system', title: 'System', icon: 'accessibility' },
         ],
         dynamicTitle: true,
       },
@@ -45,15 +46,8 @@ const preview: Preview = {
     theme: 'system',
   },
   parameters: {
-    backgrounds: {
-      grid: {
-        cellSize: 8,
-        opacity: 0.2,
-        cellAmount: 10,
-        offsetX: 16, // Default is 0 if story has 'fullscreen' layout, 16 if layout is 'padded'
-        offsetY: 16, // Default is 0 if story has 'fullscreen' layout, 16 if layout is 'padded'
-      },
-    },
+    layout: 'fullscreen',
+    backgrounds: { disable: true },
     options: {
       storySort: {
         method: '',

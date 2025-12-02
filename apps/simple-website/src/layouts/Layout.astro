@@ -10,9 +10,11 @@ import Html from '@/layouts/partials/Html.astro'
 
 export interface Props {
   metadata: HeadProps
+  showHeader?: boolean
+  showFooter?: boolean
 }
 
-const { metadata } = Astro.props
+const { metadata, showHeader = true, showFooter = true } = Astro.props
 ---
 
 <Document>
@@ -20,9 +22,9 @@ const { metadata } = Astro.props
     <Head {...metadata} />
     <Body>
       <AccessibilityShortcuts />
-      <Header availableLanguages={metadata.alternates} />
+      {showHeader && <Header availableLanguages={metadata.alternates} />}
       <slot transition:animate='fade' />
-      <Footer />
+      {showFooter && <Footer />}
     </Body>
   </Html>
 </Document>

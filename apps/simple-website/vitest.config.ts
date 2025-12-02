@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 import { getViteConfig } from 'astro/config'
 
 export default getViteConfig({
@@ -11,5 +10,6 @@ export default getViteConfig({
     coverage: {
       include: ['src/**/*.ts', 'src/**/*.astro'],
     },
+    setupFiles: ['tests/setup-tests.ts'],
   },
 })

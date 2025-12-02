@@ -1,21 +1,18 @@
 import mdx from '@astrojs/mdx'
 import node from '@astrojs/node'
+import react from '@astrojs/react'
 import { paraglideVitePlugin } from '@inlang/paraglide-js'
 import playformCompress from '@playform/compress'
 import tailwindcss from '@tailwindcss/vite'
 import compressor from 'astro-compressor'
 import { defineConfig } from 'astro/config'
-import path from 'node:path'
+import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import routes from './routes'
 
-import react from '@astrojs/react'
-
-const dirname =
-  typeof __dirname !== 'undefined'
-    ? __dirname
-    : path.dirname(fileURLToPath(import.meta.url))
+const path = fileURLToPath(import.meta.url)
+const dir = dirname(path)
 
 export default defineConfig({
   trailingSlash: 'never',
@@ -25,8 +22,8 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        '@': path.resolve(dirname, './src'),
-        '~': path.resolve(dirname, '.'),
+        '@': resolve(dir, './src'),
+        '~': resolve(dir, '.'),
       },
     },
     plugins: [

@@ -4,6 +4,7 @@ import {
   LANGUAGE_INFO_MAP,
   getAllLanguageCodes,
   getLanguageAbbreviation,
+  getLanguageEmoji,
   getLanguageEndonym,
   getLanguageInfo,
   getLanguagesByScript,
@@ -95,5 +96,21 @@ describe('getLanguagesByScript', () => {
   it('retourne toutes les langues du script Arabic', () => {
     const arabic = getLanguagesByScript('Arabic')
     expect(arabic.some((l) => l.code === 'ar')).toBe(true)
+  })
+
+  it('retourne un tableau vide si script inconnu', () => {
+    const none = getLanguagesByScript('NonExistentScript')
+    expect(Array.isArray(none)).toBe(true)
+    expect(none.length).toBe(0)
+  })
+})
+
+describe('getLanguageEmoji', () => {
+  it("retourne l'emoji pour une langue connue", () => {
+    expect(getLanguageEmoji('fr')).toBe(LANGUAGE_INFO_MAP.fr.emoji)
+  })
+
+  it('retourne undefined pour une langue inconnue', () => {
+    expect(getLanguageEmoji('zz')).toBeUndefined()
   })
 })

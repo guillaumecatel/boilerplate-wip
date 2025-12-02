@@ -20,6 +20,9 @@
     "./dist"
   ],
   "exports": {
+    "./use-once": "./src/useOnce.tsx",
+    "./use-local-storage": "./src/useLocalStorage.tsx",
+    "./use-theme": "./src/useTheme.tsx",
     "./use-keyboard-navigation": "./src/useKeyboardNavigation.tsx",
     "./use-click-outside": "./src/useClickOutside.tsx",
     "./use-debounce": "./src/useDebounce.tsx",
@@ -32,6 +35,21 @@
   },
   "publishConfig": {
     "exports": {
+      "./use-local-storage": {
+        "import": "./dist/useLocalStorage.js",
+        "require": "./dist/useLocalStorage.cjs",
+        "types": "./dist/useLocalStorage.d.ts"
+      },
+      "./use-theme": {
+        "import": "./dist/useTheme.js",
+        "require": "./dist/useTheme.cjs",
+        "types": "./dist/useTheme.d.ts"
+      },
+      "./use-once": {
+        "import": "./dist/useOnce.js",
+        "require": "./dist/useOnce.cjs",
+        "types": "./dist/useOnce.d.ts"
+      },
       "./use-keyboard-navigation": {
         "import": "./dist/useKeyboardNavigation.js",
         "require": "./dist/useKeyboardNavigation.cjs",
@@ -90,7 +108,9 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@myorg/shared": "workspace:*"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",

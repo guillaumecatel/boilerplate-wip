@@ -1,24 +1,37 @@
+import { useOnce } from '@myorg/hooks/use-once'
+import { useTheme } from '@myorg/hooks/use-theme'
+import { getSystemTheme, type Theme } from '@myorg/shared/dom'
 import { useEffect } from 'react'
+import { useGlobals } from 'storybook/internal/preview-api'
 import type { DecoratorFunction } from 'storybook/internal/types'
 
-document.documentElement.classList.add('bg-base-50', 'dark:bg-base-950')
+export type StorybookTheme = Theme & 'system'
 
-const withTheme: DecoratorFunction = (Story, context) => {
-  const { theme } = context.globals as { theme: 'light' | 'dark' | 'system' }
+const setThemeClasses = () =>
+  document.documentElement.classList.add('bg-base-50', 'dark:bg-base-950')
+
+const withTheme: DecoratorFunction = (Story) => {
+  const { setTheme } = useTheme()
+  const [globals] = useGlobals()
+
+  const theme = globals.theme as StorybookTheme
+
+  useOnce(setThemeClasses)
 
   useEffect(() => {
-    document.documentElement.classList.remove('light', 'dark')
     if (theme === 'system') {
-      const isDarkMode = window.matchMedia(
-        '(prefers-color-scheme: dark)',
-      ).matches
-      document.documentElement.classList.add(isDarkMode ? 'dark' : 'light')
+      const globalSystemTheme = getSystemTheme()
+      setTheme(globalSystemTheme)
     } else {
-      document.documentElement.classList.add(theme)
+      setTheme(theme)
     }
-  }, [theme])
+  }, [theme, setTheme])
 
-  return <Story />
+  return (
+    <div className='bg-base-50 dark:bg-base-950 relative p-4'>
+      <Story />
+    </div>
+  )
 }
 
 export default withTheme

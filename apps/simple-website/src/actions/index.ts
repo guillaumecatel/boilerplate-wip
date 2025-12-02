@@ -8,7 +8,6 @@ export const server = {
       email: z.string().email(),
     }),
     handler: async (input) => {
-      console.log('Subscribing email to newsletter:', input.email)
       return `Hello, ${input.email}!`
     },
   }),
