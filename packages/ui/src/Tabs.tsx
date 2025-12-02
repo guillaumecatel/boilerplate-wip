@@ -1,6 +1,7 @@
 import { cva, cx, type VariantProps } from 'class-variance-authority'
 import { Tabs as RadixTabs } from 'radix-ui'
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
+import Divider from './Divider'
 
 // Tabs Root Variants
 const tabsRootVariants = cva('', {
@@ -16,55 +17,52 @@ const tabsRootVariants = cva('', {
 })
 
 // Tabs List Variants
-const tabsListVariants = cva(
-  'flex shrink-0 border-base-200 dark:border-base-800',
-  {
-    variants: {
-      orientation: {
-        horizontal: 'border-b',
-        vertical: 'flex-col border-r',
-      },
-      variant: {
-        line: '',
-        enclosed: 'bg-base-50 dark:bg-base-900 rounded-lg p-1',
-      },
+const tabsListVariants = cva('flex shrink-0 ', {
+  variants: {
+    orientation: {
+      horizontal: 'border-b',
+      vertical: 'flex-col',
     },
-    compoundVariants: [
-      {
-        orientation: 'horizontal',
-        variant: 'line',
-        class: 'gap-6',
-      },
-      {
-        orientation: 'vertical',
-        variant: 'line',
-        class: 'gap-2',
-      },
-      {
-        orientation: 'horizontal',
-        variant: 'enclosed',
-        class: 'gap-1',
-      },
-      {
-        orientation: 'vertical',
-        variant: 'enclosed',
-        class: 'gap-1',
-      },
-    ],
-    defaultVariants: {
-      orientation: 'horizontal',
-      variant: 'line',
+    variant: {
+      line: '',
+      enclosed: 'bg-base-50 dark:bg-base-900 rounded-lg p-1',
     },
   },
-)
+  compoundVariants: [
+    {
+      orientation: 'horizontal',
+      variant: 'line',
+      class: 'gap-0',
+    },
+    {
+      orientation: 'vertical',
+      variant: 'line',
+      class: 'gap-2',
+    },
+    {
+      orientation: 'horizontal',
+      variant: 'enclosed',
+      class: 'gap-1',
+    },
+    {
+      orientation: 'vertical',
+      variant: 'enclosed',
+      class: 'gap-1',
+    },
+  ],
+  defaultVariants: {
+    orientation: 'horizontal',
+    variant: 'line',
+  },
+})
 
 // Tabs Trigger Variants
 const tabsTriggerVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-start whitespace-nowrap font-medium cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       orientation: {
-        horizontal: '',
+        horizontal: 'px-4',
         vertical: 'w-full',
       },
       variant: {
@@ -80,9 +78,9 @@ const tabsTriggerVariants = cva(
     },
     compoundVariants: [
       // Line variant horizontal
-      { variant: 'line', orientation: 'horizontal', size: 'sm', class: 'pb-2' },
-      { variant: 'line', orientation: 'horizontal', size: 'md', class: 'pb-3' },
-      { variant: 'line', orientation: 'horizontal', size: 'lg', class: 'pb-4' },
+      { variant: 'line', orientation: 'horizontal', size: 'sm', class: 'py-1' },
+      { variant: 'line', orientation: 'horizontal', size: 'md', class: 'py-2' },
+      { variant: 'line', orientation: 'horizontal', size: 'lg', class: 'py-3' },
       // Line variant vertical
       {
         variant: 'line',
@@ -121,9 +119,9 @@ const tabsContentVariants = cva(
   {
     variants: {
       size: {
-        sm: 'mt-3',
-        md: 'mt-4',
-        lg: 'mt-6',
+        sm: '',
+        md: '',
+        lg: '',
       },
     },
     defaultVariants: {
@@ -160,11 +158,14 @@ export interface TabsListProps
 export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
   ({ className, orientation, variant, ...props }, ref) => {
     return (
-      <RadixTabs.List
-        ref={ref}
-        className={cx(tabsListVariants({ orientation, variant }), className)}
-        {...props}
-      />
+      <>
+        <RadixTabs.List
+          ref={ref}
+          className={cx(tabsListVariants({ orientation, variant }), className)}
+          {...props}
+        />
+        <Divider orientation={orientation} />
+      </>
     )
   },
 )

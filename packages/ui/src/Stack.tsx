@@ -39,6 +39,10 @@ const variants = cva(['flex'], {
       'wrap': ['flex-wrap'],
       'wrap-reverse': ['flex-wrap-reverse'],
     },
+    grow: {
+      true: ['flex-grow'],
+      false: ['flex-grow-0'],
+    },
   },
   defaultVariants: {
     direction: 'row',

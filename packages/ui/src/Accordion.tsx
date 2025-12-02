@@ -48,7 +48,7 @@ const AccordionTrigger = forwardRef<
     <RadixAccordion.Trigger
       ref={ref}
       className={cx(
-        'flex flex-1 flex-row items-baseline gap-x-3 px-3 py-3 text-start',
+        'flex flex-1 flex-row items-baseline gap-x-3 py-3 text-start',
         className,
       )}
       {...props}>
@@ -94,7 +94,7 @@ const AccordionContent = forwardRef<
         className,
       )}
       {...props}>
-      <div className='px-3 pb-6'>
+      <div className='pb-6'>
         <Text
           variant='body-small'
           className='text-gray-500'>
@@ -115,7 +115,7 @@ const AccordionItem = forwardRef<
   <RadixAccordion.Item
     ref={ref}
     className={cx(
-      'flex flex-col justify-between border-b border-b-gray-100 focus-visible:bg-gray-100',
+      'flex flex-col justify-between focus-visible:bg-gray-100',
       className,
     )}
     {...props}

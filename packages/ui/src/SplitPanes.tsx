@@ -1,20 +1,22 @@
-import type { KeyboardEvent } from 'react'
 import {
   useCallback,
   useEffect,
   useRef,
   useState,
   type CSSProperties,
+  type KeyboardEvent,
   type MouseEvent,
   type ReactNode,
   type TouchEvent,
 } from 'react'
+import Divider from './Divider'
 
 export interface SplitPanesProps {
   /**
    * The two panes to display. Must be exactly 2 children.
    */
-  children: [ReactNode, ReactNode]
+  firstPane: ReactNode
+  secondPane: ReactNode
   /**
    * The initial size of the first pane in pixels or percentage
    * @default "50%"
@@ -80,7 +82,8 @@ const parseSizeValue = (
 }
 
 export const SplitPanes = ({
-  children,
+  firstPane,
+  secondPane,
   defaultSize = '50%',
   minSize = 100,
   maxSize,
@@ -93,7 +96,9 @@ export const SplitPanes = ({
   resizerAriaLabel = 'Resize panels',
 }: SplitPanesProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [pane1Size, setPane1Size] = useState<number>(0)
+  const [pane1Size, setPane1Size] = useState<number>(
+    parseSizeValue(defaultSize, 1),
+  )
   const [isDragging, setIsDragging] = useState(false)
   const dragStartPos = useRef<number>(0)
   const dragStartSize = useRef<number>(0)
@@ -246,14 +251,14 @@ export const SplitPanes = ({
     zIndex: 1,
     ...(isVertical
       ? {
-          width: '11px',
+          width: '1px',
           cursor: resizable ? 'col-resize' : 'default',
-          margin: '0 -5px',
+          margin: '0',
         }
       : {
-          height: '11px',
+          height: '1px',
           cursor: resizable ? 'row-resize' : 'default',
-          margin: '-5px 0',
+          margin: '0',
         }),
   }
 
@@ -263,22 +268,16 @@ export const SplitPanes = ({
       ? {
           width: '1px',
           height: '100%',
-          left: '5px',
+          left: 0,
           top: 0,
         }
       : {
           height: '1px',
           width: '100%',
-          top: '5px',
+          top: 0,
           left: 0,
         }),
-    backgroundColor: isDragging
-      ? 'var(--color-accent-500)'
-      : 'var(--color-base-300)',
-    transition: isDragging ? 'none' : 'background-color 0.2s',
   }
-
-  const [firstChild, secondChild] = children
 
   return (
     <div
@@ -292,7 +291,7 @@ export const SplitPanes = ({
         style={pane1Styles}
         role='region'
         aria-label='First panel'>
-        {firstChild}
+        {firstPane}
       </div>
 
       {resizable && (
@@ -310,6 +309,7 @@ export const SplitPanes = ({
           onTouchStart={handleMouseDown}
           onKeyDown={handleKeyDown}>
           <div style={resizerBarStyles} />
+          <Divider orientation={isVertical ? 'vertical' : 'horizontal'} />
         </div>
       )}
 
@@ -319,7 +319,7 @@ export const SplitPanes = ({
         style={pane2Styles}
         role='region'
         aria-label='Second panel'>
-        {secondChild}
+        {secondPane}
       </div>
     </div>
   )

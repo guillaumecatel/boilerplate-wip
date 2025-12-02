@@ -80,6 +80,7 @@ const listItemVariants = cva(
     'transition-colors duration-200',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
     'focus-visible:ring-gray-400 dark:focus-visible:ring-gray-600',
+    'text-start',
   ],
   {
     variants: {
@@ -207,6 +208,9 @@ const ListItem = <C extends ElementType = 'li'>({
 
 ListItem.displayName = 'List.Item'
 
+List.Item = ListItem
+
 // Export as compound component
 export { List, ListItem }
+
 export default List
