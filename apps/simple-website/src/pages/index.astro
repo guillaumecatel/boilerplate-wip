@@ -1,7 +1,6 @@
 ---
 import { getCollection, getEntry } from 'astro:content'
 
-import Button from '@myorg/ui/button'
 import Text from '@myorg/ui/text'
 
 import { getLocale, locales, localizeHref } from '@/i18n/runtime'
@@ -10,8 +9,6 @@ import Layout from '@/layouts/Layout.astro'
 
 import LatestPostsSection from '@/components/LatestPostsSection.astro'
 import NewsletterSection from '@/components/NewsletterSection.astro'
-
-import { ButtonGroup } from '@myorg/ui'
 
 const currentLocale = getLocale()
 
@@ -50,20 +47,6 @@ const metadata = {
         {homepage.data.description}
       </Text>
     </hgroup>
-    <Button>Click me</Button>
-    <Button
-      as='a'
-      href='https://google.com'
-      target='_blank'
-      >Click me</Button
-    >
-    <Button as='div'>Click me</Button>
-
-    <ButtonGroup label='toto'>
-      <Button variant='outline'>View</Button>
-      <Button variant='outline'>Edit</Button>
-      <Button variant='outline'>Delete</Button>
-    </ButtonGroup>
 
     <LatestPostsSection posts={posts.map((post) => post.data)} />
     <NewsletterSection />

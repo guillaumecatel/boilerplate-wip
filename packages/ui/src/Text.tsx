@@ -1,8 +1,9 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { ElementType } from 'react'
-import type { PolymorphicProps } from './Polymorphic'
 
-const variants = cva([], {
+import type { PolymorphicProps } from './utils/polymorphic'
+
+const textVariants = cva([], {
   variants: {
     breakKeep: {
       true: 'break-keep',
@@ -19,25 +20,31 @@ const variants = cva([], {
     color: {
       none: '',
       inherit: 'text-inherit',
-      primary: 'text-gray-900 dark:text-gray-100',
-      secondary: 'text-gray-600 dark:text-gray-400',
-      disabled: 'text-gray-400 dark:text-gray-600',
-      success: 'text-green-600 dark:text-green-400',
-      warning: 'text-yellow-600 dark:text-yellow-400',
-      error: 'text-red-600 dark:text-red-400',
-      info: 'text-blue-600 dark:text-blue-400',
+      primary:
+        'text-[var(--text-color-primary)] dark:text-[var(--text-color-primary-dark)]',
+      secondary:
+        'text-[var(--text-color-secondary)] dark:text-[var(--text-color-secondary-dark)]',
+      disabled:
+        'text-[var(--text-color-disabled)] dark:text-[var(--text-color-disabled-dark)]',
+      success:
+        'text-[var(--text-color-success)] dark:text-[var(--text-color-success-dark)]',
+      warning:
+        'text-[var(--text-color-warning)] dark:text-[var(--text-color-warning-dark)]',
+      error:
+        'text-[var(--text-color-error)] dark:text-[var(--text-color-error-dark)]',
+      info: 'text-[var(--text-color-info)] dark:text-[var(--text-color-info-dark)]',
     },
     variant: {
-      'display-large': 'text-display-large',
-      'display-medium': 'text-display-medium',
-      'display-small': 'text-display-small',
-      'heading-large': 'text-heading-large',
-      'heading-medium': 'text-heading-medium',
-      'heading-small': 'text-heading-small',
-      'body-large': 'text-body-large',
-      'body-medium': 'text-body-medium',
-      'body-small': 'text-body-small',
-      'caption': 'text-caption',
+      'display-large': 'text-[length:var(--text-variant-display-large)]',
+      'display-medium': 'text-[length:var(--text-variant-display-medium)]',
+      'display-small': 'text-[length:var(--text-variant-display-small)]',
+      'heading-large': 'text-[length:var(--text-variant-heading-large)]',
+      'heading-medium': 'text-[length:var(--text-variant-heading-medium)]',
+      'heading-small': 'text-[length:var(--text-variant-heading-small)]',
+      'body-large': 'text-[length:var(--text-variant-body-large)]',
+      'body-medium': 'text-[length:var(--text-variant-body-medium)]',
+      'body-small': 'text-[length:var(--text-variant-body-small)]',
+      'caption': 'text-[length:var(--text-variant-caption)]',
     },
     weight: {
       none: '',
@@ -90,7 +97,7 @@ const variants = cva([], {
 export type DefaultTextElement = 'span'
 
 export type TextProps<Component extends ElementType = DefaultTextElement> =
-  PolymorphicProps<Component, VariantProps<typeof variants>>
+  PolymorphicProps<Component, VariantProps<typeof textVariants>>
 
 export type TextVariant = TextProps<DefaultTextElement>['variant']
 export type TextColor = TextProps<DefaultTextElement>['color']
@@ -126,7 +133,7 @@ export const Text = <Component extends ElementType = DefaultTextElement>({
   return (
     <Comp
       data-component='Text'
-      className={variants({
+      className={textVariants({
         color,
         variant,
         weight,

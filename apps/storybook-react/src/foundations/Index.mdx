@@ -1,0 +1,75 @@
+import Grid from '@myorg/ui/grid'
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+
+import FoundationCardBorderAndRadius from '~/.storybook/components/FoundationCardBorderAndRadius'
+import FoundationCardColor from '~/.storybook/components/FoundationCardColor'
+import FoundationCardElevation from '~/.storybook/components/FoundationCardElevation'
+import FoundationCardGridAndLayout from '~/.storybook/components/FoundationCardGridAndLayout'
+import FoundationCardMotion from '~/.storybook/components/FoundationCardMotion'
+import FoundationCardSizeAndSpacing from '~/.storybook/components/FoundationCardSizeAndSpacing'
+import FoundationCardTypography from '~/.storybook/components/FoundationCardTypography'
+
+<Meta title='Foundations/Index' />
+
+# Foundations
+
+Foundation in design systems refers to the core elements that form the basis for building a consistent and cohesive user interface. These elements include colors, typography, spacing, grid systems, and other design principles that ensure a unified look and feel across all components and screens.
+
+<Grid
+  cols={3}
+  gap='lg'
+  className='my-8'>
+  <Grid.Item>
+    <FoundationCardColor />
+  </Grid.Item>
+  <Grid.Item>
+    <FoundationCardTypography />
+  </Grid.Item>
+  <Grid.Item>
+    <FoundationCardSizeAndSpacing />
+  </Grid.Item>
+  <Grid.Item>
+    <FoundationCardBorderAndRadius />
+  </Grid.Item>
+  <Grid.Item>
+    <FoundationCardElevation />
+  </Grid.Item>
+  <Grid.Item>
+    <FoundationCardGridAndLayout />
+  </Grid.Item>
+  <Grid.Item>
+    <FoundationCardMotion />
+  </Grid.Item>
+</Grid>
+
+## Usage
+
+Each foundation card represents a core design token category. Click on any card to explore the specific values and usage guidelines.
+
+```jsx
+<Grid
+  cols={3}
+  gap='lg'>
+  <Grid.Item>
+    <FoundationCardColor />
+  </Grid.Item>
+  <Grid.Item>
+    <FoundationCardTypography />
+  </Grid.Item>
+  <Grid.Item>
+    <FoundationCardSizeAndSpacing />
+  </Grid.Item>
+  <Grid.Item>
+    <FoundationCardBorderAndRadius />
+  </Grid.Item>
+  <Grid.Item>
+    <FoundationCardElevation />
+  </Grid.Item>
+  <Grid.Item>
+    <FoundationCardGridAndLayout />
+  </Grid.Item>
+  <Grid.Item>
+    <FoundationCardMotion />
+  </Grid.Item>
+</Grid>
+```

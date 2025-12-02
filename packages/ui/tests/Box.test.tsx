@@ -1,19 +1,19 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { Stack } from '../src'
+import { Box } from '../src'
 
-describe('Stack', () => {
+describe('Box', () => {
   it('renders correctly with children', () => {
-    render(<Stack >Hello world</Stack >)
+    render(<Box >Hello world</Box >)
     expect(screen.getByText('Hello world')).toBeInTheDocument()
   })
 
   it('has the correct data-component attribute', () => {
-    render(<Stack >Click me</Stack >)
+    render(<Box >Click me</Box >)
     expect(screen.getByText('Click me')).toHaveAttribute(
       'data-component',
-      'Stack',
+      'Box',
     )
   })
 })

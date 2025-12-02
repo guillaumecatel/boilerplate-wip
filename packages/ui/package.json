@@ -23,8 +23,9 @@
     "./dist"
   ],
   "exports": {
-    "./grid": "./src/Grid.tsx",
+    "./box": "./src/Box.tsx",
     "./stack": "./src/Stack.tsx",
+    "./grid": "./src/Grid.tsx",
     "./list": "./src/List.tsx",
     "./split-panes": "./src/SplitPanes.tsx",
     "./form": "./src/Form.tsx",
@@ -70,15 +71,20 @@
   },
   "publishConfig": {
     "exports": {
-      "./grid": {
-        "import": "./dist/Grid.js",
-        "require": "./dist/Grid.cjs",
-        "types": "./dist/Grid.d.ts"
+      "./box": {
+        "import": "./dist/Box.js",
+        "require": "./dist/Box.cjs",
+        "types": "./dist/Box.d.ts"
       },
       "./stack": {
         "import": "./dist/Stack.js",
         "require": "./dist/Stack.cjs",
         "types": "./dist/Stack.d.ts"
+      },
+      "./grid": {
+        "import": "./dist/Grid.js",
+        "require": "./dist/Grid.cjs",
+        "types": "./dist/Grid.d.ts"
       },
       "./list": {
         "import": "./dist/List.js",

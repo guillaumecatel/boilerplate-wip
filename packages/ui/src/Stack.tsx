@@ -1,14 +1,24 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import type { ElementType, HTMLAttributes } from 'react'
-import type { PolymorphicProps } from './Polymorphic'
+import type { ElementType } from 'react'
 
-const variants = cva(['flex'], {
+import type { PolymorphicProps } from './utils/polymorphic'
+
+const stackVariants = cva(['flex'], {
   variants: {
     direction: {
       'row': ['flex-row'],
-      'column': ['flex-col'],
       'row-reverse': ['flex-row-reverse'],
-      'column-reverse': ['flex-col-reverse'],
+      'col': ['flex-col'],
+      'col-reverse': ['flex-col-reverse'],
+    },
+    gap: {
+      'none': ['gap-0'],
+      'xs': ['gap-[var(--stack-gap-xs)]'],
+      'sm': ['gap-[var(--stack-gap-sm)]'],
+      'md': ['gap-[var(--stack-gap-md)]'],
+      'lg': ['gap-[var(--stack-gap-lg)]'],
+      'xl': ['gap-[var(--stack-gap-xl)]'],
+      '2xl': ['gap-[var(--stack-gap-2xl)]'],
     },
     align: {
       start: ['items-start'],
@@ -24,71 +34,61 @@ const variants = cva(['flex'], {
       between: ['justify-between'],
       around: ['justify-around'],
       evenly: ['justify-evenly'],
-    },
-    gap: {
-      'none': ['gap-0'],
-      'xs': ['gap-1'],
-      'sm': ['gap-2'],
-      'md': ['gap-4'],
-      'lg': ['gap-6'],
-      'xl': ['gap-8'],
-      '2xl': ['gap-12'],
+      stretch: ['justify-stretch'],
     },
     wrap: {
       'nowrap': ['flex-nowrap'],
       'wrap': ['flex-wrap'],
       'wrap-reverse': ['flex-wrap-reverse'],
     },
-    grow: {
-      true: ['flex-grow'],
-      false: ['flex-grow-0'],
-    },
   },
   defaultVariants: {
-    direction: 'row',
+    direction: 'col',
+    gap: 'none',
     align: 'stretch',
     justify: 'start',
-    gap: 'none',
     wrap: 'nowrap',
   },
 })
 
-export interface StackPropsBase
-  extends HTMLAttributes<HTMLElement>,
-    VariantProps<typeof variants> {}
+export type DefaultStackElement = 'div'
 
-export type StackProps<T extends ElementType = 'div'> = PolymorphicProps<
-  T,
-  StackPropsBase
->
+export type StackProps<Component extends ElementType = DefaultStackElement> =
+  PolymorphicProps<Component, VariantProps<typeof stackVariants>>
 
-export const Stack = <T extends ElementType = 'div'>({
+export type StackDirection = StackProps<DefaultStackElement>['direction']
+export type StackGap = StackProps<DefaultStackElement>['gap']
+export type StackAlign = StackProps<DefaultStackElement>['align']
+export type StackJustify = StackProps<DefaultStackElement>['justify']
+export type StackWrap = StackProps<DefaultStackElement>['wrap']
+
+export const Stack = <Component extends ElementType = DefaultStackElement>({
   as,
-  direction,
-  align,
-  justify,
-  gap,
-  wrap,
+  direction = 'col',
+  gap = 'none',
+  align = 'stretch',
+  justify = 'start',
+  wrap = 'nowrap',
   className,
   children,
   ...props
-}: StackProps<T>) => {
-  const Component = as || 'div'
+}: StackProps<Component>) => {
+  const Comp = (as ?? 'div') as ElementType
 
   return (
-    <Component
+    <Comp
       data-component='Stack'
-      className={variants({
+      className={stackVariants({
         direction,
+        gap,
         align,
         justify,
-        gap,
         wrap,
         className,
       })}
       {...props}>
       {children}
-    </Component>
+    </Comp>
   )
 }
 

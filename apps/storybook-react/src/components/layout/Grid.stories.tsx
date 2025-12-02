@@ -7,39 +7,111 @@ const meta = {
   title: 'Components/Layout/Grid',
   component: Grid,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'The Grid component is a flexible layout system based on CSS Grid. It provides an easy way to create responsive grid layouts with various configurations for columns, rows, gaps, and alignment. It includes a Grid.Item sub-component for controlling individual grid item placement and spanning.',
+      },
+    },
+  },
   argTypes: {
+    as: {
+      control: false,
+      description:
+        'Allows you to render the Grid component as a different HTML element or custom component.',
+      table: {
+        type: { summary: 'ElementType' },
+        defaultValue: { summary: 'div' },
+      },
+    },
     cols: {
       control: 'select',
       options: [1, 2, 3, 4, 5, 6, 12],
+      description: 'Defines the number of columns in the grid.',
+      table: {
+        type: { summary: '1 | 2 | 3 | 4 | 5 | 6 | 12' },
+        defaultValue: { summary: '1' },
+      },
     },
     rows: {
       control: 'select',
       options: [1, 2, 3, 4, 5, 6],
+      description: 'Defines the number of rows in the grid.',
+      table: {
+        type: { summary: '1 | 2 | 3 | 4 | 5 | 6' },
+        defaultValue: { summary: 'undefined' },
+      },
     },
     gap: {
       control: 'select',
       options: ['none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'],
+      description:
+        'Defines the gap between grid items (both horizontal and vertical).',
+      table: {
+        type: { summary: 'none | xs | sm | md | lg | xl | 2xl' },
+        defaultValue: { summary: 'none' },
+      },
     },
     gapX: {
       control: 'select',
       options: ['none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'],
+      description: 'Defines the horizontal gap between grid items.',
+      table: {
+        type: { summary: 'none | xs | sm | md | lg | xl | 2xl' },
+        defaultValue: { summary: 'undefined' },
+      },
     },
     gapY: {
       control: 'select',
       options: ['none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'],
+      description: 'Defines the vertical gap between grid items.',
+      table: {
+        type: { summary: 'none | xs | sm | md | lg | xl | 2xl' },
+        defaultValue: { summary: 'undefined' },
+      },
     },
     align: {
       control: 'select',
       options: ['start', 'center', 'end', 'stretch', 'baseline'],
+      description: 'Aligns grid items along the block (column) axis.',
+      table: {
+        type: { summary: 'start | center | end | stretch | baseline' },
+        defaultValue: { summary: 'stretch' },
+      },
     },
     justify: {
       control: 'select',
       options: ['start', 'center', 'end', 'stretch'],
+      description: 'Aligns grid items along the inline (row) axis.',
+      table: {
+        type: { summary: 'start | center | end | stretch' },
+        defaultValue: { summary: 'stretch' },
+      },
     },
     flow: {
       control: 'select',
       options: ['row', 'col', 'dense', 'row-dense', 'col-dense'],
+      description: 'Controls how auto-placed items get inserted in the grid.',
+      table: {
+        type: { summary: 'row | col | dense | row-dense | col-dense' },
+        defaultValue: { summary: 'row' },
+      },
     },
+    children: {
+      description: 'The content to be displayed within the Grid component.',
+      control: false,
+      table: {
+        type: { summary: 'ReactNode' },
+      },
+    },
+  },
+  args: {
+    cols: 3,
+    gap: 'md',
+    align: 'stretch',
+    justify: 'stretch',
+    flow: 'row',
   },
 } satisfies Meta<typeof Grid>
 
@@ -47,7 +119,7 @@ export default meta
 
 type Story = StoryObj<typeof Grid>
 
-const GridItem = ({
+const DemoItem = ({
   children,
   className = '',
 }: {
@@ -61,98 +133,111 @@ const GridItem = ({
 )
 
 export const Playground: Story = {
-  args: {
-    cols: 3,
-    gap: 'md',
-    align: 'stretch',
-    justify: 'stretch',
-  },
   render: (args) => (
     <Grid {...args}>
-      <GridItem>1</GridItem>
-      <GridItem>2</GridItem>
-      <GridItem>3</GridItem>
-      <GridItem>4</GridItem>
-      <GridItem>5</GridItem>
-      <GridItem>6</GridItem>
+      <Grid.Item>
+        <DemoItem>1</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>2</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>3</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>4</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>5</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>6</DemoItem>
+      </Grid.Item>
     </Grid>
   ),
 }
 
-export const TwoColumns: Story = {
-  render: () => (
-    <Grid
-      cols={2}
-      gap='md'>
-      <GridItem>Column 1</GridItem>
-      <GridItem>Column 2</GridItem>
-      <GridItem>Column 1</GridItem>
-      <GridItem>Column 2</GridItem>
-    </Grid>
-  ),
-}
-
-export const ThreeColumns: Story = {
+export const BasicLayout: Story = {
   render: () => (
     <Grid
       cols={3}
-      gap='lg'>
-      {Array.from({ length: 9 }, (_, i) => (
-        <GridItem key={i}>{i + 1}</GridItem>
-      ))}
+      gap='md'>
+      <Grid.Item>
+        <DemoItem>Item 1</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>Item 2</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>Item 3</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>Item 4</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>Item 5</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>Item 6</DemoItem>
+      </Grid.Item>
     </Grid>
   ),
 }
 
-export const FourColumns: Story = {
+export const WithColSpan: Story = {
   render: () => (
     <Grid
       cols={4}
       gap='md'>
-      {Array.from({ length: 8 }, (_, i) => (
-        <GridItem key={i}>{i + 1}</GridItem>
-      ))}
+      <Grid.Item colSpan={4}>
+        <DemoItem>Full Width (colSpan=4)</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={2}>
+        <DemoItem>Half Width (colSpan=2)</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={2}>
+        <DemoItem>Half Width (colSpan=2)</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={3}>
+        <DemoItem>3/4 Width (colSpan=3)</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>1/4 Width</DemoItem>
+      </Grid.Item>
     </Grid>
   ),
 }
 
-export const WithRows: Story = {
+export const WithRowSpan: Story = {
   render: () => (
     <Grid
       cols={3}
-      rows={2}
+      rows={3}
       gap='md'>
-      {Array.from({ length: 6 }, (_, i) => (
-        <GridItem key={i}>{i + 1}</GridItem>
-      ))}
-    </Grid>
-  ),
-}
-
-export const SeparateGaps: Story = {
-  render: () => (
-    <Grid
-      cols={3}
-      gapX='lg'
-      gapY='sm'>
-      {Array.from({ length: 9 }, (_, i) => (
-        <GridItem key={i}>{i + 1}</GridItem>
-      ))}
-    </Grid>
-  ),
-}
-
-export const CenteredItems: Story = {
-  render: () => (
-    <Grid
-      cols={3}
-      gap='md'
-      align='center'
-      justify='center'
-      className='min-h-[300px]'>
-      <GridItem>Centered</GridItem>
-      <GridItem>Content</GridItem>
-      <GridItem>Items</GridItem>
+      <Grid.Item
+        colSpan={2}
+        rowSpan={2}>
+        <DemoItem className='flex h-full items-center justify-center'>
+          Large Item
+          <br />
+          (colSpan=2, rowSpan=2)
+        </DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>1</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>2</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>3</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>4</DemoItem>
+      </Grid.Item>
+      <Grid.Item>
+        <DemoItem>5</DemoItem>
+      </Grid.Item>
     </Grid>
   ),
 }
@@ -160,13 +245,27 @@ export const CenteredItems: Story = {
 export const DashboardLayout: Story = {
   render: () => (
     <Grid
-      cols={4}
+      cols={12}
       gap='md'>
-      <GridItem className='col-span-4'>Header</GridItem>
-      <GridItem className='col-span-1 row-span-2'>Sidebar</GridItem>
-      <GridItem className='col-span-3'>Main Content</GridItem>
-      <GridItem className='col-span-3'>Secondary Content</GridItem>
-      <GridItem className='col-span-4'>Footer</GridItem>
+      <Grid.Item colSpan={12}>
+        <DemoItem>Header</DemoItem>
+      </Grid.Item>
+      <Grid.Item
+        colSpan={3}
+        rowSpan={2}>
+        <DemoItem className='flex h-full items-center justify-center'>
+          Sidebar
+        </DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={9}>
+        <DemoItem>Main Content</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={9}>
+        <DemoItem>Secondary Content</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={12}>
+        <DemoItem>Footer</DemoItem>
+      </Grid.Item>
     </Grid>
   ),
 }
@@ -177,13 +276,39 @@ export const CardGrid: Story = {
       cols={3}
       gap='lg'>
       {Array.from({ length: 6 }, (_, i) => (
-        <GridItem
-          key={i}
-          className='p-8'>
-          <div className='mb-2 text-lg font-semibold'>Card {i + 1}</div>
-          <p className='text-sm opacity-75'>This is a card with some content</p>
-        </GridItem>
+        <Grid.Item key={i}>
+          <DemoItem className='p-8'>
+            <div className='mb-2 text-lg font-semibold'>Card {i + 1}</div>
+            <p className='text-sm opacity-75'>
+              This is a card with some content
+            </p>
+          </DemoItem>
+        </Grid.Item>
       ))}
+    </Grid>
+  ),
+}
+
+export const ResponsiveLayout: Story = {
+  render: () => (
+    <Grid
+      cols={4}
+      gap='md'>
+      <Grid.Item colSpan={4}>
+        <DemoItem>Header - Full Width</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={1}>
+        <DemoItem>Nav</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={2}>
+        <DemoItem>Main Content</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={1}>
+        <DemoItem>Aside</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={4}>
+        <DemoItem>Footer - Full Width</DemoItem>
+      </Grid.Item>
     </Grid>
   ),
 }
@@ -192,57 +317,224 @@ export const GapVariants: Story = {
   render: () => (
     <div className='space-y-8'>
       <div>
-        <p className='text-base-600 dark:text-base-400 mb-2 text-sm'>
+        <p className='text-base-600 dark:text-base-400 mb-2 text-sm font-medium'>
           Gap: none
         </p>
         <Grid
           cols={3}
           gap='none'>
           {Array.from({ length: 3 }, (_, i) => (
-            <GridItem key={i}>{i + 1}</GridItem>
+            <Grid.Item key={i}>
+              <DemoItem>{i + 1}</DemoItem>
+            </Grid.Item>
           ))}
         </Grid>
       </div>
       <div>
-        <p className='text-base-600 dark:text-base-400 mb-2 text-sm'>Gap: xs</p>
+        <p className='text-base-600 dark:text-base-400 mb-2 text-sm font-medium'>
+          Gap: xs
+        </p>
         <Grid
           cols={3}
           gap='xs'>
           {Array.from({ length: 3 }, (_, i) => (
-            <GridItem key={i}>{i + 1}</GridItem>
+            <Grid.Item key={i}>
+              <DemoItem>{i + 1}</DemoItem>
+            </Grid.Item>
           ))}
         </Grid>
       </div>
       <div>
-        <p className='text-base-600 dark:text-base-400 mb-2 text-sm'>Gap: sm</p>
+        <p className='text-base-600 dark:text-base-400 mb-2 text-sm font-medium'>
+          Gap: sm
+        </p>
         <Grid
           cols={3}
           gap='sm'>
           {Array.from({ length: 3 }, (_, i) => (
-            <GridItem key={i}>{i + 1}</GridItem>
+            <Grid.Item key={i}>
+              <DemoItem>{i + 1}</DemoItem>
+            </Grid.Item>
           ))}
         </Grid>
       </div>
       <div>
-        <p className='text-base-600 dark:text-base-400 mb-2 text-sm'>Gap: md</p>
+        <p className='text-base-600 dark:text-base-400 mb-2 text-sm font-medium'>
+          Gap: md
+        </p>
         <Grid
           cols={3}
           gap='md'>
           {Array.from({ length: 3 }, (_, i) => (
-            <GridItem key={i}>{i + 1}</GridItem>
+            <Grid.Item key={i}>
+              <DemoItem>{i + 1}</DemoItem>
+            </Grid.Item>
           ))}
         </Grid>
       </div>
       <div>
-        <p className='text-base-600 dark:text-base-400 mb-2 text-sm'>Gap: lg</p>
+        <p className='text-base-600 dark:text-base-400 mb-2 text-sm font-medium'>
+          Gap: lg
+        </p>
         <Grid
           cols={3}
           gap='lg'>
           {Array.from({ length: 3 }, (_, i) => (
-            <GridItem key={i}>{i + 1}</GridItem>
+            <Grid.Item key={i}>
+              <DemoItem>{i + 1}</DemoItem>
+            </Grid.Item>
+          ))}
+        </Grid>
+      </div>
+      <div>
+        <p className='text-base-600 dark:text-base-400 mb-2 text-sm font-medium'>
+          Gap: xl
+        </p>
+        <Grid
+          cols={3}
+          gap='xl'>
+          {Array.from({ length: 3 }, (_, i) => (
+            <Grid.Item key={i}>
+              <DemoItem>{i + 1}</DemoItem>
+            </Grid.Item>
           ))}
         </Grid>
       </div>
     </div>
+  ),
+}
+
+export const SeparateGaps: Story = {
+  render: () => (
+    <div className='space-y-8'>
+      <div>
+        <p className='text-base-600 dark:text-base-400 mb-2 text-sm font-medium'>
+          gapX: lg, gapY: sm
+        </p>
+        <Grid
+          cols={3}
+          gapX='lg'
+          gapY='sm'>
+          {Array.from({ length: 9 }, (_, i) => (
+            <Grid.Item key={i}>
+              <DemoItem>{i + 1}</DemoItem>
+            </Grid.Item>
+          ))}
+        </Grid>
+      </div>
+      <div>
+        <p className='text-base-600 dark:text-base-400 mb-2 text-sm font-medium'>
+          gapX: sm, gapY: xl
+        </p>
+        <Grid
+          cols={3}
+          gapX='sm'
+          gapY='xl'>
+          {Array.from({ length: 9 }, (_, i) => (
+            <Grid.Item key={i}>
+              <DemoItem>{i + 1}</DemoItem>
+            </Grid.Item>
+          ))}
+        </Grid>
+      </div>
+    </div>
+  ),
+}
+
+export const AlignmentVariants: Story = {
+  render: () => (
+    <div className='space-y-8'>
+      <div>
+        <p className='text-base-600 dark:text-base-400 mb-2 text-sm font-medium'>
+          Align: start
+        </p>
+        <Grid
+          cols={3}
+          gap='md'
+          align='start'
+          className='min-h-[200px]'>
+          {Array.from({ length: 3 }, (_, i) => (
+            <Grid.Item key={i}>
+              <DemoItem>{i + 1}</DemoItem>
+            </Grid.Item>
+          ))}
+        </Grid>
+      </div>
+      <div>
+        <p className='text-base-600 dark:text-base-400 mb-2 text-sm font-medium'>
+          Align: center
+        </p>
+        <Grid
+          cols={3}
+          gap='md'
+          align='center'
+          className='min-h-[200px]'>
+          {Array.from({ length: 3 }, (_, i) => (
+            <Grid.Item key={i}>
+              <DemoItem>{i + 1}</DemoItem>
+            </Grid.Item>
+          ))}
+        </Grid>
+      </div>
+      <div>
+        <p className='text-base-600 dark:text-base-400 mb-2 text-sm font-medium'>
+          Align: end
+        </p>
+        <Grid
+          cols={3}
+          gap='md'
+          align='end'
+          className='min-h-[200px]'>
+          {Array.from({ length: 3 }, (_, i) => (
+            <Grid.Item key={i}>
+              <DemoItem>{i + 1}</DemoItem>
+            </Grid.Item>
+          ))}
+        </Grid>
+      </div>
+    </div>
+  ),
+}
+
+export const ComplexLayout: Story = {
+  render: () => (
+    <Grid
+      cols={6}
+      gap='md'>
+      <Grid.Item
+        colSpan={6}
+        className='from-primary-500 to-primary-700 bg-gradient-to-r'>
+        <DemoItem className='bg-transparent font-semibold text-white'>
+          Hero Section - Full Width
+        </DemoItem>
+      </Grid.Item>
+      <Grid.Item
+        colSpan={2}
+        rowSpan={3}>
+        <DemoItem className='flex h-full items-center justify-center'>
+          Sidebar
+          <br />
+          Navigation
+        </DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={4}>
+        <DemoItem>Featured Content</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={2}>
+        <DemoItem>Card 1</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={2}>
+        <DemoItem>Card 2</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={2}>
+        <DemoItem>Card 3</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={2}>
+        <DemoItem>Card 4</DemoItem>
+      </Grid.Item>
+      <Grid.Item colSpan={6}>
+        <DemoItem>Footer</DemoItem>
+      </Grid.Item>
+    </Grid>
   ),
 }

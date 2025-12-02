@@ -1,33 +1,99 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import type { ReactNode } from 'react'
 
-import { Badge, Stack } from '@myorg/ui'
+import { Stack, Text } from '@myorg/ui'
 
 const meta = {
   title: 'Components/Layout/Stack',
   component: Stack,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'The Stack component is a flexible layout primitive that arranges its children in a row or column direction using flexbox. It provides a simple and consistent way to create vertical or horizontal layouts with configurable spacing, alignment, and wrapping behavior.',
+      },
+    },
+  },
   argTypes: {
+    as: {
+      control: false,
+      description:
+        'Allows you to render the Stack component as a different HTML element or custom component.',
+      table: {
+        type: { summary: 'ElementType' },
+        defaultValue: { summary: 'div' },
+      },
+    },
     direction: {
       control: 'select',
-      options: ['row', 'column', 'row-reverse', 'column-reverse'],
-    },
-    align: {
-      control: 'select',
-      options: ['start', 'center', 'end', 'stretch', 'baseline'],
-    },
-    justify: {
-      control: 'select',
-      options: ['start', 'center', 'end', 'between', 'around', 'evenly'],
+      options: ['row', 'row-reverse', 'col', 'col-reverse'],
+      description: 'Defines the direction in which children are laid out.',
+      table: {
+        type: { summary: 'row | row-reverse | col | col-reverse' },
+        defaultValue: { summary: 'col' },
+      },
     },
     gap: {
       control: 'select',
       options: ['none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'],
+      description: 'Defines the gap between children using design tokens.',
+      table: {
+        type: { summary: 'none | xs | sm | md | lg | xl | 2xl' },
+        defaultValue: { summary: 'none' },
+      },
+    },
+    align: {
+      control: 'select',
+      options: ['start', 'center', 'end', 'stretch', 'baseline'],
+      description: 'Defines the alignment of children along the cross axis.',
+      table: {
+        type: { summary: 'start | center | end | stretch | baseline' },
+        defaultValue: { summary: 'stretch' },
+      },
+    },
+    justify: {
+      control: 'select',
+      options: [
+        'start',
+        'center',
+        'end',
+        'between',
+        'around',
+        'evenly',
+        'stretch',
+      ],
+      description: 'Defines the alignment of children along the main axis.',
+      table: {
+        type: {
+          summary: 'start | center | end | between | around | evenly | stretch',
+        },
+        defaultValue: { summary: 'start' },
+      },
     },
     wrap: {
       control: 'select',
       options: ['nowrap', 'wrap', 'wrap-reverse'],
+      description:
+        'Defines how children wrap when they overflow the container.',
+      table: {
+        type: { summary: 'nowrap | wrap | wrap-reverse' },
+        defaultValue: { summary: 'nowrap' },
+      },
     },
+    children: {
+      description: 'The content to be displayed within the Stack component.',
+      control: false,
+      table: {
+        type: { summary: 'ReactNode' },
+      },
+    },
+  },
+  args: {
+    direction: 'col',
+    gap: 'md',
+    align: 'stretch',
+    justify: 'start',
+    wrap: 'nowrap',
   },
 } satisfies Meta<typeof Stack>
 
@@ -35,165 +101,283 @@ export default meta
 
 type Story = StoryObj<typeof Stack>
 
-const BoxExample = ({ children }: { children?: ReactNode }) => (
-  <div className='bg-base-200 dark:bg-base-700 rounded-lg p-4'>
-    {children || 'Item'}
-  </div>
-)
-
 export const Playground: Story = {
-  args: {
-    direction: 'row',
-    align: 'stretch',
-    justify: 'start',
-    gap: 'md',
-    wrap: 'nowrap',
-  },
   render: (args) => (
     <Stack {...args}>
-      <BoxExample>Item 1</BoxExample>
-      <BoxExample>Item 2</BoxExample>
-      <BoxExample>Item 3</BoxExample>
+      <div className='bg-accent-100 dark:bg-accent-900 rounded-lg p-4'>
+        <Text
+          as='p'
+          variant='body-medium'
+          weight='medium'>
+          Item 1
+        </Text>
+      </div>
+      <div className='bg-accent-100 dark:bg-accent-900 rounded-lg p-4'>
+        <Text
+          as='p'
+          variant='body-medium'
+          weight='medium'>
+          Item 2
+        </Text>
+      </div>
+      <div className='bg-accent-100 dark:bg-accent-900 rounded-lg p-4'>
+        <Text
+          as='p'
+          variant='body-medium'
+          weight='medium'>
+          Item 3
+        </Text>
+      </div>
     </Stack>
   ),
 }
 
-export const HorizontalRow: Story = {
+export const VerticalStack: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'A vertical stack (column) with medium gap between items.',
+      },
+    },
+  },
+  render: () => (
+    <Stack
+      direction='col'
+      gap='md'>
+      <div className='bg-accent-100 dark:bg-accent-900 rounded-lg p-4'>
+        <Text
+          as='p'
+          variant='body-medium'
+          weight='medium'>
+          First Item
+        </Text>
+      </div>
+      <div className='bg-accent-100 dark:bg-accent-900 rounded-lg p-4'>
+        <Text
+          as='p'
+          variant='body-medium'
+          weight='medium'>
+          Second Item
+        </Text>
+      </div>
+      <div className='bg-accent-100 dark:bg-accent-900 rounded-lg p-4'>
+        <Text
+          as='p'
+          variant='body-medium'
+          weight='medium'>
+          Third Item
+        </Text>
+      </div>
+    </Stack>
+  ),
+}
+
+export const HorizontalStack: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'A horizontal stack (row) with medium gap between items.',
+      },
+    },
+  },
   render: () => (
     <Stack
       direction='row'
       gap='md'>
-      <BoxExample>First</BoxExample>
-      <BoxExample>Second</BoxExample>
-      <BoxExample>Third</BoxExample>
+      <div className='bg-accent-100 dark:bg-accent-900 rounded-lg p-4'>
+        <Text
+          as='p'
+          variant='body-medium'
+          weight='medium'>
+          Item A
+        </Text>
+      </div>
+      <div className='bg-accent-100 dark:bg-accent-900 rounded-lg p-4'>
+        <Text
+          as='p'
+          variant='body-medium'
+          weight='medium'>
+          Item B
+        </Text>
+      </div>
+      <div className='bg-accent-100 dark:bg-accent-900 rounded-lg p-4'>
+        <Text
+          as='p'
+          variant='body-medium'
+          weight='medium'>
+          Item C
+        </Text>
+      </div>
     </Stack>
   ),
 }
 
-export const VerticalColumn: Story = {
+export const WithAlignment: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Stack with centered alignment along both axes.',
+      },
+    },
+  },
   render: () => (
     <Stack
-      direction='column'
-      gap='md'>
-      <BoxExample>First</BoxExample>
-      <BoxExample>Second</BoxExample>
-      <BoxExample>Third</BoxExample>
-    </Stack>
-  ),
-}
-
-export const CenteredContent: Story = {
-  render: () => (
-    <Stack
-      direction='column'
+      direction='col'
+      gap='lg'
       align='center'
       justify='center'
-      gap='md'
-      className='min-h-[300px]'>
-      <BoxExample>Centered</BoxExample>
-      <BoxExample>Content</BoxExample>
+      className='bg-base-50 dark:bg-base-900 min-h-[300px] rounded-lg'>
+      <div className='bg-accent-600 rounded-lg p-4 text-white'>
+        <Text
+          as='p'
+          variant='body-medium'
+          weight='medium'>
+          Centered Content
+        </Text>
+      </div>
+      <div className='bg-accent-600 rounded-lg p-4 text-white'>
+        <Text
+          as='p'
+          variant='body-medium'
+          weight='medium'>
+          Also Centered
+        </Text>
+      </div>
     </Stack>
   ),
 }
 
 export const SpaceBetween: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Horizontal stack with space-between justification.',
+      },
+    },
+  },
   render: () => (
     <Stack
       direction='row'
       justify='between'
-      className='w-full'>
-      <BoxExample>Left</BoxExample>
-      <BoxExample>Center</BoxExample>
-      <BoxExample>Right</BoxExample>
+      align='center'
+      className='bg-base-50 dark:bg-base-900 rounded-lg p-6'>
+      <Text
+        as='p'
+        variant='heading-small'
+        weight='bold'>
+        Logo
+      </Text>
+      <Stack
+        direction='row'
+        gap='md'>
+        <Text
+          as='span'
+          variant='body-medium'>
+          Home
+        </Text>
+        <Text
+          as='span'
+          variant='body-medium'>
+          About
+        </Text>
+        <Text
+          as='span'
+          variant='body-medium'>
+          Contact
+        </Text>
+      </Stack>
     </Stack>
   ),
 }
 
 export const WithWrap: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Stack with wrapping enabled for overflow content.',
+      },
+    },
+  },
   render: () => (
     <Stack
       direction='row'
+      gap='sm'
       wrap='wrap'
-      gap='md'
-      className='max-w-[500px]'>
+      className='max-w-md'>
       {Array.from({ length: 12 }, (_, i) => (
-        <BoxExample key={i}>Item {i + 1}</BoxExample>
+        <div
+          key={i}
+          className='bg-accent-100 dark:bg-accent-900 rounded-lg px-4 py-2'>
+          <Text
+            as='span'
+            variant='body-small'
+            weight='medium'>
+            Tag {i + 1}
+          </Text>
+        </div>
       ))}
     </Stack>
   ),
 }
 
-export const WithBadges: Story = {
+export const GapSizes: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstration of different gap sizes.',
+      },
+    },
+  },
   render: () => (
     <Stack
-      direction='row'
-      gap='sm'
-      wrap='wrap'>
-      <Badge variant='primary'>Primary</Badge>
-      <Badge variant='secondary'>Secondary</Badge>
-      <Badge variant='success'>Success</Badge>
-      <Badge variant='warning'>Warning</Badge>
-      <Badge variant='destructive'>Destructive</Badge>
-      <Badge variant='outline'>Outline</Badge>
-    </Stack>
-  ),
-}
-
-export const GapVariants: Story = {
-  render: () => (
-    <Stack
-      direction='column'
-      gap='lg'>
+      direction='col'
+      gap='xl'>
       <div>
-        <p className='text-base-600 dark:text-base-400 mb-2 text-sm'>
-          Gap: none
-        </p>
-        <Stack
-          direction='row'
-          gap='none'>
-          <BoxExample />
-          <BoxExample />
-          <BoxExample />
-        </Stack>
-      </div>
-      <div>
-        <p className='text-base-600 dark:text-base-400 mb-2 text-sm'>Gap: xs</p>
+        <Text
+          as='p'
+          variant='caption'
+          color='secondary'
+          className='mb-2'>
+          Gap: xs
+        </Text>
         <Stack
           direction='row'
           gap='xs'>
-          <BoxExample />
-          <BoxExample />
-          <BoxExample />
+          <div className='bg-accent-100 dark:bg-accent-900 rounded p-3' />
+          <div className='bg-accent-100 dark:bg-accent-900 rounded p-3' />
+          <div className='bg-accent-100 dark:bg-accent-900 rounded p-3' />
         </Stack>
       </div>
       <div>
-        <p className='text-base-600 dark:text-base-400 mb-2 text-sm'>Gap: sm</p>
-        <Stack
-          direction='row'
-          gap='sm'>
-          <BoxExample />
-          <BoxExample />
-          <BoxExample />
-        </Stack>
-      </div>
-      <div>
-        <p className='text-base-600 dark:text-base-400 mb-2 text-sm'>Gap: md</p>
+        <Text
+          as='p'
+          variant='caption'
+          color='secondary'
+          className='mb-2'>
+          Gap: md
+        </Text>
         <Stack
           direction='row'
           gap='md'>
-          <BoxExample />
-          <BoxExample />
-          <BoxExample />
+          <div className='bg-accent-100 dark:bg-accent-900 rounded p-3' />
+          <div className='bg-accent-100 dark:bg-accent-900 rounded p-3' />
+          <div className='bg-accent-100 dark:bg-accent-900 rounded p-3' />
         </Stack>
       </div>
       <div>
-        <p className='text-base-600 dark:text-base-400 mb-2 text-sm'>Gap: lg</p>
+        <Text
+          as='p'
+          variant='caption'
+          color='secondary'
+          className='mb-2'>
+          Gap: xl
+        </Text>
         <Stack
           direction='row'
-          gap='lg'>
-          <BoxExample />
-          <BoxExample />
-          <BoxExample />
+          gap='xl'>
+          <div className='bg-accent-100 dark:bg-accent-900 rounded p-3' />
+          <div className='bg-accent-100 dark:bg-accent-900 rounded p-3' />
+          <div className='bg-accent-100 dark:bg-accent-900 rounded p-3' />
         </Stack>
       </div>
     </Stack>
