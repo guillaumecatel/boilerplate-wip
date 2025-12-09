@@ -1,7 +1,12 @@
 [
   {
     "action": "remove",
-    "files": ["apps/**/*", "packages/**/*"],
+    "files": [
+      "apps/astro-website",
+      "packages/react-package",
+      "packages/typescript-package",
+      "packages/font-package"
+    ],
     "force": true
   }
 ]
