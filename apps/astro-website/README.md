@@ -1,4 +1,4 @@
-# Website
+# AstroWebsite
 
 Astro website with i18n support (French and English).
 

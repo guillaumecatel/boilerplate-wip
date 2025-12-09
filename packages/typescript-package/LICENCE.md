@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) My Org - Utils - 2025
+Copyright (c) My Org - Typescript package - 2025
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -3,7 +3,7 @@ import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
-  plop.setGenerator('@myorg/fonts sync exports', {
+  plop.setGenerator('@myorg/font-package sync exports', {
     description: '🔄 Synchronize package.json exports with font files',
     prompts: [],
     actions: [

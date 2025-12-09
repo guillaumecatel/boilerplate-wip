@@ -1,3 +1,3 @@
-# @My Org/ui
+# @My Org/react-package
 
 

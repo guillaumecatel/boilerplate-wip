@@ -1,5 +1,5 @@
 {
-  "name": "@myorg/ui",
+  "name": "@myorg/react-package",
   "version": "0.0.1",
   "type": "module",
   "license": "MIT",

@@ -8,7 +8,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     return `../../../../turbo/generators/templates/internal/${templateName}`
   })
 
-  plop.setGenerator('@myorg/ui create component', {
+  plop.setGenerator('@myorg/react-package create component', {
     description: '⚛️🧪 Create a new component with test',
     prompts: [
       {
@@ -58,7 +58,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     ],
   })
 
-  plop.setGenerator('@myorg/ui create hook', {
+  plop.setGenerator('@myorg/react-package create hook', {
     description: '🪝🧪 Create a new hook with test',
     prompts: [
       {
@@ -108,7 +108,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     ],
   })
 
-  plop.setGenerator('@myorg/ui sync exports', {
+  plop.setGenerator('@myorg/react-package sync exports', {
     description: '🔄 Synchronize package.json exports and index.ts with src files',
     prompts: [],
     actions: [

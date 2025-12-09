@@ -28,9 +28,7 @@ describe('Button', () => {
   it('does not call onClick when disabled', () => {
     const handleClick = vi.fn()
     render(
-      <Button
-        onClick={handleClick}
-        disabled>
+      <Button onClick={handleClick} disabled>
         Click me
       </Button>,
     )

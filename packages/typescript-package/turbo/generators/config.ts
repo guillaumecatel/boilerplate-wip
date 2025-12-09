@@ -8,7 +8,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     return `../../../../turbo/generators/templates/internal/${templateName}`
   })
 
-  plop.setGenerator('@myorg/utils create file', {
+  plop.setGenerator('@myorg/typescript-package create file', {
     description: '📝🧪 Create a new file with test',
     prompts: [
       {
@@ -29,14 +29,14 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         templateFile: '{{internalTemplatePath "typescript-file"}}/test.hbs',
       },
       {
-        type: 'append',
-        path: 'package.json',
+        type: "append",
+        path: "package.json",
         pattern: /"exports": {(?<insertion>)/,
         template: `    "./{{kebabCase name}}": "./src/{{kebabCase name}}.ts",`,
       },
       {
-        type: 'append',
-        path: 'package.json',
+        type: "append",
+        path: "package.json",
         pattern: /"publishConfig": {\s*"exports": {(?<insertion>)/,
         template: `      "./{{kebabCase name}}": {
             "import": "./dist/{{kebabCase name}}.js",
@@ -45,17 +45,16 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           },`,
       },
       {
-        type: 'modify',
-        path: 'package.json',
+        type: "modify",
+        path: "package.json",
         transform: (content: string) =>
-          JSON.stringify(JSON.parse(content), null, 2) + '\n',
+          JSON.stringify(JSON.parse(content), null, 2) + "\n",
       },
     ],
   })
 
-  plop.setGenerator('@myorg/utils sync exports', {
-    description:
-      '🔄 Synchronize package.json exports and index.ts with src files',
+  plop.setGenerator('@myorg/typescript-package sync exports', {
+    description: '🔄 Synchronize package.json exports and index.ts with src files',
     prompts: [],
     actions: [
       {
@@ -65,19 +64,14 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           const srcDir = join(__dirname, '../../src')
 
           const files = readdirSync(srcDir)
-            .filter(
-              (file: string) =>
-                file.endsWith('.ts') &&
-                !file.endsWith('.test.ts') &&
-                file !== 'index.ts',
+            .filter((file: string) =>
+              file.endsWith('.ts') &&
+              !file.endsWith('.test.ts') &&
+              file !== 'index.ts'
             )
             .map((file: string) => file.replace('.ts', ''))
 
-          return (
-            files
-              .map((file: string) => `export * from './${file}'`)
-              .join('\n') + '\n'
-          )
+          return files.map((file: string) => `export * from './${file}'`).join('\n') + '\n'
         },
       },
       {
@@ -102,9 +96,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
 
           // Add exports for each file
           files.forEach((file: string) => {
-            const kebabName = file
-              .replace(/([a-z])([A-Z])/g, '$1-$2')
-              .toLowerCase()
+            const kebabName = file.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
             pkg.exports[`./${kebabName}`] = `./src/${file}.ts`
             pkg.publishConfig.exports[`./${kebabName}`] = {
               import: `./dist/${file}.js`,

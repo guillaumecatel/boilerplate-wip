@@ -1,11 +1,11 @@
-# @myorg/fonts
+# @myorg/font-package
 
 
 
 ## Installation
 
 ```bash
-pnpm add @myorg/fonts
+pnpm add @myorg/font-package
 ```
 
 ## Usage
@@ -13,7 +13,7 @@ pnpm add @myorg/fonts
 Import fonts in your project:
 
 ```typescript
-import '@myorg/fonts/font-name.woff2'
+import '@myorg/font-package/font-name.woff2'
 ```
 
 ## Available Fonts

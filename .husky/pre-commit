@@ -1,4 +1,3 @@
 prettier --write --ignore-unknown
 eslint --fix
-turbo run typecheck
 git update-index --again

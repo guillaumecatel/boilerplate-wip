@@ -1,17 +1,17 @@
-# @myorg/utils
+# @myorg/typescript-package
 
 > 
 
 ## Installation
 
 ```bash
-pnpm add @myorg/utils
+pnpm add @myorg/typescript-package
 ```
 
 ## Usage
 
 ```ts
-import Utils from '@myorg/utils'
+import TypescriptPackage from '@myorg/typescript-package'
 ```
 
 ## License

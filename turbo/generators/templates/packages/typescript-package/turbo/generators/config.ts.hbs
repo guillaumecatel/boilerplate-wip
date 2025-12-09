@@ -78,16 +78,15 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         type: 'modify',
         path: 'package.json',
         transform: (content: string) => {
-          const fs = require('fs')
-          const path = require('path')
           const pkg = JSON.parse(content)
-          const srcDir = path.join(__dirname, '../../src')
+          const srcDir = join(__dirname, '../../src')
 
-          const files = fs.readdirSync(srcDir)
-            .filter((file: string) =>
-              file.endsWith('.ts') &&
-              !file.endsWith('.test.ts') &&
-              file !== 'index.ts'
+          const files = readdirSync(srcDir)
+            .filter(
+              (file: string) =>
+                file.endsWith('.ts') &&
+                !file.endsWith('.test.ts') &&
+                file !== 'index.ts',
             )
             .map((file: string) => file.replace('.ts', ''))
 
