@@ -18,6 +18,7 @@ export default defineConfig({
     plugins: [
       // @ts-ignore
       tailwindcss(),
+      // @ts-ignore
       paraglideVitePlugin({
         project: '../../.inlang',
         outdir: './src/i18n',
