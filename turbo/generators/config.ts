@@ -34,11 +34,6 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       const actions: PlopTypes.ActionType[] = []
       const { name, template, packages } = answers as PromptData<AppTemplate>
 
-      // remove .gitkeep if exists
-      actions.push({
-        type: 'removeGitkeep',
-      })
-
       // copy template files
       actions.push({
         type: 'addMany',
@@ -87,11 +82,6 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       const actions: PlopTypes.ActionType[] = []
       const { name, template, packages } =
         answers as PromptData<PackageTemplate>
-
-      // remove .gitkeep if exists
-      actions.push({
-        type: 'removeGitkeep',
-      })
 
       // copy base files
       actions.push({
