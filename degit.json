@@ -5,8 +5,7 @@
       "apps/astro-website",
       "packages/react-package",
       "packages/typescript-package",
-      "packages/font-package",
-      "degit.json"
+      "packages/font-package"
     ]
   }
 ]
