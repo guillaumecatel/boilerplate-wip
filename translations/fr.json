@@ -25,6 +25,7 @@
   "not_found": "Page non trouvée",
   "not_found_description": "La page que vous recherchez n'existe pas.",
   "table_of_contents": "Table des matières",
+  "published_on": "Publié le",
   "loading": "Chargement…",
   "sample_text": "Ceci est un texte d'exemple en français. Il est utilisé pour démontrer la fonctionnalité de traduction dans l'application."
 }

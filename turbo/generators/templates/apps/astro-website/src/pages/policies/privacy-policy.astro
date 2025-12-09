@@ -1,0 +1,19 @@
+---
+import { m } from '@/i18n/messages'
+import Layout from '@/layouts/Layout.astro'
+
+const metadata = {
+  title: m.privacy_policy(),
+  description: 'Privacy policy for our usersApi',
+}
+---
+
+<Layout metadata={metadata}>
+  <div
+    class='flex flex-1 items-center justify-center'
+    id='main-content'>
+    <h1 class='text-2xl'>
+      {m.privacy_policy()}
+    </h1>
+  </div>
+</Layout>

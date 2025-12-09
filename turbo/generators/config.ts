@@ -1,9 +1,6 @@
 import type { PlopTypes } from '@turbo/gen'
 
-import fs from 'node:fs'
-
 import initActions from './actions'
-import { APP_TEMPLATES, PACKAGE_TEMPLATES } from './constants'
 import initHelpers from './helpers'
 import type {
   AppTemplate,
@@ -23,37 +20,30 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       {
         type: 'list',
         name: 'template',
-        message: 'Choose an app template',
-        choices: APP_TEMPLATES,
+        message: 'Choose an application template',
+        choices: plop.getHelper('getTemplates')('apps'),
       },
       {
         type: 'input',
         name: 'name',
-        message: 'Choose an app name',
+        message: 'Choose an application name',
         validate: (input) => validateName(input, 'Name'),
       },
       {
         type: 'checkbox',
         name: 'packages',
         message: 'Wich packages do you want to include?',
-        choices: fs
-          .readdirSync('packages')
-          .filter((name) => {
-            const stat = fs.statSync(`packages/${name}`)
-            return stat.isDirectory()
-          })
-          .map(
-            (name) => `@${plop.getHelper('organizationScopeName')()}/${name}`,
-          ),
-        when: () => {
-          return fs.readdirSync('packages').length > 0
-        },
+        choices: plop.getHelper('getTemplates')('packages'),
       },
     ],
-
     actions: (answers) => {
       const actions: PlopTypes.ActionType[] = []
       const { name, template, packages } = answers as PromptData<AppTemplate>
+
+      // remove .gitkeep if exists
+      actions.push({
+        type: 'removeGitkeep',
+      })
 
       // copy template files
       actions.push({
@@ -63,10 +53,12 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         templateFiles: [`templates/apps/${template}/**`],
       })
 
+      // install dependencies
       actions.push({
         type: 'installDeps',
         data: {
           packagePath: `apps/${plop.getHelper('kebabCase')(name)}`,
+          packageName: plop.getHelper('kebabCase')(name),
           packages: packages || [],
         } as InstallDepsActionData,
       })
@@ -82,7 +74,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         type: 'list',
         name: 'template',
         message: 'Choose a package template',
-        choices: PACKAGE_TEMPLATES,
+        choices: plop.getHelper('getTemplates')('packages'),
       },
       {
         type: 'input',
@@ -99,21 +91,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         type: 'checkbox',
         name: 'packages',
         message: 'Wich packages do you want to include? (optional)',
-        choices: fs
-          .readdirSync('packages')
-          .filter((name) => {
-            const stat = fs.statSync(`packages/${name}`)
-            return stat.isDirectory()
-          })
-          .map(
-            (name) => `@${plop.getHelper('organizationScopeName')()}/${name}`,
-          ),
-        when: () => {
-          return fs.readdirSync('packages').some((name) => {
-            const stat = fs.statSync(`packages/${name}`)
-            return stat.isDirectory()
-          })
-        },
+        choices: plop.getHelper('getTemplates')('packages'),
       },
     ],
 
@@ -122,12 +100,17 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       const { name, template, packages } =
         answers as PromptData<PackageTemplate>
 
-      // copy common files
+      // remove .gitkeep if exists
+      actions.push({
+        type: 'removeGitkeep',
+      })
+
+      // copy base files
       actions.push({
         type: 'addMany',
-        base: `templates/shared/base`,
+        base: `templates/internal/base`,
         destination: `packages/${plop.getHelper('kebabCase')(name)}`,
-        templateFiles: [`templates/shared/base/**`],
+        templateFiles: [`templates/internal/base/**`],
         data: { dir: 'packages' },
       })
 
@@ -139,28 +122,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         templateFiles: [`templates/packages/${template}/**`],
       })
 
-      if (
-        template === 'typescript-library' ||
-        template === 'typescript-utilities'
-      ) {
-        actions.push({
-          type: 'addMany',
-          base: `templates/shared/ts-file`,
-          destination: `packages/${plop.getHelper('kebabCase')(name)}/turbo/generators/templates/ts-file`,
-          templateFiles: [`templates/shared/ts-file/**`],
-        })
-      }
-
-      // add
-      if (template === 'react-library') {
-        actions.push({
-          type: 'addMany',
-          base: `templates/shared/react-component`,
-          destination: `packages/${plop.getHelper('kebabCase')(name)}/turbo/generators/templates/react-component`,
-          templateFiles: [`templates/shared/react-component/**`],
-        })
-      }
-
+      // install deps
       actions.push({
         type: 'installDeps',
         data: {

@@ -1,0 +1,60 @@
+# Website
+
+Astro website with i18n support (French and English).
+
+## Features
+
+- 🚀 Astro 5
+- 🌍 i18n with Paraglide (fr/en)
+- 🎨 Tailwind CSS 4
+- 📦 Express server for production
+- 🔒 Security headers (Helmet, CSP, Permissions Policy)
+- ⚡ Optimized compression
+- 🧪 Vitest for testing
+
+## Development
+
+```bash
+# Install dependencies
+pnpm install
+
+# Start dev server
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Start production server
+pnpm start
+
+# Run tests
+pnpm test
+
+# Type check
+pnpm typecheck
+```
+
+## Project Structure
+
+```bash
+├── public/          # Static assets
+├── src/
+│   ├── components/  # Astro components
+│   ├── data/        # Content (posts)
+│   ├── layouts/     # Page layouts
+│   ├── middleware/  # Middleware (i18n)
+│   ├── pages/       # Routes
+│   ├── styles/      # Global styles
+│   └── utils/       # Utilities
+├── tests/           # Test files
+└── routes.ts        # i18n routes configuration
+```
+
+## i18n
+
+This app supports French (default) and English:
+
+- French: `/`
+- English: `/en`
+
+Routes are automatically localized based on `routes.ts` configuration.

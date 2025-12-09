@@ -37,6 +37,7 @@ const config = (config: Config) => {
       },
       rules: {
         'no-unused-vars': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/no-unused-vars': ['error'],
         '@typescript-eslint/no-empty-object-type': [
           'error',

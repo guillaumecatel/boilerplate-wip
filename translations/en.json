@@ -25,6 +25,7 @@
   "not_found": "Page not found",
   "not_found_description": "The page you are looking for does not exist.",
   "table_of_contents": "Table of contents",
+  "published_on": "Published on",
   "loading": "Loading...",
   "sample_text": "This is a sample text in English. It is used to demonstrate the translation functionality in the application."
 }
