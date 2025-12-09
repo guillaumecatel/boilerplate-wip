@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "type": "module",
   "license": "MIT",
-  "description": "",
-  "keywords": [""],
+  "description": "False",
+  "keywords": ["false"],
   "homepage": "https://github.com/myorg/my-repo#readme",
   "author": "My Org <contact@myorg.com>",
   "repository": {
@@ -49,10 +49,9 @@
   "peerDependencies": {},
   "dependencies": {},
   "devDependencies": {
-    "@vitest/coverage-v8": "4.0.15",
-    "tsdown": "^0.17.2",
-    "tsup": "^8.5.1",
+    "@vitest/coverage-v8": "3.2.4",
+    "tsdown": "^0.15.6",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.15"
+    "vitest": "^3.2.4"
   }
 }

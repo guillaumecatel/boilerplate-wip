@@ -1,6 +1,6 @@
 # @myorg/typescript-package
 
-> 
+> False
 
 ## Installation
 

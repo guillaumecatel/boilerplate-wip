@@ -1,5 +1,7 @@
 # AstroWebsite
 
+
+
 Astro website with i18n support (French and English).
 
 ## Features
@@ -53,7 +55,6 @@ pnpm typecheck
 ## i18n
 
 This app supports French (default) and English:
-
 - French: `/`
 - English: `/en`
 

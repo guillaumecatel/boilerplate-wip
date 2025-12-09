@@ -4,8 +4,3 @@ export type AlternativeHrefLang = {
   locale: Locale
   href: string
 }
-
-export type HrefItem = {
-  label: string
-  href: string
-}

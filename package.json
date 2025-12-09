@@ -12,7 +12,9 @@
   "scripts": {
     "knip": "knip",
     "build": "turbo run typecheck build",
-    "check-updates": "npm-check-updates -p pnpm --packageFile '**/package.json'",
+    "gen:all": "pnpm gen:packages && pnpm gen:apps",
+    "gen:apps": "pnpm gen app --args astro-website astro-website false",
+    "gen:packages": "pnpm gen package --args typescript-package typescript-package false && pnpm gen package --args react-package react-package false && pnpm gen package --args font-package font-package false",
     "clean": "turbo run clean",
     "dev": "turbo run dev",
     "format": "prettier --write .",

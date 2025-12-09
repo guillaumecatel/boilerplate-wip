@@ -29,12 +29,6 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         message: 'Choose an application name',
         validate: (input) => validateName(input, 'Name'),
       },
-      {
-        type: 'checkbox',
-        name: 'packages',
-        message: 'Wich packages do you want to include?',
-        choices: plop.getHelper('getTemplates')('packages'),
-      },
     ],
     actions: (answers) => {
       const actions: PlopTypes.ActionType[] = []
@@ -86,12 +80,6 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         type: 'input',
         name: 'description',
         message: 'Set a description (optional)',
-      },
-      {
-        type: 'checkbox',
-        name: 'packages',
-        message: 'Wich packages do you want to include? (optional)',
-        choices: plop.getHelper('getTemplates')('packages'),
       },
     ],
 

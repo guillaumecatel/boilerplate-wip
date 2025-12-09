@@ -1,14 +1,15 @@
 import { type KnipConfig } from 'knip'
 
 const config: KnipConfig = {
+  rules: {
+    duplicates: 'off',
+  },
   astro: {
     config: ['astro.config.{js,cjs,mjs,ts,mts}'],
     entry: [
       'src/content/config.ts',
       'src/content.config.ts',
-      'src/pages/**/*.{astro,mdx,js,ts}',
-      '!src/pages/**/_*',
-      '!src/pages/**/_*/**',
+      'src/pages/**/*.{astro,ts}',
       'src/content/**/*.mdx',
       'src/middleware.{js,ts}',
       'src/middleware/**/*.{js,ts}',
@@ -24,7 +25,6 @@ const config: KnipConfig = {
     '**/vitest.shims.d.ts',
   ],
   ignoreDependencies: [
-    /@types\/.*/,
     'eslint-plugin-jsx-a11y',
     '@typescript-eslint/parser',
     '@turbo/gen',

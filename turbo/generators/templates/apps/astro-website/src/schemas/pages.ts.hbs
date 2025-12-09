@@ -8,5 +8,3 @@ export const PageSchema = z.object({
   description: z.string().optional(),
   locale: z.enum(locales),
 })
-
-export type Page = z.infer<typeof PageSchema>

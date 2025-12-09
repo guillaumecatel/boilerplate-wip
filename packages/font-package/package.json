@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "type": "module",
   "license": "MIT",
-  "description": "",
-  "keywords": [""],
+  "description": "False",
+  "keywords": ["false"],
   "homepage": "https://github.com/myorg/my-repo#readme",
   "author": "My Org <contact@myorg.com>",
   "repository": {
@@ -36,7 +36,6 @@
   "peerDependencies": {},
   "dependencies": {},
   "devDependencies": {
-    "nodemon": "^3.1.11",
-    "shx": "^0.4.0"
+    "nodemon": "^3.1.7"
   }
 }
