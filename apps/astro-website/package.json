@@ -3,9 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "postinstall": "astro sync",
     "dev": "astro dev",
     "build": "astro build",
-    "start": "ts-node server.ts",
+    "start": "node server.mjs",
     "typecheck": "astro check",
     "test": "vitest",
     "astro": "astro",
@@ -15,8 +16,7 @@
     "compression": "^1.8.1",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
-    "permissions-policy": "^0.6.0",
-    "ts-node": "^10.9.2"
+    "permissions-policy": "^0.6.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
@@ -30,7 +30,6 @@
     "astro": "^5.15.3",
     "astro-capo": "^0.0.1",
     "astro-compressor": "^1.2.0",
-    "shx": "^0.3.4",
     "tailwind-config": "workspace:*",
     "tailwindcss": "^4.1.16",
     "typescript": "^5.9.3",

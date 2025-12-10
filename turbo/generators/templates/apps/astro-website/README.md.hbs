@@ -1,61 +1,313 @@
 # {{pascalCase name}}
 
+**[🇫🇷 Version française](./README_FR.md)**
+
 {{sentenceCase description}}
 
-Astro website with i18n support (French and English).
+A production-ready Astro website template with SSR (Server-Side Rendering), internationalization, and optimized for a perfect 100% Lighthouse score.
 
-## Features
+## ✨ Features
 
-- 🚀 Astro 5
-- 🌍 i18n with Paraglide (fr/en)
-- 🎨 Tailwind CSS 4
-- 📦 Express server for production
-- 🔒 Security headers (Helmet, CSP, Permissions Policy)
-- ⚡ Optimized compression
-- 🧪 Vitest for testing
+### Core Stack
+- ⚡ **Astro 5** - Modern web framework with SSR support
+- 🚀 **Node.js Adapter** - Server-side rendering via Express.js
+- 🎨 **Tailwind CSS 4** - Latest version with modern CSS features
+- 🌍 **Paraglide.js** - Type-safe i18n routing and translations
+- 📦 **TypeScript** - Full type safety across the project
 
-## Development
+### Production Ready
+- 🔒 **Security Headers** - Helmet.js with CSP and Permissions Policy
+- ⚡ **Compression** - Gzip compression for optimal performance
+- 🎯 **SEO Optimized** - Meta tags, Open Graph, and sitemap generation
+- 📊 **100% Lighthouse Score** - Optimized for performance, accessibility, SEO, and best practices
+- 🧪 **Testing** - Vitest setup with Astro container testing
+
+### Developer Experience
+- 🔥 **Hot Module Replacement** - Fast development with Vite
+- 📝 **Content Collections** - Type-safe markdown content management
+- 🎭 **Multiple Layouts** - Flexible layout system with partials
+- 🧩 **Component Library** - Pre-built accessible components
+
+## 📦 What's Included
+
+### Pages
+- Home page with modern design
+- About page
+- Accessibility statement
+- Legal pages (Privacy Policy, Terms of Service, Cookie Policy)
+- Custom 404 error page
+- Dynamic sitemap.xml
+- Dynamic robots.txt
+- Web manifest for PWA support
+
+### Components
+- Responsive Header with language switcher
+- Footer with legal links
+- Accessibility shortcuts navigation
+- SEO-optimized layouts with Open Graph support
+
+### i18n Support
+- French (default language)
+- English
+- Extendable to additional languages via monorepo configuration
+- Type-safe translation keys
+- Automatic route localization
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- pnpm (or npm/yarn)
+
+### Installation
 
 ```bash
-# Install dependencies
+# Clone or generate from template
 pnpm install
 
-# Start dev server
+# Start development server
 pnpm dev
+```
 
-# Build for production
-pnpm build
+The development server will start at `http://localhost:4321`
 
-# Start production server
-pnpm start
+## 📜 Available Scripts
 
+```bash
+# Development
+pnpm dev          # Start dev server with HMR
+
+# Production
+pnpm build        # Build for production
+pnpm start        # Start production server (port 4321)
+
+# Quality
+pnpm typecheck    # Run Astro type checking
+pnpm test         # Run tests with Vitest
+
+# Maintenance
+pnpm clean        # Remove node_modules, dist, .astro, etc.
+```
+
+## 📂 Project Structure
+
+```
+├── public/
+│   ├── icons/              # Favicon and app icons
+│   └── images/             # Static images
+├── src/
+│   ├── components/         # Reusable Astro components
+│   │   ├── Header.astro
+│   │   ├── Footer.astro
+│   │   └── AccessibilityShortcuts.astro
+│   ├── content/            # Content collections
+│   │   ├── config.ts       # Content schema definitions
+│   │   └── pages/          # Markdown pages (fr/en)
+│   ├── i18n/               # Generated translations (Paraglide)
+│   ├── layouts/            # Page layouts
+│   │   ├── Layout.astro
+│   │   └── partials/       # Layout components
+│   ├── middleware/         # Astro middleware
+│   │   ├── index.ts
+│   │   └── paraglide.ts    # i18n routing
+│   ├── pages/              # File-based routing
+│   │   ├── index.astro     # Home (French)
+│   │   ├── about.astro
+│   │   ├── [...].astro     # Catch-all for localized routes
+│   │   └── manifest.webmanifest.ts
+│   ├── schemas/            # TypeScript schemas
+│   ├── styles/             # Global styles
+│   │   └── global.css      # Tailwind imports
+│   ├── types/              # TypeScript types
+│   ├── utils/              # Utility functions
+│   │   ├── opengraph.ts    # OG image generation
+│   │   └── sitemap.ts      # Sitemap helpers
+│   └── config.ts           # App configuration
+├── tests/                  # Test files
+├── astro.config.ts         # Astro configuration
+├── routes.ts               # i18n route mappings
+├── server.ts               # Express production server
+└── vitest.config.ts        # Vitest configuration
+```
+
+## 🌍 Internationalization
+
+### Supported Languages
+- **French** (fr) - Default language, accessible at `/`
+- **English** (en) - Accessible at `/en/*`
+
+### Adding Translations
+
+1. Translations are managed at the monorepo level in `../../.inlang/`
+2. Messages are generated automatically in `src/i18n/`
+3. Use the `routes.ts` file to define localized route patterns
+
+### Route Configuration
+
+```typescript
+// routes.ts
+export default [
+  {
+    pattern: '/about',
+    localized: [
+      ['fr', '/a-propos'],
+      ['en', '/en/about'],
+    ],
+  },
+  // ...
+]
+```
+
+## 🎨 Styling
+
+This template uses **Tailwind CSS 4** with the following setup:
+
+- Configuration via `@tailwindcss/vite` plugin
+- Custom configuration package from monorepo (`tailwind-config`)
+- Global styles in `src/styles/global.css`
+- CSS layers for base, components, and utilities
+
+## 🔒 Security
+
+The production server (`server.ts`) includes:
+
+- **Helmet.js** - Security headers (CSP, XSS protection, etc.)
+- **Permissions Policy** - Feature policy controls
+- **CORS** - Cross-origin resource sharing protection
+- **Compression** - Response compression
+- **Charset enforcement** - UTF-8 encoding on all responses
+
+## 📊 SEO & Performance
+
+### SEO Features
+- Dynamic meta tags per page
+- Open Graph images and metadata
+- Structured JSON-LD data ready
+- Automatic sitemap generation
+- Robots.txt configuration
+- Canonical URLs
+- Language alternates
+
+### Performance Optimizations
+- Server-side rendering for fast initial load
+- Image optimization via Astro assets
+- Code splitting and lazy loading
+- CSS/JS minification and compression
+- Efficient caching strategies
+- Resource hints (preload, prefetch)
+
+### Lighthouse Scores
+This template is optimized to achieve:
+- ⚡ Performance: 100
+- ♿ Accessibility: 100
+- 🎯 Best Practices: 100
+- 🔍 SEO: 100
+
+## 🧪 Testing
+
+Tests are written using **Vitest** with Astro's experimental container API:
+
+```bash
 # Run tests
 pnpm test
 
-# Type check
-pnpm typecheck
+# Run tests in watch mode
+pnpm test -- --watch
+
+# Generate coverage
+pnpm test -- --coverage
 ```
 
-## Project Structure
+Example test:
+```typescript
+import { experimental_AstroContainer as AstroContainer } from 'astro/container'
+import { describe, expect, it } from 'vitest'
+import Index from '@/pages/index.astro'
+
+describe('Index page', async () => {
+  it('should render the index page', async () => {
+    const container = await AstroContainer.create()
+    const result = await container.renderToString(Index)
+    expect(result).toContain('Simple Website')
+  })
+})
+```
+
+## 🚢 Production Deployment
+
+### Build
 
 ```bash
-├── public/          # Static assets
-├── src/
-│   ├── components/  # Astro components
-│   ├── data/        # Content (posts)
-│   ├── layouts/     # Page layouts
-│   ├── middleware/  # Middleware (i18n)
-│   ├── pages/       # Routes
-│   ├── styles/      # Global styles
-│   └── utils/       # Utilities
-├── tests/           # Test files
-└── routes.ts        # i18n routes configuration
+pnpm build
 ```
 
-## i18n
+This generates:
+- `dist/client/` - Static assets
+- `dist/server/` - SSR server bundle
 
-This app supports French (default) and English:
-- French: `/`
-- English: `/en`
+### Running Production Server
 
-Routes are automatically localized based on `routes.ts` configuration.
+```bash
+pnpm start
+```
+
+The Express server will start on port 4321 by default.
+
+### Environment Variables
+
+You can configure the production server via environment variables or modify `server.ts`:
+
+```bash
+# Example: Custom port
+PORT=3000 pnpm start
+```
+
+## 📝 Content Management
+
+Content is managed via Astro's Content Collections:
+
+1. Add markdown files in `src/content/pages/`
+2. Follow the naming pattern: `{slug}-{lang}.md`
+3. Schema is defined in `src/content/config.ts`
+4. Access content via `getCollection('pages')`
+
+Example:
+```markdown
+---
+title: About Us
+description: Learn more about our company
+---
+
+Your content here...
+```
+
+## 🛠️ Configuration
+
+### App Configuration
+
+Edit `src/config.ts` to customize:
+```typescript
+export const PROJECT_NAME = 'Your Website Name'
+export const PROJECT_SHORT_NAME = 'YWN'
+export const PROJECT_DESCRIPTION = 'Your description'
+export const TWITTER_HANDLE = '@yourhandle'
+```
+
+### Astro Configuration
+
+See `astro.config.ts` for:
+- Adapter settings
+- Integrations (compression)
+- Vite plugins (Tailwind, Paraglide)
+
+## 🤝 Contributing
+
+This is a template repository. Feel free to fork and customize for your needs!
+
+## 📄 License
+
+MIT License - feel free to use this template for any project.
+
+---
+
+**Built with ❤️ using Astro, Paraglide.js, and Tailwind CSS**
