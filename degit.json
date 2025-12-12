@@ -3,6 +3,7 @@
     "action": "remove",
     "files": [
       "apps/astro-website",
+      "apps/storybook-react",
       "packages/react-package",
       "packages/typescript-package",
       "packages/font-package"
