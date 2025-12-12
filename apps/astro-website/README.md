@@ -1,4 +1,4 @@
-# Astro Website Template
+# AstroWebsite
 
 **[🇫🇷 Version française](./README_FR.md)**
 

@@ -41,6 +41,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         base: `templates/apps/${template}`,
         destination: `apps/${plop.getHelper('kebabCase')(name)}`,
         templateFiles: [`templates/apps/${template}/**`],
+        globOptions: { dot: true },
       })
 
       // install dependencies
