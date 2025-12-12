@@ -61,8 +61,17 @@ A production-ready Astro website template with SSR (Server-Side Rendering), inte
 
 ### Prerequisites
 
-- Node.js 18+
-- pnpm (or npm/yarn)
+- **Node.js** >= 24.0.0
+- **pnpm** >= 10.0.0 (package manager)
+- **nvm** (Node Version Manager) - recommended
+
+```bash
+# Install correct Node.js version
+nvm use
+
+# Install dependencies
+pnpm install
+```
 
 ### Installation
 
@@ -131,7 +140,7 @@ pnpm clean        # Remove node_modules, dist, .astro, etc.
 ├── tests/                  # Test files
 ├── astro.config.ts         # Astro configuration
 ├── routes.ts               # i18n route mappings
-├── server.ts               # Express production server
+├── server.mjs               # Express production server
 └── vitest.config.ts        # Vitest configuration
 ```
 
@@ -175,7 +184,7 @@ This template uses **Tailwind CSS 4** with the following setup:
 
 ## 🔒 Security
 
-The production server (`server.ts`) includes:
+The production server (`server.mjs`) includes:
 
 - **Helmet.js** - Security headers (CSP, XSS protection, etc.)
 - **Permissions Policy** - Feature policy controls
@@ -267,7 +276,7 @@ The Express server will start on port 4321 by default.
 
 ### Environment Variables
 
-You can configure the production server via environment variables or modify `server.ts`:
+You can configure the production server via environment variables or modify `server.mjs`:
 
 ```bash
 # Example: Custom port

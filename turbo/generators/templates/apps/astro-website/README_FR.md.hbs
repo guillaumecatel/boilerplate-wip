@@ -1,14 +1,13 @@
-# {{pascalCase name}}
+# AstroWebsite
 
 **[🇬🇧 English version](./README.md)**
-
-{{sentenceCase description}}
 
 Un template de site web Astro prêt pour la production avec SSR (Server-Side Rendering), internationalisation et optimisé pour obtenir un score Lighthouse de 100%.
 
 ## ✨ Fonctionnalités
 
 ### Stack Technique
+
 - ⚡ **Astro 5** - Framework web moderne avec support SSR
 - 🚀 **Adaptateur Node.js** - Rendu côté serveur via Express.js
 - 🎨 **Tailwind CSS 4** - Dernière version avec fonctionnalités CSS modernes
@@ -16,6 +15,7 @@ Un template de site web Astro prêt pour la production avec SSR (Server-Side Ren
 - 📦 **TypeScript** - Sécurité des types dans tout le projet
 
 ### Prêt pour la Production
+
 - 🔒 **En-têtes de Sécurité** - Helmet.js avec CSP et Permissions Policy
 - ⚡ **Compression** - Compression Gzip pour des performances optimales
 - 🎯 **Optimisé SEO** - Meta tags, Open Graph et génération de sitemap
@@ -23,6 +23,7 @@ Un template de site web Astro prêt pour la production avec SSR (Server-Side Ren
 - 🧪 **Tests** - Configuration Vitest avec tests de conteneur Astro
 
 ### Expérience Développeur
+
 - 🔥 **Hot Module Replacement** - Développement rapide avec Vite
 - 📝 **Content Collections** - Gestion de contenu markdown type-safe
 - 🎭 **Layouts Multiples** - Système de layouts flexible avec partials
@@ -31,6 +32,7 @@ Un template de site web Astro prêt pour la production avec SSR (Server-Side Ren
 ## 📦 Contenu Inclus
 
 ### Pages
+
 - Page d'accueil avec design moderne
 - Page à propos
 - Déclaration d'accessibilité
@@ -41,12 +43,14 @@ Un template de site web Astro prêt pour la production avec SSR (Server-Side Ren
 - Web manifest pour le support PWA
 
 ### Composants
+
 - En-tête responsive avec sélecteur de langue
 - Pied de page avec liens légaux
 - Navigation de raccourcis d'accessibilité
 - Layouts optimisés SEO avec support Open Graph
 
 ### Support i18n
+
 - Français (langue par défaut)
 - Anglais
 - Extensible à d'autres langues via la configuration du monorepo
@@ -56,8 +60,18 @@ Un template de site web Astro prêt pour la production avec SSR (Server-Side Ren
 ## 🚀 Démarrage Rapide
 
 ### Prérequis
-- Node.js 18+
-- pnpm (ou npm/yarn)
+
+- **Node.js** >= 24.0.0
+- **pnpm** >= 10.0.0 (gestionnaire de paquets)
+- **nvm** (Node Version Manager) - recommandé
+
+```bash
+# Installer la bonne version de Node.js
+nvm use
+
+# Installer les dépendances
+pnpm install
+```
 
 ### Installation
 
@@ -126,13 +140,14 @@ pnpm clean        # Supprimer node_modules, dist, .astro, etc.
 ├── tests/                  # Fichiers de test
 ├── astro.config.ts         # Configuration Astro
 ├── routes.ts               # Mappings de routes i18n
-├── server.ts               # Serveur Express de production
+├── server.mjs               # Serveur Express de production
 └── vitest.config.ts        # Configuration Vitest
 ```
 
 ## 🌍 Internationalisation
 
 ### Langues Supportées
+
 - **Français** (fr) - Langue par défaut, accessible à `/`
 - **Anglais** (en) - Accessible à `/en/*`
 
@@ -169,7 +184,7 @@ Ce template utilise **Tailwind CSS 4** avec la configuration suivante :
 
 ## 🔒 Sécurité
 
-Le serveur de production (`server.ts`) inclut :
+Le serveur de production (`server.mjs`) inclut :
 
 - **Helmet.js** - En-têtes de sécurité (CSP, protection XSS, etc.)
 - **Permissions Policy** - Contrôles de politique de fonctionnalités
@@ -180,6 +195,7 @@ Le serveur de production (`server.ts`) inclut :
 ## 📊 SEO & Performance
 
 ### Fonctionnalités SEO
+
 - Meta tags dynamiques par page
 - Images et métadonnées Open Graph
 - Données JSON-LD structurées prêtes
@@ -189,6 +205,7 @@ Le serveur de production (`server.ts`) inclut :
 - Alternates de langue
 
 ### Optimisations de Performance
+
 - Rendu côté serveur pour un chargement initial rapide
 - Optimisation d'images via Astro assets
 - Code splitting et lazy loading
@@ -197,7 +214,9 @@ Le serveur de production (`server.ts`) inclut :
 - Resource hints (preload, prefetch)
 
 ### Scores Lighthouse
+
 Ce template est optimisé pour atteindre :
+
 - ⚡ Performance : 100
 - ♿ Accessibilité : 100
 - 🎯 Bonnes Pratiques : 100
@@ -219,6 +238,7 @@ pnpm test -- --coverage
 ```
 
 Exemple de test :
+
 ```typescript
 import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { describe, expect, it } from 'vitest'
@@ -242,6 +262,7 @@ pnpm build
 ```
 
 Cela génère :
+
 - `dist/client/` - Assets statiques
 - `dist/server/` - Bundle du serveur SSR
 
@@ -255,7 +276,7 @@ Le serveur Express démarrera sur le port 4321 par défaut.
 
 ### Variables d'Environnement
 
-Vous pouvez configurer le serveur de production via des variables d'environnement ou modifier `server.ts` :
+Vous pouvez configurer le serveur de production via des variables d'environnement ou modifier `server.mjs` :
 
 ```bash
 # Exemple : Port personnalisé
@@ -272,6 +293,7 @@ Le contenu est géré via les Content Collections d'Astro :
 4. Accédez au contenu via `getCollection('pages')`
 
 Exemple :
+
 ```markdown
 ---
 title: À Propos
@@ -286,6 +308,7 @@ Votre contenu ici...
 ### Configuration de l'Application
 
 Éditez `src/config.ts` pour personnaliser :
+
 ```typescript
 export const PROJECT_NAME = 'Nom de votre Site'
 export const PROJECT_SHORT_NAME = 'NVS'
@@ -296,6 +319,7 @@ export const TWITTER_HANDLE = '@votrecompte'
 ### Configuration Astro
 
 Voir `astro.config.ts` pour :
+
 - Paramètres de l'adaptateur
 - Intégrations (compression)
 - Plugins Vite (Tailwind, Paraglide)
