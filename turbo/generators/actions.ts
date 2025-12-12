@@ -1,8 +1,8 @@
 import { PlopTypes } from '@turbo/gen'
+import { exec } from 'node:child_process'
 import { existsSync, unlinkSync } from 'node:fs'
 import path from 'node:path'
 
-import { exec } from 'node:child_process'
 import { InstallDepsActionData } from './types'
 
 export default function initActions(plop: PlopTypes.NodePlopAPI): void {

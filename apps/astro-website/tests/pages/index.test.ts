@@ -8,6 +8,6 @@ describe('Index page', async () => {
     const container = await AstroContainer.create()
     const result = await container.renderToString(Index)
 
-    expect(result).toContain('Simple Website')
+    expect(result).toContain('Hi John Doe!')
   })
 })

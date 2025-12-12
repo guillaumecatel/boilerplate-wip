@@ -1,13 +1,14 @@
 import type { PlopTypes } from '@turbo/gen'
 
-import initActions from './actions'
-import initHelpers from './helpers'
 import type {
   AppTemplate,
   InstallDepsActionData,
   PackageTemplate,
   PromptData,
 } from './types'
+
+import initActions from './actions'
+import initHelpers from './helpers'
 import { validateName } from './validators'
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {

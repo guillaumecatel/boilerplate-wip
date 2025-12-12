@@ -5,6 +5,7 @@ import js from '@eslint/js'
 import json from '@eslint/json'
 import markdown from '@eslint/markdown'
 import pluginAstro from 'eslint-plugin-astro'
+import perfectionist from 'eslint-plugin-perfectionist'
 import pluginPrettier from 'eslint-plugin-prettier'
 import pluginReact from 'eslint-plugin-react'
 import storybook from 'eslint-plugin-storybook'
@@ -15,33 +16,49 @@ import { tailwind4 } from 'tailwind-csstree'
 import tseslint from 'typescript-eslint'
 
 export type Config = Partial<
-  Record<'astro' | 'react' | 'json' | 'markdown' | 'css' | 'prettier', boolean>
+  Record<'astro' | 'css' | 'json' | 'markdown' | 'prettier' | 'react', boolean>
 >
 
 const gitignorePath = fileURLToPath(new URL('.gitignore', import.meta.url))
 
 const config = (config: Config) => {
   const defaultConfig: ConfigWithExtendsArray = [
-    globalIgnores(['./.husky/**', 'pnpm-lock.yaml']),
+    globalIgnores(['./.husky/**', 'pnpm-lock.yaml', '**/i18n/**']),
     includeIgnoreFile(gitignorePath),
 
     tseslint.configs.recommended,
     storybook.configs['flat/recommended'],
 
     {
-      files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-      plugins: { js },
       extends: ['js/recommended'],
+      files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
       languageOptions: {
         globals: { ...globals.browser, ...globals.node, ...globals.vitest },
       },
+      plugins: { js },
       rules: {
-        'no-unused-vars': 'off',
         '@typescript-eslint/ban-ts-comment': 'off',
-        '@typescript-eslint/no-unused-vars': ['error'],
         '@typescript-eslint/no-empty-object-type': [
           'error',
           { allowInterfaces: 'with-single-extends' },
+        ],
+        '@typescript-eslint/no-unused-vars': ['error'],
+        'no-unused-vars': 'off',
+      },
+    },
+
+    {
+      files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+      plugins: {
+        perfectionist,
+      },
+      rules: {
+        'perfectionist/sort-imports': [
+          'error',
+          {
+            type: 'natural',
+            order: 'asc',
+          },
         ],
       },
     },
@@ -50,7 +67,6 @@ const config = (config: Config) => {
   if (config.react) {
     defaultConfig.push({
       files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-      plugins: { react: pluginReact },
       languageOptions: {
         parserOptions: {
           ecmaFeatures: {
@@ -58,45 +74,46 @@ const config = (config: Config) => {
           },
         },
       },
+      plugins: { react: pluginReact },
     })
   }
 
   if (config.astro) {
     defaultConfig.push({
+      extends: ['astro/recommended', 'astro/jsx-a11y-recommended'],
       files: ['**/*.astro'],
       plugins: { astro: pluginAstro },
-      extends: ['astro/recommended', 'astro/jsx-a11y-recommended'],
     })
   }
 
   if (config.json) {
     defaultConfig.push({
-      files: ['**/*.json'],
-      plugins: { json },
-      language: 'json/json',
       extends: ['json/recommended'],
+      files: ['**/*.json'],
+      language: 'json/json',
+      plugins: { json },
     })
 
     defaultConfig.push({
-      files: ['**/*.jsonc'],
-      plugins: { json },
-      language: 'json/jsonc',
       extends: ['json/recommended'],
+      files: ['**/*.jsonc'],
+      language: 'json/jsonc',
+      plugins: { json },
     })
     defaultConfig.push({
-      files: ['**/*.json5'],
-      plugins: { json },
-      language: 'json/json5',
       extends: ['json/recommended'],
+      files: ['**/*.json5'],
+      language: 'json/json5',
+      plugins: { json },
     })
   }
 
   if (config.markdown) {
     defaultConfig.push({
-      files: ['**/*.md'],
-      plugins: { markdown },
-      language: 'markdown/gfm',
       extends: ['markdown/recommended'],
+      files: ['**/*.md'],
+      language: 'markdown/gfm',
+      plugins: { markdown },
     })
   }
 
@@ -104,11 +121,11 @@ const config = (config: Config) => {
     defaultConfig.push({
       files: ['**/*.css'],
       ignores: ['**/global.css'],
-      plugins: { css },
       language: 'css/css',
       languageOptions: {
         customSyntax: tailwind4,
       },
+      plugins: { css },
       rules: {
         'css/no-empty-blocks': 'off',
         'css/no-invalid-at-rules': 'off',
@@ -128,10 +145,10 @@ const config = (config: Config) => {
 }
 
 export default config({
-  react: true,
   astro: true,
+  css: false,
   json: true,
   markdown: true,
-  css: false,
   prettier: true,
+  react: true,
 })

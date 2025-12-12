@@ -53,8 +53,8 @@ export default [
   {
     pattern: '/:path(.*)?',
     localized: [
-      ['fr', '/:path(.*)?'],
       ['en', '/en/:path(.*)?'],
+      ['fr', '/:path(.*)?'],
     ],
   },
 ] as Runtime['urlPatterns']
